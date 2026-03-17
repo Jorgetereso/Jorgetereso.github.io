@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gloomy Eyes & The Last Standing - Script Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">Gloomy Eyes</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#characters">Characters</a></li>
+                <li><a href="#sequences">Story</a></li>
+                <li><a href="#key-scenes">Key Scenes</a></li>
+                <li><a href="#interactive">Interactive</a></li>
+                <li><a href="#setting">Setting</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-glow">Gloomy Eyes</span>
+                <span class="title-ampersand">&</span>
+                <span class="title-secondary">The Last Standing</span>
+            </h1>
+            <p class="hero-subtitle">An Immersive Location-Based Entertainment Experience</p>
+            <p class="hero-tagline">Where zombies and humans unite to restore the sun</p>
+            <a href="#overview" class="hero-cta">Explore the Script</a>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll to discover</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </header>
+
+    <section class="section overview" id="overview">
+        <div class="container">
+            <h2 class="section-title">Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3>Experience Type</h3>
+                    <p>Location-Based Entertainment (LBE) - An immersive theatrical experience where the audience becomes part of the story as zombie characters called "The Last Standing."</p>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>Core Narrative</h3>
+                    <p>A journey from underground imprisonment to freedom, as zombie survivors and humans work together to restore the sun and nature's balance in the mystical Alishan region.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>Audience Role</h3>
+                    <p>Participants embody "The Last Standing" - zombie characters who must escape imprisonment, infiltrate enemy territory, and ultimately channel energy to restore the sun.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <h3>Central Theme</h3>
+                    <p>Unity between unlikely allies - zombies and humans - demonstrating that collective action can overcome tyranny and restore natural harmony.</p>
+                </div>
+            </div>
+
+            <div class="plot-summary">
+                <h3>The Story</h3>
+                <div class="plot-content">
+                    <p>Long ago, the sun retreated underground, causing the land to decay and zombies to emerge from the darkness. Under the tyrannical rule of <strong>Uncle</strong>, zombies are imprisoned and hunted.</p>
+                    <p>The audience, as "The Last Standing," embarks on an epic journey guided by <strong>Gloomy</strong> - a child-like zombie with a pure heart - and <strong>Nina</strong>, a brave human ally. Together, they must escape captivity, traverse the mystical Alishan forest, infiltrate a guarded train, and ultimately reach the heart of the mountain where the sun's energy lies dormant.</p>
+                    <p>Through sacrifice, unity, and the power of collective action, they discover that human and zombie hands raised together can channel the firefly light needed to awaken the sun and restore balance to the world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section characters" id="characters">
+        <div class="container">
+            <h2 class="section-title">Characters</h2>
+            <div class="characters-grid">
+                <div class="character-card protagonist">
+                    <div class="character-image gloomy-bg"></div>
+                    <div class="character-info">
+                        <h3>Gloomy</h3>
+                        <span class="character-role">Protagonist - Child Zombie</span>
+                        <p>A young zombie with innocent eyes and a pure heart. Despite his undead nature, Gloomy represents hope and the possibility of redemption. He guides The Last Standing through their journey and ultimately makes the ultimate sacrifice to restore the sun.</p>
+                        <div class="character-traits">
+                            <span class="trait">Innocent</span>
+                            <span class="trait">Brave</span>
+                            <span class="trait">Selfless</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="character-card ally">
+                    <div class="character-image nina-bg"></div>
+                    <div class="character-info">
+                        <h3>Nina</h3>
+                        <span class="character-role">Human Ally</span>
+                        <p>A courageous human who defies societal prejudice to help the zombies. Nina frees The Last Standing from imprisonment and becomes a crucial bridge between the human and zombie worlds. Her capture later becomes a pivotal plot point.</p>
+                        <div class="character-traits">
+                            <span class="trait">Compassionate</span>
+                            <span class="trait">Courageous</span>
+                            <span class="trait">Defiant</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="character-card antagonist">
+                    <div class="character-image uncle-bg"></div>
+                    <div class="character-info">
+                        <h3>Uncle</h3>
+                        <span class="character-role">Antagonist - Tyrant</span>
+                        <p>The tyrannical ruler who maintains power through fear and oppression. Uncle hunts and imprisons zombies, seeking to prevent the sun's return. His collapse of the cavern during the climax represents his desperate final attempt to stop the restoration.</p>
+                        <div class="character-traits">
+                            <span class="trait">Ruthless</span>
+                            <span class="trait">Fearful</span>
+                            <span class="trait">Powerful</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="character-card guide">
+                    <div class="character-image gravekeeper-bg"></div>
+                    <div class="character-info">
+                        <h3>The Gravekeeper</h3>
+                        <span class="character-role">Narrator - Exposition</span>
+                        <p>The mysterious storyteller who opens the experience by revealing the history of the sun's retreat underground. The Gravekeeper sets the stage and provides essential context for the audience's journey.</p>
+                        <div class="character-traits">
+                            <span class="trait">Wise</span>
+                            <span class="trait">Ancient</span>
+                            <span class="trait">Knowing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="character-card guide">
+                    <div class="character-image pacha-bg"></div>
+                    <div class="character-info">
+                        <h3>Pacha</h3>
+                        <span class="character-role">Sage - Revelator</span>
+                        <p>A wise figure who reveals the crucial secret: that collective human-zombie action can awaken the sun's underground energy. Pacha's revelation provides the key to the story's resolution.</p>
+                        <div class="character-traits">
+                            <span class="trait">Mystical</span>
+                            <span class="trait">Insightful</span>
+                            <span class="trait">Hopeful</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="character-card audience">
+                    <div class="character-image laststanding-bg"></div>
+                    <div class="character-info">
+                        <h3>The Last Standing</h3>
+                        <span class="character-role">The Audience</span>
+                        <p>YOU - the participants who embody zombie survivors throughout the experience. The Last Standing must escape imprisonment, fight alongside allies, and ultimately raise their hands to channel the firefly light that restores the sun.</p>
+                        <div class="character-traits">
+                            <span class="trait">Resilient</span>
+                            <span class="trait">United</span>
+                            <span class="trait">Transformative</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section sequences" id="sequences">
+        <div class="container">
+            <h2 class="section-title">The Eight Sequences</h2>
+            <p class="section-intro">The narrative unfolds through eight distinct sequences, each building upon the last to create a complete journey from darkness to light.</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>The Opening</h3>
+                        <span class="sequence-subtitle">The Gravekeeper's Tale</span>
+                        <p>The experience begins as the Gravekeeper emerges from the shadows to tell the ancient story. Long ago, the sun retreated underground, causing the land to decay. From this darkness, zombies emerged - not as monsters, but as victims of a world thrown out of balance.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Dark, atmospheric opening space</span>
+                            <span><strong>Mood:</strong> Mysterious, foreboding</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>The Prison</h3>
+                        <span class="sequence-subtitle">Awakening in Captivity</span>
+                        <p>The audience awakens as imprisoned zombies, held captive by Uncle's forces. The cells are cold and dark, and hope seems lost. But a glimmer of light appears as Nina arrives, risking everything to free The Last Standing from their chains.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Underground prison cells</span>
+                            <span><strong>Key Moment:</strong> Nina's liberation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>The Escape</h3>
+                        <span class="sequence-subtitle">Elevator & Arrow Combat</span>
+                        <p>With Nina's help, The Last Standing breaks free. But escape is not easy - they must fight their way through Uncle's guards using arrow combat in a thrilling elevator escape sequence.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Industrial elevator shaft</span>
+                            <span><strong>Interaction:</strong> Arrow combat gameplay</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>The Forest Journey</h3>
+                        <span class="sequence-subtitle">Rafting Through Alishan</span>
+                        <p>Having escaped, The Last Standing meets Gloomy - a child-like zombie who will guide them on their journey. Together, they board a raft and travel through the mystical Alishan forest, navigating its misty waters and ancient trees.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Alishan forest waterways</span>
+                            <span><strong>Interaction:</strong> Raft navigation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h3>The Infiltration</h3>
+                        <span class="sequence-subtitle">Disguised as Rabbit Soldiers</span>
+                        <p>Nina has been captured! To rescue her, The Last Standing must infiltrate a guarded train. Disguised as rabbit soldiers - Uncle's own troops - the group sneaks aboard, moving through carriages while avoiding detection.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Historic Alishan railway train</span>
+                            <span><strong>Mood:</strong> Tense, covert</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">6</div>
+                    <div class="timeline-content">
+                        <h3>The Revelation</h3>
+                        <span class="sequence-subtitle">Pacha's Secret</span>
+                        <p>Deep within the mountain, the group encounters Pacha, who reveals the secret to awakening the sun: collective human-zombie action. Neither group alone can restore the light - only together can they channel the earth's dormant energy.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Mountain cavern</span>
+                            <span><strong>Key Moment:</strong> Learning the ritual</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">7</div>
+                    <div class="timeline-content">
+                        <h3>The Climax</h3>
+                        <span class="sequence-subtitle">Sacrifice & Resurrection</span>
+                        <p>Uncle collapses the cavern. Gloomy sacrifices himself to protect the others. From the rubble, he resurfaces - transformed and empowered. Through synchronized hand gestures, The Last Standing channels firefly light to revive him.</p>
+                        <div class="sequence-details">
+                            <span><strong>Mood:</strong> Devastating, then triumphant</span>
+                            <span><strong>Interaction:</strong> Hand-raising ritual</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">8</div>
+                    <div class="timeline-content">
+                        <h3>The Resolution</h3>
+                        <span class="sequence-subtitle">Dawn Breaks</span>
+                        <p>The sun rises for the first time in ages. Dawn breaks over the Alishan mountains, and nature begins to awaken. Flowers bloom, the fog lifts, and balance returns to the world.</p>
+                        <div class="sequence-details">
+                            <span><strong>Setting:</strong> Mountain peak at sunrise</span>
+                            <span><strong>Interaction:</strong> Flower touch effects</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section key-scenes" id="key-scenes">
+        <div class="container">
+            <h2 class="section-title">Key Scenes & Strong Moments</h2>
+            <p class="section-intro">The most impactful moments that define the emotional journey of the experience.</p>
+
+            <div class="scenes-grid">
+                <div class="scene-card">
+                    <div class="scene-number">Scene 1</div>
+                    <h3>The Gravekeeper's Prologue</h3>
+                    <div class="scene-type">Exposition</div>
+                    <p>The experience opens in darkness. Slowly, a figure emerges - the Gravekeeper, ancient and knowing. Through whispered narration, the history unfolds: how the sun chose to hide, how zombies came to be victims, not villains.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Sets a tone of melancholy and mystery, reframing zombies as sympathetic figures.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 2</div>
+                    <h3>Nina's Act of Defiance</h3>
+                    <div class="scene-type">Liberation</div>
+                    <p>In the cold prison cells, all seems hopeless. Then Nina appears - a human who fears no zombies. With keys in hand, she unlocks the cells. This moment marks the beginning of the human-zombie alliance.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Hope ignites. The audience experiences their first taste of freedom.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 3</div>
+                    <h3>Meeting Gloomy</h3>
+                    <div class="scene-type">Character Introduction</div>
+                    <p>After escaping, The Last Standing encounters a small figure in the shadows. Gloomy steps forward - a child zombie with wide, innocent eyes. His gentle nature immediately endears him to the group.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Tenderness arises. Gloomy becomes the heart of the journey.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 4</div>
+                    <h3>The Elevator Battle</h3>
+                    <div class="scene-type">Action Sequence</div>
+                    <p>Alarms blare. Guards swarm. In a desperate escape through the elevator shaft, The Last Standing must fight back using arrow combat. The group battles upward toward freedom.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Adrenaline and agency. Participants become active warriors.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 5</div>
+                    <h3>Drifting Through Alishan</h3>
+                    <div class="scene-type">Atmospheric Journey</div>
+                    <p>The raft glides silently through misty waters. Ancient cypress trees tower overhead. Fireflies dance in the darkness. For a moment, the danger fades, and beauty takes over.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Wonder and peace. A meditative showcase of natural beauty.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 6</div>
+                    <h3>The Rabbit Disguise</h3>
+                    <div class="scene-type">Infiltration</div>
+                    <p>To board the train, The Last Standing must become what they fight against - Uncle's rabbit soldiers. Donning the enemy's uniform blurs the line between ally and enemy.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Tension and moral complexity about identity.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 7</div>
+                    <h3>Nina's Capture Revealed</h3>
+                    <div class="scene-type">Plot Twist</div>
+                    <p>Nina, who risked everything to free the zombies, has been captured by Uncle's forces. The rescue mission transforms from escape to salvation - paying back the debt of freedom.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Urgency and loyalty. Stakes become personal.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 8</div>
+                    <h3>Pacha's Revelation</h3>
+                    <div class="scene-type">Turning Point</div>
+                    <p>In the mountain's heart, Pacha shares the ancient secret: neither human nor zombie alone can restore the sun. Only together - hands raised in unity - can they channel the earth's dormant energy.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> The theme crystallizes: unity is necessity.
+                    </div>
+                </div>
+
+                <div class="scene-card featured">
+                    <div class="scene-number">Scene 9</div>
+                    <h3>Uncle's Desperate Strike</h3>
+                    <div class="scene-type">Catastrophe</div>
+                    <p>As the group prepares the ritual, Uncle makes his final move. The cavern shakes. Rocks fall. In his desperation to prevent the sun's return, the tyrant brings the mountain down upon everyone.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Terror and chaos. The villain's true fear revealed.
+                    </div>
+                </div>
+
+                <div class="scene-card featured">
+                    <div class="scene-number">Scene 10</div>
+                    <h3>Gloomy's Sacrifice</h3>
+                    <div class="scene-type">Climactic Sacrifice</div>
+                    <p>As the cavern collapses, Gloomy acts without hesitation. The child zombie throws himself into danger to protect The Last Standing. His small form disappears beneath the rubble.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Devastation. The most innocent gives everything.
+                    </div>
+                </div>
+
+                <div class="scene-card featured">
+                    <div class="scene-number">Scene 11</div>
+                    <h3>The Resurrection Ritual</h3>
+                    <div class="scene-type">Triumphant Climax</div>
+                    <p>From the rubble, a glow emerges. Gloomy resurfaces, transformed. The Last Standing raises their hands together. Firefly light streams from their palms, channeling into Gloomy, who becomes the conduit for the sun's return.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Catharsis. The audience becomes heroes who bring back the light.
+                    </div>
+                </div>
+
+                <div class="scene-card">
+                    <div class="scene-number">Scene 12</div>
+                    <h3>First Dawn</h3>
+                    <div class="scene-type">Resolution</div>
+                    <p>The sun crests the mountain. Golden light spills across the Alishan peaks for the first time in ages. Flowers bloom at the audience's touch, releasing particles of light. Balance returns.</p>
+                    <div class="scene-impact">
+                        <strong>Impact:</strong> Peace and accomplishment. Collective action creates miracles.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section interactive" id="interactive">
+        <div class="container">
+            <h2 class="section-title">Interactive Elements</h2>
+            <p class="section-intro">The experience transforms passive viewing into active participation.</p>
+
+            <div class="interactive-grid">
+                <div class="interactive-card">
+                    <div class="interactive-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M12 22V12"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Arrow Combat</h3>
+                    <p>During the elevator escape, participants engage in arrow-based combat against Uncle's guards. This mechanic provides agency and tension, transforming the escape into participatory action.</p>
+                    <div class="interaction-details">
+                        <span><strong>When:</strong> Sequence 3 - The Escape</span>
+                        <span><strong>Type:</strong> Combat/Defense</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="interactive-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 15c2.483 2.483 6.517 2.483 9 0s2.483-6.517 0-9"/>
+                            <path d="M21 9c-2.483-2.483-6.517-2.483-9 0s-2.483 6.517 0 9"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Raft Navigation</h3>
+                    <p>As the group travels through the Alishan forest waterways, participants control the raft's direction. This creates a sense of journey and exploration while showcasing the beautiful environment.</p>
+                    <div class="interaction-details">
+                        <span><strong>When:</strong> Sequence 4 - The Forest Journey</span>
+                        <span><strong>Type:</strong> Navigation/Exploration</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="interactive-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>Movement Mimicry</h3>
+                    <p>Participants learn and perform choreographed zombie-to-human movements. This physical engagement reinforces the theme of transformation and unity between the two groups.</p>
+                    <div class="interaction-details">
+                        <span><strong>When:</strong> Throughout the experience</span>
+                        <span><strong>Type:</strong> Physical/Choreographic</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card">
+                    <div class="interactive-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/>
+                        </svg>
+                    </div>
+                    <h3>Flower Touch Effects</h3>
+                    <p>In the resolution sequence, touching flowers triggers beautiful particle effects. This gentle interaction symbolizes the return of nature's vitality and rewards exploration.</p>
+                    <div class="interaction-details">
+                        <span><strong>When:</strong> Sequence 8 - The Resolution</span>
+                        <span><strong>Type:</strong> Environmental/Aesthetic</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card featured">
+                    <div class="interactive-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/>
+                            <path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/>
+                            <path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/>
+                        </svg>
+                    </div>
+                    <h3>Hand-Raising Energy Ritual</h3>
+                    <p>The climactic interactive moment: participants raise their hands together to channel firefly light energy. This synchronized gesture directly causes the sun's restoration, making the audience the literal source of salvation.</p>
+                    <div class="interaction-details">
+                        <span><strong>When:</strong> Sequence 7 - The Climax</span>
+                        <span><strong>Type:</strong> Ritual/Collective Action</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interaction-philosophy">
+                <h3>Design Philosophy</h3>
+                <p>Each interactive element serves the narrative. Combat creates stakes during escape. Navigation builds connection to the environment. Movement mimicry embodies transformation. The hand-raising ritual makes the audience essential to the story's resolution - they don't just watch salvation happen, they cause it.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section setting" id="setting">
+        <div class="container">
+            <h2 class="section-title">Setting: Alishan, Taiwan</h2>
+
+            <div class="setting-hero">
+                <div class="setting-image"></div>
+                <div class="setting-overlay">
+                    <p class="setting-quote">"Where ancient forests meet the clouds, and the railway carries stories through time."</p>
+                </div>
+            </div>
+
+            <div class="setting-grid">
+                <div class="setting-card">
+                    <h3>The Forest</h3>
+                    <p>The Alishan forest is famous for its ancient cypress and cedar trees, some over a thousand years old. In the script, this mystical woodland becomes a sanctuary where nature's magic still lingers despite the sun's absence.</p>
+                </div>
+                <div class="setting-card">
+                    <h3>The Historic Railway</h3>
+                    <p>Alishan's narrow-gauge mountain railway is one of the world's most famous scenic routes. In the story, this train becomes a tool of oppression - Uncle's transport - and later a site of infiltration and rescue.</p>
+                </div>
+                <div class="setting-card">
+                    <h3>The Mountain Fog</h3>
+                    <p>Alishan is renowned for its sea of clouds and mysterious fog. This atmospheric element creates the perfect visual language for a world without sun - perpetually shrouded, beautiful yet melancholic.</p>
+                </div>
+                <div class="setting-card">
+                    <h3>Indigenous Heritage</h3>
+                    <p>The region's Tsou indigenous culture infuses the narrative with spiritual depth. The concept of humans and nature in harmony, the mountain as sacred space, and the sun as life-giving force all draw from these traditions.</p>
+                </div>
+            </div>
+
+            <div class="setting-significance">
+                <h3>Why Alishan?</h3>
+                <p>The choice of Alishan as the setting is deliberate. This location represents Taiwan's natural beauty and cultural heritage - a place worth saving. The mountain's real-world association with sunrise viewing gives extra resonance to the story's climax: the return of the sun.</p>
+                <p>By grounding the fantasy in a real, beloved location, the experience creates emotional stakes that transcend the fictional narrative. Saving Alishan's sun means saving Taiwan's heart.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Gloomy Eyes & The Last Standing</h3>
+                    <p>An immersive journey from darkness to light</p>
+                </div>
+                <div class="footer-nav">
+                    <h4>Navigate</h4>
+                    <ul>
+                        <li><a href="#overview">Overview</a></li>
+                        <li><a href="#characters">Characters</a></li>
+                        <li><a href="#sequences">Sequences</a></li>
+                        <li><a href="#key-scenes">Key Scenes</a></li>
+                        <li><a href="#interactive">Interactive</a></li>
+                        <li><a href="#setting">Setting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-info">
+                    <h4>About</h4>
+                    <p>This website documents the script structure and key moments of the Gloomy Eyes & The Last Standing LBE experience.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Script Analysis & Documentation</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
