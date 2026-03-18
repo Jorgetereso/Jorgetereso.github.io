@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEBUKI — Sebastian Vivares</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold:  #c9a84c;
+      --gold2: #e8c97e;
+      --dark:  #050505;
+      --dark2: #0d0d0d;
+      --dark3: #141414;
+      --light: #f5f0e8;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Montserrat', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--light); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+    ::selection { background: var(--gold); color: #000; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── CURSOR ── */
+    .cursor { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+    .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(201,168,76,.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all .15s ease-out; }
+
+    /* ── LOADER ── */
+    #loader { position: fixed; inset: 0; background: var(--dark); display: flex; align-items: center; justify-content: center; z-index: 10000; flex-direction: column; gap: 20px; transition: opacity .8s ease, visibility .8s ease; }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-text { font-family: var(--serif); font-size: clamp(2rem,6vw,4rem); font-weight: 300; letter-spacing: .4em; color: var(--gold); opacity: 0; animation: fadeUp .8s .3s forwards; }
+    .loader-bar { width: 200px; height: 1px; background: rgba(201,168,76,.2); position: relative; overflow: hidden; }
+    .loader-bar::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gold); animation: loaderSlide 1.8s .5s ease forwards; }
+    @keyframes loaderSlide { to { left: 0; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 28px 60px; display: flex; align-items: center; justify-content: space-between; transition: background .4s, padding .4s; }
+    nav.scrolled { background: rgba(5,5,5,.92); backdrop-filter: blur(20px); padding: 18px 60px; border-bottom: 1px solid rgba(201,168,76,.12); }
+    .nav-logo { font-family: var(--serif); font-size: 1.6rem; letter-spacing: .3em; color: var(--gold); font-weight: 300; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,240,232,.6); transition: color .3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-cta { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; border: 1px solid var(--gold); padding: 12px 28px; color: var(--gold); transition: all .3s; }
+    .nav-cta:hover { background: var(--gold); color: #000; }
+
+    /* ── LANGUAGE TOGGLE ── */
+    .lang-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,.25);
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all .3s;
+      font-family: var(--sans);
+      font-size: .6rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,.5);
+    }
+    .lang-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .lang-btn.active-es { border-color: rgba(201,168,76,.5); color: var(--gold); }
+    .flag-arg {
+      width: 28px; height: 19px;
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+    }
+    .flag-en {
+      width: 28px; height: 19px;
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+    }
+
+    /* ── HERO ── */
+    #hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+    .hero-canvas { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,.04) 0%, transparent 60%), var(--dark); }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,.03) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 70% 80% at 65% 50%, black 30%, transparent 80%); }
+    #particles { position: absolute; inset: 0; pointer-events: none; }
+    .hero-content { position: relative; padding: 0 10vw; max-width: 1400px; width: 100%; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; opacity: 0; animation: fadeUp .8s 2s forwards; }
+    .hero-line { width: 40px; height: 1px; background: var(--gold); }
+    .hero-eyebrow span { font-size: .65rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); }
+    .hero-name { font-family: var(--serif); font-size: clamp(4rem,12vw,11rem); font-weight: 300; line-height: .9; letter-spacing: -.01em; opacity: 0; animation: fadeUp 1s 2.2s forwards; }
+    .hero-name em { font-style: italic; color: var(--gold); }
+    .hero-title { margin-top: 28px; font-size: clamp(.8rem,1.5vw,1rem); letter-spacing: .25em; text-transform: uppercase; color: rgba(245,240,232,.5); max-width: 500px; line-height: 2; opacity: 0; animation: fadeUp .8s 2.5s forwards; }
+    .hero-scroll { position: absolute; bottom: 48px; left: 10vw; display: flex; align-items: center; gap: 12px; opacity: 0; animation: fadeUp .8s 3s forwards; }
+    .hero-scroll span { font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(245,240,232,.4); }
+    .scroll-line { width: 40px; height: 1px; background: rgba(201,168,76,.4); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gold); animation: scrollAnim 2s 3.5s ease infinite; }
+    @keyframes scrollAnim { 0% { left: -100%; } 50% { left: 0; } 100% { left: 100%; } }
+
+    /* ── HERO PHOTO ── */
+    .hero-photo-frame { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); width: clamp(300px,32vw,520px); aspect-ratio: .75; opacity: 0; animation: fadeIn 1.2s 2.4s forwards; }
+    .hero-photo-bg { width: 100%; height: 100%; position: relative; overflow: hidden; border: 1px solid rgba(201,168,76,.15); }
+    .hero-photo-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(15%) contrast(1.05); }
+    .hero-photo-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(5,5,5,.7) 100%), linear-gradient(90deg, rgba(5,5,5,.2) 0%, transparent 30%); pointer-events: none; }
+    .photo-corner { position: absolute; width: 20px; height: 20px; border-color: var(--gold); border-style: solid; opacity: .5; z-index: 2; }
+    .photo-corner.tl { top: 16px; left: 16px; border-width: 1px 0 0 1px; }
+    .photo-corner.tr { top: 16px; right: 16px; border-width: 1px 1px 0 0; }
+    .photo-corner.bl { bottom: 16px; left: 16px; border-width: 0 0 1px 1px; }
+    .photo-corner.br { bottom: 16px; right: 16px; border-width: 0 1px 1px 0; }
+    .hero-badge { position: absolute; bottom: -20px; left: -20px; width: 120px; height: 120px; border: 1px solid rgba(201,168,76,.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--dark); flex-direction: column; gap: 2px; z-index: 3; }
+    .hero-badge .num { font-family: var(--serif); font-size: 2rem; color: var(--gold); line-height: 1; }
+    .hero-badge .label { font-size: .5rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(245,240,232,.5); text-align: center; padding: 0 10px; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 120px 10vw; }
+    .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .section-label span { font-size: .6rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); }
+    .section-label .line { width: 30px; height: 1px; background: var(--gold); }
+    .section-num { font-family: var(--serif); font-size: .75rem; color: rgba(201,168,76,.4); letter-spacing: .1em; }
+    h2.headline { font-family: var(--serif); font-size: clamp(2.5rem,6vw,5rem); font-weight: 300; line-height: 1.05; }
+    h2.headline em { font-style: italic; color: var(--gold); }
+
+    /* ── STATS ── */
+    #stats { padding: 80px 10vw; background: var(--dark2); border-top: 1px solid rgba(201,168,76,.08); border-bottom: 1px solid rgba(201,168,76,.08); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(201,168,76,.08); }
+    .stat-item { background: var(--dark2); padding: 48px 40px; text-align: center; transition: background .3s; }
+    .stat-item:hover { background: rgba(201,168,76,.04); }
+    .stat-num { font-family: var(--serif); font-size: clamp(2.5rem,5vw,4rem); color: var(--gold); line-height: 1; display: block; }
+    .stat-label { margin-top: 12px; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,240,232,.4); }
+
+    /* ── ABOUT ── */
+    #about { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+    .about-text p { font-size: 1.05rem; line-height: 1.9; color: rgba(245,240,232,.7); margin-bottom: 24px; }
+    .about-text p strong { color: var(--gold); font-weight: 400; }
+    .about-quote { margin: 40px 0; padding: 32px 0 32px 32px; border-left: 1px solid var(--gold); }
+    .about-quote p { font-family: var(--serif); font-size: 1.6rem; font-style: italic; font-weight: 300; line-height: 1.4; color: var(--light) !important; margin: 0 !important; }
+    .about-visual { position: relative; }
+    .about-img-frame { width: 100%; aspect-ratio: .8; position: relative; overflow: hidden; border: 1px solid rgba(201,168,76,.15); }
+    .about-img-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(10%) contrast(1.05); }
+    .about-img-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(5,5,5,.6) 100%), linear-gradient(90deg, transparent 60%, rgba(5,5,5,.2) 100%); pointer-events: none; }
+    .about-tag { position: absolute; top: 24px; right: -20px; background: var(--dark); border: 1px solid rgba(201,168,76,.2); padding: 16px 24px; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+    .about-awards { position: absolute; bottom: -20px; left: -20px; background: var(--dark3); border: 1px solid rgba(201,168,76,.15); padding: 24px 28px; min-width: 200px; }
+    .about-awards .aw-title { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,240,232,.4); margin-bottom: 12px; }
+    .about-awards ul { list-style: none; }
+    .about-awards li { font-size: .75rem; color: rgba(245,240,232,.7); padding: 6px 0; border-bottom: 1px solid rgba(201,168,76,.08); display: flex; align-items: center; gap: 8px; }
+    .about-awards li::before { content: '—'; color: var(--gold); font-size: .6rem; }
+    .about-awards li:last-child { border: none; }
+
+    /* ── EXPERTISE ── */
+    #expertise { background: var(--dark2); }
+    .expertise-intro { max-width: 600px; margin-bottom: 80px; }
+    .expertise-intro p { margin-top: 24px; font-size: .95rem; line-height: 1.9; color: rgba(245,240,232,.5); }
+    .expertise-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(201,168,76,.08); }
+    .exp-card { background: var(--dark2); padding: 52px 44px; position: relative; overflow: hidden; cursor: default; transition: background .4s; }
+    .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .5s ease; }
+    .exp-card:hover { background: rgba(201,168,76,.03); }
+    .exp-card:hover::before { width: 100%; }
+    .exp-num { font-family: var(--serif); font-size: 5rem; font-weight: 300; color: rgba(201,168,76,.07); position: absolute; top: 20px; right: 24px; line-height: 1; }
+    .exp-icon { width: 48px; height: 48px; border: 1px solid rgba(201,168,76,.2); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; }
+    .exp-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .exp-card h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; margin-bottom: 16px; line-height: 1.2; }
+    .exp-card p { font-size: .8rem; line-height: 1.8; color: rgba(245,240,232,.5); }
+    .exp-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+    .exp-link::after { content: '→'; transition: transform .3s; }
+    .exp-card:hover .exp-link::after { transform: translateX(4px); }
+
+    /* ── CLIENTS ── */
+    #clients { overflow: hidden; }
+    .clients-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 80px; flex-wrap: wrap; gap: 32px; }
+    .clients-header p { max-width: 400px; font-size: .85rem; line-height: 1.8; color: rgba(245,240,232,.5); }
+    .clients-marquee-wrap { overflow: hidden; border-top: 1px solid rgba(201,168,76,.08); border-bottom: 1px solid rgba(201,168,76,.08); padding: 40px 0; margin-bottom: 1px; }
+    .clients-marquee { display: flex; width: max-content; animation: marquee 28s linear infinite; }
+    .clients-marquee-wrap:nth-child(3) .clients-marquee { animation-direction: reverse; animation-duration: 36s; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .client-item { padding: 0 56px; font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: rgba(245,240,232,.18); white-space: nowrap; letter-spacing: .08em; transition: color .3s; position: relative; }
+    .client-item::after { content: '·'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: rgba(201,168,76,.2); }
+    .client-item:hover { color: rgba(245,240,232,.5); }
+
+    /* ── RESULTS ── */
+    #results { background: var(--dark2); }
+    .results-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 80px; }
+    .result-item { padding: 48px; border: 1px solid rgba(201,168,76,.08); position: relative; transition: border-color .3s; }
+    .result-item:hover { border-color: rgba(201,168,76,.2); }
+    .result-num { font-family: var(--serif); font-size: 4rem; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+    .result-item h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; margin-bottom: 12px; }
+    .result-item p { font-size: .8rem; line-height: 1.8; color: rgba(245,240,232,.5); }
+    .result-badge { position: absolute; top: -1px; right: 32px; background: var(--gold); color: #000; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; padding: 6px 14px; font-weight: 500; }
+
+    /* ── PRESS ── */
+    .press-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(201,168,76,.08); margin-top: 70px; }
+    .press-item { background: var(--dark); padding: 48px 40px; transition: background .3s; }
+    .press-item:hover { background: rgba(201,168,76,.03); }
+    .press-pub { font-size: .6rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .press-quote { font-family: var(--serif); font-size: 1.15rem; font-style: italic; font-weight: 300; line-height: 1.6; color: rgba(245,240,232,.8); margin-bottom: 24px; }
+    .press-meta { font-size: .65rem; letter-spacing: .1em; color: rgba(245,240,232,.35); }
+
+    /* ── SPEAKING ── */
+    #speaking { background: var(--dark2); }
+    .speaking-list { margin-top: 70px; border-top: 1px solid rgba(201,168,76,.1); }
+    .speaking-item { display: grid; grid-template-columns: 1fr 2fr 1fr 120px; gap: 40px; align-items: center; padding: 36px 0; border-bottom: 1px solid rgba(201,168,76,.08); transition: all .3s; cursor: default; }
+    .speaking-item:hover { background: rgba(201,168,76,.03); padding-left: 20px; }
+    .sp-date { font-size: .7rem; letter-spacing: .15em; color: rgba(245,240,232,.4); }
+    .sp-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 300; }
+    .sp-venue { font-size: .75rem; color: rgba(245,240,232,.5); }
+    .sp-tag { font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; border: 1px solid rgba(201,168,76,.3); color: var(--gold); padding: 6px 14px; text-align: center; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-track { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: rgba(201,168,76,.08); margin-top: 70px; }
+    .testi-card { background: var(--dark); padding: 60px 52px; position: relative; }
+    .testi-card::before { content: '"'; font-family: var(--serif); font-size: 8rem; color: rgba(201,168,76,.06); position: absolute; top: 20px; left: 36px; line-height: 1; }
+    .testi-text { font-family: var(--serif); font-size: 1.2rem; font-style: italic; font-weight: 300; line-height: 1.7; color: rgba(245,240,232,.8); position: relative; z-index: 1; margin-bottom: 36px; }
+    .testi-author { display: flex; align-items: center; gap: 16px; }
+    .testi-avatar { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(201,168,76,.2); background: linear-gradient(135deg,#1a1508 0%,#0d0a03 100%); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.1rem; color: var(--gold); }
+    .testi-name { font-size: .8rem; font-weight: 500; margin-bottom: 4px; }
+    .testi-role { font-size: .65rem; letter-spacing: .1em; color: rgba(245,240,232,.4); }
+    .testi-stars { display: flex; gap: 4px; margin-left: auto; }
+    .testi-stars span { color: var(--gold); font-size: .8rem; }
+
+    /* ── CTA BANNER ── */
+    #cta-banner { padding: 0; min-height: 60vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+    .cta-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(201,168,76,.08) 0%, transparent 70%), var(--dark2); border-top: 1px solid rgba(201,168,76,.1); border-bottom: 1px solid rgba(201,168,76,.1); }
+    .cta-content { position: relative; width: 100%; padding: 100px 10vw; text-align: center; }
+    .cta-content h2 { font-family: var(--serif); font-size: clamp(2.5rem,6vw,5.5rem); font-weight: 300; margin-bottom: 24px; line-height: 1.1; }
+    .cta-content h2 em { font-style: italic; color: var(--gold); }
+    .cta-content p { max-width: 500px; margin: 0 auto 48px; font-size: .9rem; line-height: 1.9; color: rgba(245,240,232,.5); }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: #000; font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; padding: 18px 48px; font-weight: 500; transition: all .3s; }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+    .btn-secondary { border: 1px solid rgba(245,240,232,.2); color: var(--light); font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; padding: 18px 48px; transition: all .3s; }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ── CONTACT ── */
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; margin-top: 70px; }
+    .contact-info p { font-size: .9rem; line-height: 1.9; color: rgba(245,240,232,.5); margin-bottom: 40px; }
+    .contact-details { list-style: none; }
+    .contact-details li { padding: 20px 0; border-bottom: 1px solid rgba(201,168,76,.08); display: flex; align-items: flex-start; gap: 20px; font-size: .8rem; }
+    .cd-label { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); min-width: 80px; margin-top: 3px; }
+    .cd-value { color: rgba(245,240,232,.7); }
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; font-size: .55rem; letter-spacing: .25em; text-transform: uppercase; color: rgba(245,240,232,.4); margin-bottom: 10px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(245,240,232,.15); padding: 12px 0; color: var(--light); font-family: var(--sans); font-size: .85rem; font-weight: 300; outline: none; transition: border-color .3s; -webkit-appearance: none; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: #1a1508; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .form-submit { margin-top: 40px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-family: var(--sans); font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; padding: 18px 48px; cursor: pointer; transition: all .3s; width: 100%; }
+    .form-submit:hover { background: var(--gold); color: #000; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark2); border-top: 1px solid rgba(201,168,76,.08); padding: 60px 10vw 40px; }
+    .footer-top { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 48px; border-bottom: 1px solid rgba(201,168,76,.08); flex-wrap: wrap; gap: 40px; }
+    .footer-brand .logo { font-family: var(--serif); font-size: 2rem; letter-spacing: .3em; color: var(--gold); font-weight: 300; margin-bottom: 12px; }
+    .footer-brand p { font-size: .7rem; color: rgba(245,240,232,.35); max-width: 280px; line-height: 1.8; }
+    .footer-links h4 { font-size: .55rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .footer-links ul { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { font-size: .75rem; color: rgba(245,240,232,.4); transition: color .3s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-social { display: flex; gap: 12px; }
+    .social-link { width: 40px; height: 40px; border: 1px solid rgba(201,168,76,.15); display: flex; align-items: center; justify-content: center; transition: all .3s; font-size: .7rem; color: rgba(245,240,232,.4); }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-bottom { padding-top: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-bottom p { font-size: .6rem; color: rgba(245,240,232,.2); letter-spacing: .1em; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav { padding: 24px 32px; } nav.scrolled { padding: 16px 32px; }
+      section { padding: 80px 6vw; }
+      #about { grid-template-columns: 1fr; gap: 60px; }
+      .expertise-grid { grid-template-columns: 1fr 1fr; }
+      .results-layout { grid-template-columns: 1fr; gap: 40px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .press-grid { grid-template-columns: 1fr 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 60px; }
+      .testimonials-track { grid-template-columns: 1fr; }
+      .hero-photo-frame { display: none; }
+      .about-visual { display: block !important; }
+      .speaking-item { grid-template-columns: 1fr 2fr; }
+      .sp-venue, .sp-tag { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .expertise-grid { grid-template-columns: 1fr; }
+      .press-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .about-visual { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-text">SEBUKI</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">SEBUKI</div>
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+    <li><a href="#expertise" data-i18n="nav_expertise">Expertise</a></li>
+    <li><a href="#clients" data-i18n="nav_clients">Clients</a></li>
+    <li><a href="#press" data-i18n="nav_press">Press</a></li>
+    <li><a href="#speaking" data-i18n="nav_speaking">Speaking</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langToggle" title="Cambiar idioma / Change language">
+      <!-- Flag rendered via JS -->
+      <span id="langLabel">ES</span>
+    </button>
+    <a href="#contact" class="nav-cta" data-i18n="nav_book">Book Sebastian</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-canvas"></div>
+  <div class="hero-grid"></div>
+  <canvas id="particles"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span data-i18n="hero_eyebrow">AI Strategist &nbsp;·&nbsp; Keynote Speaker &nbsp;·&nbsp; Executive Advisor</span>
+    </div>
+    <h1 class="hero-name">SEBASTIAN<br><em>VIVARES</em></h1>
+    <p class="hero-title" data-i18n="hero_title">Architecting the artificial intelligence future<br>of the world's most powerful companies</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span data-i18n="hero_scroll">Scroll to explore</span>
+  </div>
+  <div class="hero-photo-frame">
+    <div class="hero-photo-bg">
+      <img src="sebu.jpeg" alt="Sebastian Vivares" />
+      <div class="photo-corner tl"></div>
+      <div class="photo-corner tr"></div>
+      <div class="photo-corner bl"></div>
+      <div class="photo-corner br"></div>
+    </div>
+    <div class="hero-badge">
+      <span class="num">12+</span>
+      <span class="label" data-i18n="hero_badge">Years of Excellence</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="320">0</span>
+      <div class="stat-label" data-i18n="stat1">Enterprises Transformed</div>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="47">0</span>
+      <div class="stat-label" data-i18n="stat2">Fortune 500 Clients</div>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="4200000000" data-short="true">$0</span>
+      <div class="stat-label" data-i18n="stat3">Revenue Unlocked for Clients</div>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="83">0</span>
+      <div class="stat-label" data-i18n="stat4">Global Speaking Engagements</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text reveal-left">
+    <div class="section-label">
+      <span class="section-num">01</span>
+      <div class="line"></div>
+      <span data-i18n="about_label">Who is Sebastian</span>
+    </div>
+    <h2 class="headline" style="margin-bottom:32px">
+      <span data-i18n="about_h2a">The Man</span><br>
+      <span data-i18n="about_h2b">Rewriting</span><br>
+      <em data-i18n="about_h2c">the Rules</em>
+    </h2>
+    <p data-i18n="about_p1">Sebastian Vivares is not a consultant. He is an <strong>AI architect</strong> — a rare mind who operates at the intersection of deep technical mastery and executive-level strategy. Born in Buenos Aires, Argentina and educated across three continents, Sebastian has spent over a decade dismantling the gap between what technology can do and what business leaders dare to imagine.</p>
+    <p data-i18n="about_p2">His proprietary <strong>VIVARES Framework™</strong> — a first-principles methodology for enterprise AI integration — has been adopted by organizations on five continents. It is not a theory. It is a battle-tested operating system for the AI era, refined across 320+ deployments ranging from Fortune 500 boardrooms to sovereign wealth funds.</p>
+    <div class="about-quote">
+      <p data-i18n="about_quote">"Most people see AI as a tool. Sebastian sees it as a new civilization layer — and he's helping the world's most powerful companies build on top of it."</p>
+    </div>
+    <p data-i18n="about_p3">When he is not advising C-suites, Sebastian writes, invests, and trains the next generation of AI-native leaders through his exclusive <strong>SEBUKI Mastermind</strong> program — a six-month intensive that has produced over 400 certified AI strategists.</p>
+  </div>
+  <div class="about-visual reveal-right">
+    <div class="about-img-frame">
+      <img src="sebu.jpeg" alt="Sebastian Vivares" />
+    </div>
+    <div class="about-tag" data-i18n="about_tag">AI Architect &amp; Advisor</div>
+    <div class="about-awards">
+      <div class="aw-title" data-i18n="about_awards_title">Recognition</div>
+      <ul>
+        <li data-i18n="award1">Forbes 30 Under 30 — Tech &amp; AI</li>
+        <li data-i18n="award2">TIME 100 Next Innovators</li>
+        <li data-i18n="award3">MIT Tech Review Innovator</li>
+        <li data-i18n="award4">WEF Young Global Leader</li>
+        <li data-i18n="award5">Harvard AI Fellow, 2023</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="expertise-intro reveal">
+    <div class="section-label">
+      <span class="section-num">02</span>
+      <div class="line"></div>
+      <span data-i18n="exp_label">Areas of Mastery</span>
+    </div>
+    <h2 class="headline"><span data-i18n="exp_h2a">Where Sebastian</span><br><em data-i18n="exp_h2b">Operates</em></h2>
+    <p data-i18n="exp_intro">From boardroom to build, Sebastian covers the complete spectrum of enterprise AI — strategic vision, technical architecture, organizational change, and measurable outcomes.</p>
+  </div>
+  <div class="expertise-grid">
+    <div class="exp-card reveal">
+      <span class="exp-num">I</span>
+      <div class="exp-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <h3 data-i18n="exp1_h">AI Prompt Engineering &amp; Architecture</h3>
+      <p data-i18n="exp1_p">Sebastian pioneered enterprise-grade prompt engineering as a discipline. His systems extract precision, consistency, and commercial value from frontier models — at scale, across every department.</p>
+      <span class="exp-link" data-i18n="exp_more">Learn more</span>
+    </div>
+    <div class="exp-card reveal">
+      <span class="exp-num">II</span>
+      <div class="exp-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h3 data-i18n="exp2_h">Enterprise AI Transformation</h3>
+      <p data-i18n="exp2_p">End-to-end transformation engagements. Sebastian embeds with executive teams, maps capability gaps, builds the AI roadmap, and drives the human change required to sustain it.</p>
+      <span class="exp-link" data-i18n="exp_more">Learn more</span>
+    </div>
+    <div class="exp-card reveal">
+      <span class="exp-num">III</span>
+      <div class="exp-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <h3 data-i18n="exp3_h">AI Strategy &amp; Roadmapping</h3>
+      <p data-i18n="exp3_p">Multi-year AI strategy grounded in competitive reality. Sebastian identifies where AI will compress your margins and where it will explode your growth — before your rivals do.</p>
+      <span class="exp-link" data-i18n="exp_more">Learn more</span>
+    </div>
+    <div class="exp-card reveal">
+      <span class="exp-num">IV</span>
+      <div class="exp-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3 data-i18n="exp4_h">Board &amp; C-Suite Advisory</h3>
+      <p data-i18n="exp4_p">A trusted voice in the room where the most consequential AI decisions are made. Sebastian provides board-level perspective without board-level ambiguity.</p>
+      <span class="exp-link" data-i18n="exp_more">Learn more</span>
+    </div>
+    <div class="exp-card reveal">
+      <span class="exp-num">V</span>
+      <div class="exp-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h3 data-i18n="exp5_h">AI-Native Product Development</h3>
+      <p data-i18n="exp5_p">Helping companies build AI-first products that don't feel bolted on — but feel inevitable. From ideation to launch, Sebastian shapes the product thinking that competitors struggle to replicate.</p>
+      <span class="exp-link" data-i18n="exp_more">Learn more</span>
+    </div>
+    <div class="exp-card reveal">
+      <span class="exp-num">VI</span>
+      <div class="exp-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <h3 data-i18n="exp6_h">Keynote Speaking &amp; Education</h3>
+      <p data-i18n="exp6_p">Electrifying keynotes for global stages — Davos, Web Summit, TED-style venues, and corporate summits. Sebastian makes AI intelligible, urgent, and actionable for every audience.</p>
+      <span class="exp-link" data-i18n="exp_more">Learn more</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="clients-header">
+    <div class="reveal">
+      <div class="section-label">
+        <span class="section-num">03</span>
+        <div class="line"></div>
+        <span data-i18n="clients_label">Trusted By</span>
+      </div>
+      <h2 class="headline"><span data-i18n="clients_h2a">The World's</span><br><em data-i18n="clients_h2b">Largest Companies</em></h2>
+    </div>
+    <p class="reveal" data-i18n="clients_p">From Silicon Valley to the Gulf, from Wall Street to Tokyo — Sebastian has been called upon by the organizations that shape the global economy.</p>
+  </div>
+  <div class="clients-marquee-wrap">
+    <div class="clients-marquee">
+      <span class="client-item">Goldman Sachs</span><span class="client-item">Microsoft</span><span class="client-item">BlackRock</span><span class="client-item">Amazon</span><span class="client-item">JP Morgan Chase</span><span class="client-item">Nestlé</span><span class="client-item">Toyota</span><span class="client-item">HSBC</span><span class="client-item">Siemens</span><span class="client-item">Unilever</span>
+      <span class="client-item">Goldman Sachs</span><span class="client-item">Microsoft</span><span class="client-item">BlackRock</span><span class="client-item">Amazon</span><span class="client-item">JP Morgan Chase</span><span class="client-item">Nestlé</span><span class="client-item">Toyota</span><span class="client-item">HSBC</span><span class="client-item">Siemens</span><span class="client-item">Unilever</span>
+    </div>
+  </div>
+  <div class="clients-marquee-wrap">
+    <div class="clients-marquee">
+      <span class="client-item">Deloitte</span><span class="client-item">Mastercard</span><span class="client-item">Airbus</span><span class="client-item">Samsung</span><span class="client-item">McKinsey &amp; Co.</span><span class="client-item">Abu Dhabi Investment</span><span class="client-item">Shell</span><span class="client-item">Pfizer</span><span class="client-item">Alphabet</span><span class="client-item">Accenture</span>
+      <span class="client-item">Deloitte</span><span class="client-item">Mastercard</span><span class="client-item">Airbus</span><span class="client-item">Samsung</span><span class="client-item">McKinsey &amp; Co.</span><span class="client-item">Abu Dhabi Investment</span><span class="client-item">Shell</span><span class="client-item">Pfizer</span><span class="client-item">Alphabet</span><span class="client-item">Accenture</span>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="reveal">
+    <div class="section-label">
+      <span class="section-num">04</span>
+      <div class="line"></div>
+      <span data-i18n="results_label">Proven Impact</span>
+    </div>
+    <h2 class="headline"><span data-i18n="results_h2a">Results That</span><br><em data-i18n="results_h2b">Speak</em></h2>
+  </div>
+  <div class="results-layout">
+    <div class="result-item reveal">
+      <div class="result-badge" data-i18n="case_study">Case Study</div>
+      <div class="result-num">+$1.2B</div>
+      <h3 data-i18n="result1_h">Revenue Expansion — Global Bank</h3>
+      <p data-i18n="result1_p">Deployed an AI-driven client intelligence layer across a Tier 1 investment bank's private wealth division. Within 18 months, relationship managers doubled AUM growth using Sebastian's proprietary prompt systems and decision-support architecture.</p>
+    </div>
+    <div class="result-item reveal">
+      <div class="result-badge" data-i18n="case_study">Case Study</div>
+      <div class="result-num">68%</div>
+      <h3 data-i18n="result2_h">Cost Reduction — Logistics Giant</h3>
+      <p data-i18n="result2_p">Redesigned back-office operations for a Fortune 50 logistics company using agentic AI workflows. Eliminated 14 redundant processes, cut operational costs by 68%, and freed 2,400 employees to focus on high-value work.</p>
+    </div>
+    <div class="result-item reveal">
+      <div class="result-badge" data-i18n="case_study">Case Study</div>
+      <div class="result-num">9×</div>
+      <h3 data-i18n="result3_h">Output Velocity — Media Conglomerate</h3>
+      <p data-i18n="result3_p">Built a bespoke AI content architecture for a global media group. Content production velocity increased 9× while brand consistency improved significantly — measured across 22 languages and 140 markets.</p>
+    </div>
+    <div class="result-item reveal">
+      <div class="result-badge" data-i18n="case_study">Case Study</div>
+      <div class="result-num">$400M</div>
+      <h3 data-i18n="result4_h">Risk Averted — Pharma Leader</h3>
+      <p data-i18n="result4_p">Identified and neutralized a critical AI governance vulnerability in a top-10 pharmaceutical company's drug-discovery pipeline — preventing regulatory exposure estimated at $400M+ in potential liability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section id="press">
+  <div class="reveal">
+    <div class="section-label">
+      <span class="section-num">05</span>
+      <div class="line"></div>
+      <span data-i18n="press_label">In the Media</span>
+    </div>
+    <h2 class="headline"><span data-i18n="press_h2a">The World Is</span><br><em data-i18n="press_h2b">Listening</em></h2>
+  </div>
+  <div class="press-grid">
+    <div class="press-item reveal">
+      <div class="press-pub">Forbes</div>
+      <p class="press-quote" data-i18n="press1_q">"Vivares may be the single most influential voice shaping how corporate America thinks about artificial intelligence. His clarity is almost unsettling."</p>
+      <div class="press-meta" data-i18n="press1_m">Forbes AI 50 Feature — March 2025</div>
+    </div>
+    <div class="press-item reveal">
+      <div class="press-pub">Harvard Business Review</div>
+      <p class="press-quote" data-i18n="press2_q">"The VIVARES Framework™ is what happens when a decade of real enterprise deployments collides with genuine intellectual rigor. Boards should read this."</p>
+      <div class="press-meta" data-i18n="press2_m">HBR Digital — January 2025</div>
+    </div>
+    <div class="press-item reveal">
+      <div class="press-pub">The Financial Times</div>
+      <p class="press-quote" data-i18n="press3_q">"In a space crowded with charlatans and snake oil, Vivares stands apart — a practitioner who has earned the right to speak with authority."</p>
+      <div class="press-meta" data-i18n="press3_m">FT Future of Business — November 2024</div>
+    </div>
+    <div class="press-item reveal">
+      <div class="press-pub">MIT Technology Review</div>
+      <p class="press-quote" data-i18n="press4_q">"His approach to prompt engineering as a governance discipline is genuinely novel. Sebastian is solving problems that most AI labs haven't even named yet."</p>
+      <div class="press-meta" data-i18n="press4_m">MIT Tech Review — September 2024</div>
+    </div>
+    <div class="press-item reveal">
+      <div class="press-pub">Bloomberg</div>
+      <p class="press-quote" data-i18n="press5_q">"When CEOs want to understand what AI means for their P&amp;L next quarter — not in five years — they call Sebastian Vivares."</p>
+      <div class="press-meta" data-i18n="press5_m">Bloomberg Markets — July 2024</div>
+    </div>
+    <div class="press-item reveal">
+      <div class="press-pub">WIRED</div>
+      <p class="press-quote" data-i18n="press6_q">"Vivares doesn't sell AI optimism. He sells AI outcomes. That difference is everything — and it's why his client list reads like a who's who of global power."</p>
+      <div class="press-meta" data-i18n="press6_m">WIRED Business — May 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKING -->
+<section id="speaking">
+  <div class="reveal">
+    <div class="section-label">
+      <span class="section-num">06</span>
+      <div class="line"></div>
+      <span data-i18n="speaking_label">On the Global Stage</span>
+    </div>
+    <h2 class="headline"><span data-i18n="speaking_h2a">Speaking</span><br><em data-i18n="speaking_h2b">Engagements</em></h2>
+  </div>
+  <div class="speaking-list">
+    <div class="speaking-item reveal">
+      <div class="sp-date">Ene 2026</div>
+      <div class="sp-title" data-i18n="sp1_title">The Intelligence Dividend: What AI Really Means for Capitalism</div>
+      <div class="sp-venue">World Economic Forum, Davos</div>
+      <div class="sp-tag" data-i18n="sp_keynote">Keynote</div>
+    </div>
+    <div class="speaking-item reveal">
+      <div class="sp-date">Nov 2025</div>
+      <div class="sp-title" data-i18n="sp2_title">Prompting at Scale: Enterprise AI That Actually Works</div>
+      <div class="sp-venue">Web Summit, Lisboa</div>
+      <div class="sp-tag" data-i18n="sp_keynote">Keynote</div>
+    </div>
+    <div class="speaking-item reveal">
+      <div class="sp-date">Oct 2025</div>
+      <div class="sp-title" data-i18n="sp3_title">The Board's Guide to AI Governance</div>
+      <div class="sp-venue">Fortune Global Forum, Abu Dhabi</div>
+      <div class="sp-tag" data-i18n="sp_fireside">Fireside</div>
+    </div>
+    <div class="speaking-item reveal">
+      <div class="sp-date">Sep 2025</div>
+      <div class="sp-title" data-i18n="sp4_title">Why Most AI Transformations Fail (and How to Be Different)</div>
+      <div class="sp-venue">Dreamforce, San Francisco</div>
+      <div class="sp-tag" data-i18n="sp_keynote">Keynote</div>
+    </div>
+    <div class="speaking-item reveal">
+      <div class="sp-date">Jun 2025</div>
+      <div class="sp-title" data-i18n="sp5_title">Rewriting the Operating Model: AI From the Inside Out</div>
+      <div class="sp-venue">McKinsey CEO Forum, Singapur</div>
+      <div class="sp-tag" data-i18n="sp_workshop">Workshop</div>
+    </div>
+    <div class="speaking-item reveal">
+      <div class="sp-date">Mar 2025</div>
+      <div class="sp-title" data-i18n="sp6_title">Ideas That Move: The Human Case for Artificial Intelligence</div>
+      <div class="sp-venue">TED Global, Vancouver</div>
+      <div class="sp-tag">TED Talk</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal">
+    <div class="section-label">
+      <span class="section-num">07</span>
+      <div class="line"></div>
+      <span data-i18n="testi_label">From the People Who Know</span>
+    </div>
+    <h2 class="headline"><span data-i18n="testi_h2a">What Leaders</span><br><em data-i18n="testi_h2b">Say</em></h2>
+  </div>
+  <div class="testimonials-track">
+    <div class="testi-card reveal">
+      <p class="testi-text" data-i18n="testi1_text">"Sebastian didn't just advise us — he fundamentally changed how our executive team thinks about competitive advantage. Two years after our engagement, his fingerprints are still on every major AI decision we make."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div>
+          <div class="testi-name">Richard Caldwell</div>
+          <div class="testi-role" data-i18n="testi1_role">CEO — Caldwell Capital Group</div>
+        </div>
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text" data-i18n="testi2_text">"We hired Sebastian for three months. By month two we had extended to a year-long partnership. There is no one in the world who can take a boardroom from fear to conviction on AI the way he can."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">M</div>
+        <div>
+          <div class="testi-name">Mireille Fontaine</div>
+          <div class="testi-role" data-i18n="testi2_role">Group Chief Digital Officer — Maison Global</div>
+        </div>
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text" data-i18n="testi3_text">"His VIVARES Framework™ is the most practical AI transformation methodology I've encountered in 25 years of enterprise consulting. It's rigorous, human-centered, and it works."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">K</div>
+        <div>
+          <div class="testi-name">Kenji Watanabe</div>
+          <div class="testi-role" data-i18n="testi3_role">Managing Director — Pacific Ventures AI</div>
+        </div>
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text" data-i18n="testi4_text">"I've seen a hundred AI consultants. Sebastian is the first who spoke to our engineers, our lawyers, our marketers, and our board — and made all four groups feel like he was speaking directly to them."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Amara Okonkwo</div>
+          <div class="testi-role" data-i18n="testi4_role">SVP Strategy — Zenith Financial Services</div>
+        </div>
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="cta-bg"></div>
+  <div class="cta-content reveal">
+    <h2><span data-i18n="cta_h2a">Ready to Build</span><br><em data-i18n="cta_h2b">Your AI Future?</em></h2>
+    <p data-i18n="cta_p">Sebastian accepts a limited number of strategic advisory engagements per year. Enquiries are reviewed personally and confidentially.</p>
+    <div class="cta-buttons">
+      <a href="#contact" class="btn-primary" data-i18n="cta_btn1">Begin the Conversation</a>
+      <a href="#speaking" class="btn-secondary" data-i18n="cta_btn2">Book a Keynote</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-info reveal-left">
+      <div class="section-label">
+        <span class="section-num">08</span>
+        <div class="line"></div>
+        <span data-i18n="contact_label">Get in Touch</span>
+      </div>
+      <h2 class="headline" style="margin-bottom:28px">
+        <span data-i18n="contact_h2a">Let's Build</span><br>
+        <em data-i18n="contact_h2b">Something</em><br>
+        <span data-i18n="contact_h2c">Extraordinary</span>
+      </h2>
+      <p data-i18n="contact_p">Sebastian's team responds to all serious inquiries within 48 hours. Whether you are exploring a long-term advisory relationship, a keynote engagement, or a corporate workshop — the conversation starts here.</p>
+      <ul class="contact-details">
+        <li><span class="cd-label" data-i18n="cd_email">Email</span><span class="cd-value">studio@sebuki.com</span></li>
+        <li><span class="cd-label" data-i18n="cd_hq">HQ</span><span class="cd-value">New York · Dubai · Singapore</span></li>
+        <li><span class="cd-label" data-i18n="cd_avail">Availability</span><span class="cd-value" data-i18n="cd_avail_val">Q3 2026 onwards — limited slots</span></li>
+        <li><span class="cd-label" data-i18n="cd_resp">Response</span><span class="cd-value" data-i18n="cd_resp_val">Within 48 business hours</span></li>
+      </ul>
+    </div>
+    <div class="contact-form reveal-right">
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="form_fname">First Name</label>
+            <input type="text" data-i18n-placeholder="form_fname_ph" placeholder="Alexander" />
+          </div>
+          <div class="form-group">
+            <label data-i18n="form_lname">Last Name</label>
+            <input type="text" data-i18n-placeholder="form_lname_ph" placeholder="Morrison" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_company">Company</label>
+          <input type="text" placeholder="Acme Corporation" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_email">Email</label>
+          <input type="email" placeholder="you@company.com" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_type">Inquiry Type</label>
+          <select>
+            <option value="" data-i18n="form_select">Select one</option>
+            <option data-i18n="form_opt1">Strategic Advisory</option>
+            <option data-i18n="form_opt2">Keynote / Speaking</option>
+            <option data-i18n="form_opt3">SEBUKI Mastermind Program</option>
+            <option data-i18n="form_opt4">Corporate Workshop</option>
+            <option data-i18n="form_opt5">Media / Press</option>
+            <option data-i18n="form_opt6">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_msg">Tell us about your project</label>
+          <textarea data-i18n-placeholder="form_msg_ph" placeholder="Briefly describe your company, the challenge you're facing, and the outcome you're hoping for..."></textarea>
+        </div>
+        <button type="submit" class="form-submit" data-i18n="form_submit">Send Inquiry →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">SEBUKI</div>
+      <p data-i18n="footer_brand">The official platform of Sebastian Vivares — AI strategist, author, and advisor to the world's most ambitious organizations.</p>
+    </div>
+    <div class="footer-links">
+      <h4 data-i18n="footer_nav">Navigate</h4>
+      <ul>
+        <li><a href="#about" data-i18n="nav_about">About</a></li>
+        <li><a href="#expertise" data-i18n="nav_expertise">Expertise</a></li>
+        <li><a href="#clients" data-i18n="nav_clients">Clients</a></li>
+        <li><a href="#results" data-i18n="results_label">Results</a></li>
+        <li><a href="#press" data-i18n="nav_press">Press</a></li>
+        <li><a href="#speaking" data-i18n="nav_speaking">Speaking</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4 data-i18n="footer_connect">Connect</h4>
+      <ul>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#" data-i18n="footer_nl">Newsletter</a></li>
+        <li><a href="#" data-i18n="footer_pod">Podcast</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-links" style="margin-bottom:24px"><h4 data-i18n="footer_social">Social</h4></div>
+      <div class="footer-social">
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">IG</a>
+        <a href="#" class="social-link">YT</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-i18n="footer_copy">© 2026 SEBUKI — Sebastian Vivares. All rights reserved.</p>
+    <p data-i18n="footer_legal">Privacy Policy &nbsp;·&nbsp; Terms of Use &nbsp;·&nbsp; Cookie Policy</p>
+  </div>
+</footer>
+
+<script>
+  // ══════════════════════════════════════════
+  // TRANSLATIONS
+  // ══════════════════════════════════════════
+  const T = {
+    en: {
+      nav_about: 'About', nav_expertise: 'Expertise', nav_clients: 'Clients',
+      nav_press: 'Press', nav_speaking: 'Speaking', nav_contact: 'Contact',
+      nav_book: 'Book Sebastian',
+      hero_eyebrow: 'AI Strategist\u00a0·\u00a0Keynote Speaker\u00a0·\u00a0Executive Advisor',
+      hero_title: "Architecting the artificial intelligence future of the world's most powerful companies",
+      hero_scroll: 'Scroll to explore', hero_badge: 'Years of Excellence',
+      stat1: 'Enterprises Transformed', stat2: 'Fortune 500 Clients',
+      stat3: 'Revenue Unlocked for Clients', stat4: 'Global Speaking Engagements',
+      about_label: 'Who is Sebastian', about_h2a: 'The Man', about_h2b: 'Rewriting', about_h2c: 'the Rules',
+      about_p1: 'Sebastian Vivares is not a consultant. He is an <strong>AI architect</strong> — a rare mind who operates at the intersection of deep technical mastery and executive-level strategy. Born in Buenos Aires, Argentina and educated across three continents, Sebastian has spent over a decade dismantling the gap between what technology can do and what business leaders dare to imagine.',
+      about_p2: 'His proprietary <strong>VIVARES Framework™</strong> — a first-principles methodology for enterprise AI integration — has been adopted by organizations on five continents. It is not a theory. It is a battle-tested operating system for the AI era, refined across 320+ deployments ranging from Fortune 500 boardrooms to sovereign wealth funds.',
+      about_quote: '"Most people see AI as a tool. Sebastian sees it as a new civilization layer — and he\'s helping the world\'s most powerful companies build on top of it."',
+      about_p3: 'When he is not advising C-suites, Sebastian writes, invests, and trains the next generation of AI-native leaders through his exclusive <strong>SEBUKI Mastermind</strong> program — a six-month intensive that has produced over 400 certified AI strategists.',
+      about_tag: 'AI Architect & Advisor', about_awards_title: 'Recognition',
+      award1: 'Forbes 30 Under 30 — Tech & AI', award2: 'TIME 100 Next Innovators',
+      award3: 'MIT Tech Review Innovator', award4: 'WEF Young Global Leader', award5: 'Harvard AI Fellow, 2023',
+      exp_label: 'Areas of Mastery', exp_h2a: 'Where Sebastian', exp_h2b: 'Operates',
+      exp_intro: 'From boardroom to build, Sebastian covers the complete spectrum of enterprise AI — strategic vision, technical architecture, organizational change, and measurable outcomes.',
+      exp1_h: 'AI Prompt Engineering & Architecture', exp1_p: "Sebastian pioneered enterprise-grade prompt engineering as a discipline. His systems extract precision, consistency, and commercial value from frontier models — at scale, across every department.",
+      exp2_h: 'Enterprise AI Transformation', exp2_p: 'End-to-end transformation engagements. Sebastian embeds with executive teams, maps capability gaps, builds the AI roadmap, and drives the human change required to sustain it.',
+      exp3_h: 'AI Strategy & Roadmapping', exp3_p: 'Multi-year AI strategy grounded in competitive reality. Sebastian identifies where AI will compress your margins and where it will explode your growth — before your rivals do.',
+      exp4_h: 'Board & C-Suite Advisory', exp4_p: 'A trusted voice in the room where the most consequential AI decisions are made. Sebastian provides board-level perspective without board-level ambiguity.',
+      exp5_h: 'AI-Native Product Development', exp5_p: "Helping companies build AI-first products that don't feel bolted on — but feel inevitable. From ideation to launch, Sebastian shapes the product thinking that competitors struggle to replicate.",
+      exp6_h: 'Keynote Speaking & Education', exp6_p: 'Electrifying keynotes for global stages — Davos, Web Summit, TED-style venues, and corporate summits. Sebastian makes AI intelligible, urgent, and actionable for every audience.',
+      exp_more: 'Learn more',
+      clients_label: 'Trusted By', clients_h2a: "The World's", clients_h2b: 'Largest Companies',
+      clients_p: 'From Silicon Valley to the Gulf, from Wall Street to Tokyo — Sebastian has been called upon by the organizations that shape the global economy.',
+      results_label: 'Proven Impact', results_h2a: 'Results That', results_h2b: 'Speak', case_study: 'Case Study',
+      result1_h: 'Revenue Expansion — Global Bank', result1_p: "Deployed an AI-driven client intelligence layer across a Tier 1 investment bank's private wealth division. Within 18 months, relationship managers doubled AUM growth using Sebastian's proprietary prompt systems and decision-support architecture.",
+      result2_h: 'Cost Reduction — Logistics Giant', result2_p: 'Redesigned back-office operations for a Fortune 50 logistics company using agentic AI workflows. Eliminated 14 redundant processes, cut operational costs by 68%, and freed 2,400 employees to focus on high-value work.',
+      result3_h: 'Output Velocity — Media Conglomerate', result3_p: 'Built a bespoke AI content architecture for a global media group. Content production velocity increased 9× while brand consistency improved significantly — measured across 22 languages and 140 markets.',
+      result4_h: 'Risk Averted — Pharma Leader', result4_p: "Identified and neutralized a critical AI governance vulnerability in a top-10 pharmaceutical company's drug-discovery pipeline — preventing regulatory exposure estimated at $400M+ in potential liability.",
+      press_label: 'In the Media', press_h2a: 'The World Is', press_h2b: 'Listening',
+      press1_q: '"Vivares may be the single most influential voice shaping how corporate America thinks about artificial intelligence. His clarity is almost unsettling."', press1_m: 'Forbes AI 50 Feature — March 2025',
+      press2_q: '"The VIVARES Framework™ is what happens when a decade of real enterprise deployments collides with genuine intellectual rigor. Boards should read this."', press2_m: 'HBR Digital — January 2025',
+      press3_q: '"In a space crowded with charlatans and snake oil, Vivares stands apart — a practitioner who has earned the right to speak with authority."', press3_m: 'FT Future of Business — November 2024',
+      press4_q: '"His approach to prompt engineering as a governance discipline is genuinely novel. Sebastian is solving problems that most AI labs haven\'t even named yet."', press4_m: 'MIT Tech Review — September 2024',
+      press5_q: '"When CEOs want to understand what AI means for their P&L next quarter — not in five years — they call Sebastian Vivares."', press5_m: 'Bloomberg Markets — July 2024',
+      press6_q: '"Vivares doesn\'t sell AI optimism. He sells AI outcomes. That difference is everything — and it\'s why his client list reads like a who\'s who of global power."', press6_m: 'WIRED Business — May 2024',
+      speaking_label: 'On the Global Stage', speaking_h2a: 'Speaking', speaking_h2b: 'Engagements',
+      sp1_title: 'The Intelligence Dividend: What AI Really Means for Capitalism',
+      sp2_title: 'Prompting at Scale: Enterprise AI That Actually Works',
+      sp3_title: "The Board's Guide to AI Governance",
+      sp4_title: 'Why Most AI Transformations Fail (and How to Be Different)',
+      sp5_title: 'Rewriting the Operating Model: AI From the Inside Out',
+      sp6_title: 'Ideas That Move: The Human Case for Artificial Intelligence',
+      sp_keynote: 'Keynote', sp_fireside: 'Fireside', sp_workshop: 'Workshop',
+      testi_label: 'From the People Who Know', testi_h2a: 'What Leaders', testi_h2b: 'Say',
+      testi1_text: '"Sebastian didn\'t just advise us — he fundamentally changed how our executive team thinks about competitive advantage. Two years after our engagement, his fingerprints are still on every major AI decision we make."',
+      testi1_role: 'CEO — Caldwell Capital Group',
+      testi2_text: '"We hired Sebastian for three months. By month two we had extended to a year-long partnership. There is no one in the world who can take a boardroom from fear to conviction on AI the way he can."',
+      testi2_role: 'Group Chief Digital Officer — Maison Global',
+      testi3_text: '"His VIVARES Framework™ is the most practical AI transformation methodology I\'ve encountered in 25 years of enterprise consulting. It\'s rigorous, human-centered, and it works."',
+      testi3_role: 'Managing Director — Pacific Ventures AI',
+      testi4_text: '"I\'ve seen a hundred AI consultants. Sebastian is the first who spoke to our engineers, our lawyers, our marketers, and our board — and made all four groups feel like he was speaking directly to them."',
+      testi4_role: 'SVP Strategy — Zenith Financial Services',
+      cta_h2a: 'Ready to Build', cta_h2b: 'Your AI Future?',
+      cta_p: 'Sebastian accepts a limited number of strategic advisory engagements per year. Enquiries are reviewed personally and confidentially.',
+      cta_btn1: 'Begin the Conversation', cta_btn2: 'Book a Keynote',
+      contact_label: 'Get in Touch', contact_h2a: "Let's Build", contact_h2b: 'Something', contact_h2c: 'Extraordinary',
+      contact_p: "Sebastian's team responds to all serious inquiries within 48 hours. Whether you are exploring a long-term advisory relationship, a keynote engagement, or a corporate workshop — the conversation starts here.",
+      cd_email: 'Email', cd_hq: 'HQ', cd_avail: 'Availability', cd_avail_val: 'Q3 2026 onwards — limited slots',
+      cd_resp: 'Response', cd_resp_val: 'Within 48 business hours',
+      form_fname: 'First Name', form_fname_ph: 'Alexander', form_lname: 'Last Name', form_lname_ph: 'Morrison',
+      form_company: 'Company', form_email: 'Email', form_type: 'Inquiry Type', form_select: 'Select one',
+      form_opt1: 'Strategic Advisory', form_opt2: 'Keynote / Speaking', form_opt3: 'SEBUKI Mastermind Program',
+      form_opt4: 'Corporate Workshop', form_opt5: 'Media / Press', form_opt6: 'Other',
+      form_msg: 'Tell us about your project', form_msg_ph: "Briefly describe your company, the challenge you're facing, and the outcome you're hoping for...",
+      form_submit: 'Send Inquiry →', form_sent: 'Message Received ✓',
+      footer_brand: 'The official platform of Sebastian Vivares — AI strategist, author, and advisor to the world\'s most ambitious organizations.',
+      footer_nav: 'Navigate', footer_connect: 'Connect', footer_social: 'Social',
+      footer_nl: 'Newsletter', footer_pod: 'Podcast',
+      footer_copy: '© 2026 SEBUKI — Sebastian Vivares. All rights reserved.',
+      footer_legal: 'Privacy Policy · Terms of Use · Cookie Policy',
+    },
+    es: {
+      nav_about: 'Sobre Él', nav_expertise: 'Especialidad', nav_clients: 'Clientes',
+      nav_press: 'Prensa', nav_speaking: 'Conferencias', nav_contact: 'Contacto',
+      nav_book: 'Reservar a Sebastián',
+      hero_eyebrow: 'Estratega en IA\u00a0·\u00a0Conferencista Global\u00a0·\u00a0Asesor Ejecutivo',
+      hero_title: 'Arquitectando el futuro de la inteligencia artificial en las empresas más poderosas del mundo',
+      hero_scroll: 'Desplazarse para explorar', hero_badge: 'Años de Excelencia',
+      stat1: 'Empresas Transformadas', stat2: 'Clientes Fortune 500',
+      stat3: 'Ingresos Generados para Clientes', stat4: 'Conferencias Globales',
+      about_label: 'Quién es Sebastián', about_h2a: 'El Hombre que', about_h2b: 'Reescribe', about_h2c: 'las Reglas',
+      about_p1: 'Sebastián Vivares no es un consultor. Es un <strong>arquitecto de IA</strong> — una mente singular que opera en la intersección del dominio técnico profundo y la estrategia ejecutiva. Nacido en Buenos Aires, Argentina, y educado en tres continentes, Sebastián ha pasado más de una década eliminando la brecha entre lo que la tecnología puede hacer y lo que los líderes empresariales se atreven a imaginar.',
+      about_p2: 'Su metodología propietaria, el <strong>VIVARES Framework™</strong> — un sistema de primera base para la integración de IA en empresas — ha sido adoptado por organizaciones en cinco continentes. No es una teoría. Es un sistema operativo probado en batalla para la era de la IA, refinado en más de 320 despliegues que abarcan desde salas de juntas de Fortune 500 hasta fondos de riqueza soberana.',
+      about_quote: '"La mayoría ve la IA como una herramienta. Sebastián la ve como una nueva capa civilizatoria — y está ayudando a las empresas más poderosas del mundo a construir sobre ella."',
+      about_p3: 'Cuando no está asesorando a comités ejecutivos, Sebastián escribe, invierte y forma a la próxima generación de líderes nativos en IA a través de su exclusivo programa <strong>SEBUKI Mastermind</strong> — una intensiva de seis meses que ha formado a más de 400 estrategas certificados en IA.',
+      about_tag: 'Arquitecto y Asesor de IA', about_awards_title: 'Reconocimientos',
+      award1: 'Forbes 30 Menores de 30 — Tecnología e IA', award2: 'TIME 100 Próximos Innovadores',
+      award3: 'Innovador MIT Tech Review', award4: 'Líder Global Joven del WEF', award5: 'Harvard AI Fellow, 2023',
+      exp_label: 'Áreas de Maestría', exp_h2a: 'Donde Sebastián', exp_h2b: 'Opera',
+      exp_intro: 'Desde el directorio hasta la implementación, Sebastián cubre el espectro completo de la IA empresarial — visión estratégica, arquitectura técnica, cambio organizacional y resultados medibles.',
+      exp1_h: 'Ingeniería de Prompts de IA y Arquitectura', exp1_p: 'Sebastián fue pionero en la ingeniería de prompts a nivel empresarial como disciplina. Sus sistemas extraen precisión, consistencia y valor comercial de los modelos de frontera — a escala, en cada departamento.',
+      exp2_h: 'Transformación Empresarial con IA', exp2_p: 'Compromisos de transformación de extremo a extremo. Sebastián se integra con equipos ejecutivos, mapea brechas de capacidades, construye la hoja de ruta de IA e impulsa el cambio humano necesario para sostenerla.',
+      exp3_h: 'Estrategia de IA y Planificación', exp3_p: 'Estrategia de IA a varios años basada en la realidad competitiva. Sebastián identifica dónde la IA comprimirá sus márgenes y dónde hará explotar su crecimiento — antes que sus rivales.',
+      exp4_h: 'Asesoría a Directorio y Alta Dirección', exp4_p: 'Una voz de confianza en la sala donde se toman las decisiones de IA más trascendentales. Sebastián aporta perspectiva a nivel de directorio sin la ambigüedad típica.',
+      exp5_h: 'Desarrollo de Productos Nativos de IA', exp5_p: 'Ayuda a las empresas a construir productos que ponen la IA al centro — no como complemento, sino como fundamento inevitable. Desde la ideación hasta el lanzamiento.',
+      exp6_h: 'Conferencias Magistrales y Educación', exp6_p: 'Ponencias electrizantes para escenarios globales — Davos, Web Summit, eventos estilo TED y cumbres corporativas. Sebastián hace que la IA sea inteligible, urgente y accionable para cualquier audiencia.',
+      exp_more: 'Saber más',
+      clients_label: 'Confían en Él', clients_h2a: 'Las Empresas', clients_h2b: 'Más Grandes del Mundo',
+      clients_p: 'Desde Silicon Valley hasta el Golfo Pérsico, desde Wall Street hasta Tokio — Sebastián ha sido convocado por las organizaciones que dan forma a la economía global.',
+      results_label: 'Impacto Comprobado', results_h2a: 'Resultados que', results_h2b: 'Hablan', case_study: 'Caso de Estudio',
+      result1_h: 'Expansión de Ingresos — Banco Global', result1_p: 'Se desplegó una capa de inteligencia de clientes basada en IA en la división de banca privada de un banco de inversión Tier 1. En 18 meses, los gestores de relaciones duplicaron el crecimiento de AUM usando los sistemas de prompts propietarios de Sebastián.',
+      result2_h: 'Reducción de Costos — Gigante Logístico', result2_p: 'Se rediseñaron las operaciones de back-office de una empresa Fortune 50 de logística usando flujos de trabajo de IA agéntica. Se eliminaron 14 procesos redundantes, se redujeron los costos operativos en un 68% y se liberaron 2.400 empleados.',
+      result3_h: 'Velocidad de Producción — Conglomerado de Medios', result3_p: 'Se construyó una arquitectura de contenido de IA personalizada para un grupo mediático global. La velocidad de producción aumentó 9× mientras la consistencia de marca mejoró significativamente en 22 idiomas y 140 mercados.',
+      result4_h: 'Riesgo Neutralizado — Líder Farmacéutico', result4_p: 'Se identificó y neutralizó una vulnerabilidad crítica de gobernanza de IA en el pipeline de descubrimiento de fármacos de una empresa farmacéutica top 10 — previniendo una exposición regulatoria estimada en más de $400M.',
+      press_label: 'En los Medios', press_h2a: 'El Mundo Está', press_h2b: 'Escuchando',
+      press1_q: '"Vivares puede ser la voz más influyente que está dando forma a cómo la América corporativa piensa sobre la inteligencia artificial. Su claridad es casi perturbadora."', press1_m: 'Forbes AI 50 — Marzo 2025',
+      press2_q: '"El VIVARES Framework™ es lo que ocurre cuando una década de despliegues reales en empresas choca con un rigor intelectual genuino. Los directorios deberían leer esto."', press2_m: 'HBR Digital — Enero 2025',
+      press3_q: '"En un espacio lleno de charlatanes, Vivares se destaca — un practicante que se ha ganado el derecho a hablar con autoridad."', press3_m: 'FT Future of Business — Noviembre 2024',
+      press4_q: '"Su enfoque de la ingeniería de prompts como disciplina de gobernanza es genuinamente novedoso. Sebastián está resolviendo problemas que la mayoría de los laboratorios de IA aún no han nombrado."', press4_m: 'MIT Tech Review — Septiembre 2024',
+      press5_q: '"Cuando los CEOs quieren entender qué significa la IA para su P&L el próximo trimestre — no en cinco años — llaman a Sebastián Vivares."', press5_m: 'Bloomberg Markets — Julio 2024',
+      press6_q: '"Vivares no vende optimismo de IA. Vende resultados de IA. Esa diferencia lo es todo — y es por eso que su lista de clientes parece un quién es quién del poder global."', press6_m: 'WIRED Business — Mayo 2024',
+      speaking_label: 'En el Escenario Global', speaking_h2a: 'Conferencias', speaking_h2b: 'y Presentaciones',
+      sp1_title: 'El Dividendo de la Inteligencia: Lo Que la IA Realmente Significa para el Capitalismo',
+      sp2_title: 'Prompting a Escala: IA Empresarial que Realmente Funciona',
+      sp3_title: 'La Guía del Directorio para la Gobernanza de IA',
+      sp4_title: 'Por Qué la Mayoría de las Transformaciones de IA Fracasan (y Cómo Ser Diferente)',
+      sp5_title: 'Reescribiendo el Modelo Operativo: IA Desde Adentro Hacia Afuera',
+      sp6_title: 'Ideas que Mueven: El Caso Humano de la Inteligencia Artificial',
+      sp_keynote: 'Conferencia', sp_fireside: 'Conversación', sp_workshop: 'Taller',
+      testi_label: 'De Quienes lo Conocen', testi_h2a: 'Lo Que Dicen', testi_h2b: 'los Líderes',
+      testi1_text: '"Sebastián no solo nos asesoró — transformó fundamentalmente la manera en que nuestro equipo ejecutivo piensa sobre la ventaja competitiva. Dos años después, su huella sigue presente en cada decisión importante de IA que tomamos."',
+      testi1_role: 'CEO — Caldwell Capital Group',
+      testi2_text: '"Lo contratamos por tres meses. Al segundo mes ya habíamos extendido a un año de colaboración. No hay nadie en el mundo que pueda llevar a un directorio del miedo a la convicción en IA como él lo hace."',
+      testi2_role: 'Director Digital del Grupo — Maison Global',
+      testi3_text: '"El VIVARES Framework™ es la metodología de transformación de IA más práctica que he visto en 25 años de consultoría empresarial. Es rigurosa, centrada en las personas, y funciona."',
+      testi3_role: 'Director Gerente — Pacific Ventures AI',
+      testi4_text: '"He visto a cien consultores de IA. Sebastián es el primero que habló con nuestros ingenieros, abogados, marketeros y directorio — y logró que los cuatro grupos sintieran que les hablaba directamente a ellos."',
+      testi4_role: 'SVP de Estrategia — Zenith Financial Services',
+      cta_h2a: '¿Listo para Construir', cta_h2b: 'tu Futuro con IA?',
+      cta_p: 'Sebastián acepta un número limitado de compromisos de asesoría estratégica por año. Las consultas son revisadas personal y confidencialmente.',
+      cta_btn1: 'Iniciar la Conversación', cta_btn2: 'Reservar una Conferencia',
+      contact_label: 'Ponerse en Contacto', contact_h2a: 'Construyamos', contact_h2b: 'Algo', contact_h2c: 'Extraordinario',
+      contact_p: 'El equipo de Sebastián responde a todas las consultas serias en 48 horas. Ya sea que estés explorando una relación de asesoría a largo plazo, una conferencia o un taller corporativo — la conversación comienza aquí.',
+      cd_email: 'Email', cd_hq: 'Sede', cd_avail: 'Disponibilidad', cd_avail_val: 'Desde Q3 2026 — plazas limitadas',
+      cd_resp: 'Respuesta', cd_resp_val: 'Dentro de 48 horas hábiles',
+      form_fname: 'Nombre', form_fname_ph: 'Alejandro', form_lname: 'Apellido', form_lname_ph: 'Rodríguez',
+      form_company: 'Empresa', form_email: 'Correo Electrónico', form_type: 'Tipo de Consulta', form_select: 'Seleccionar',
+      form_opt1: 'Asesoría Estratégica', form_opt2: 'Conferencia / Presentación', form_opt3: 'Programa SEBUKI Mastermind',
+      form_opt4: 'Taller Corporativo', form_opt5: 'Medios / Prensa', form_opt6: 'Otro',
+      form_msg: 'Cuéntanos sobre tu proyecto', form_msg_ph: 'Describe brevemente tu empresa, el desafío que enfrentas y el resultado que esperas...',
+      form_submit: 'Enviar Consulta →', form_sent: 'Mensaje Recibido ✓',
+      footer_brand: 'La plataforma oficial de Sebastián Vivares — estratega de IA, autor y asesor de las organizaciones más ambiciosas del mundo.',
+      footer_nav: 'Navegar', footer_connect: 'Conectar', footer_social: 'Redes',
+      footer_nl: 'Newsletter', footer_pod: 'Podcast',
+      footer_copy: '© 2026 SEBUKI — Sebastián Vivares. Todos los derechos reservados.',
+      footer_legal: 'Política de Privacidad · Términos de Uso · Política de Cookies',
+    }
+  };
+
+  // ── Argentine Flag SVG
+  const flagArg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" style="display:block;width:100%;height:100%">
+    <rect width="900" height="600" fill="#74ACDF"/>
+    <rect y="200" width="900" height="200" fill="#fff"/>
+    <circle cx="450" cy="300" r="55" fill="#F6B40E"/>
+    <g fill="#85340A" transform="translate(450,300)">
+      <ellipse cx="0" cy="-42" rx="8" ry="14"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(30)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(150)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(210)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(300)"/>
+      <ellipse cx="0" cy="-42" rx="8" ry="14" transform="rotate(330)"/>
+    </g>
+    <circle cx="450" cy="300" r="28" fill="#F6B40E"/>
+    <circle cx="450" cy="300" r="22" fill="#85340A"/>
+    <circle cx="450" cy="300" r="16" fill="#F6B40E"/>
+  </svg>`;
+
+  const flagUK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" style="display:block;width:100%;height:100%">
+    <rect width="60" height="40" fill="#012169"/>
+    <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+    <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="4"/>
+    <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+    <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+  </svg>`;
+
+  // ══════════════════════════════════════════
+  // LANG SYSTEM
+  // ══════════════════════════════════════════
+  let lang = 'en';
+  const btn = document.getElementById('langToggle');
+  const labelEl = document.getElementById('langLabel');
+
+  function renderFlag(which) {
+    const wrap = document.createElement('div');
+    wrap.className = which === 'arg' ? 'flag-arg' : 'flag-en';
+    wrap.innerHTML = which === 'arg' ? flagArg : flagUK;
+    return wrap;
+  }
+
+  function setLang(l) {
+    lang = l;
+    const d = T[l];
+    // Update text content
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.dataset.i18n;
+      if (!d[k]) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = d[k];
+      } else {
+        el.innerHTML = d[k];
+      }
+    });
+    // Update placeholders via data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const k = el.dataset.i18nPlaceholder;
+      if (d[k]) el.placeholder = d[k];
+    });
+    // Update html lang
+    document.documentElement.lang = l === 'es' ? 'es' : 'en';
+    // Update title
+    document.title = l === 'es' ? 'SEBUKI — Sebastián Vivares' : 'SEBUKI — Sebastian Vivares';
+    // Update button
+    btn.innerHTML = '';
+    if (l === 'es') {
+      btn.appendChild(renderFlag('en'));
+      const span = document.createElement('span');
+      span.textContent = 'EN';
+      btn.appendChild(span);
+      btn.classList.add('active-es');
+      btn.title = 'Switch to English';
+    } else {
+      btn.appendChild(renderFlag('arg'));
+      const span = document.createElement('span');
+      span.textContent = 'ES';
+      btn.appendChild(span);
+      btn.classList.remove('active-es');
+      btn.title = 'Cambiar a Español';
+    }
+  }
+
+  btn.addEventListener('click', () => setLang(lang === 'en' ? 'es' : 'en'));
+  // Init button with Argentine flag (default = English, click for Spanish)
+  setLang('en');
+
+  // ══════════════════════════════════════════
+  // LOADER
+  // ══════════════════════════════════════════
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2400);
+  });
+
+  // ══════════════════════════════════════════
+  // CURSOR
+  // ══════════════════════════════════════════
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * .15; ry += (my - ry) * .15;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+  document.querySelectorAll('a, button, .exp-card, .result-item, .speaking-item').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='6px'; cursor.style.height='6px'; ring.style.width='56px'; ring.style.height='56px'; ring.style.borderColor='rgba(201,168,76,.8)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(201,168,76,.5)'; });
+  });
+
+  // ══════════════════════════════════════════
+  // NAV SCROLL
+  // ══════════════════════════════════════════
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80));
+
+  // ══════════════════════════════════════════
+  // PARTICLES
+  // ══════════════════════════════════════════
+  (function() {
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const pts = Array.from({length: 60}, () => ({
+      x: Math.random()*1600, y: Math.random()*900,
+      r: Math.random()*1.2+.3, vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+      a: Math.random()
+    }));
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize(); window.addEventListener('resize', resize);
+    (function draw() {
+      ctx.clearRect(0,0,W,H);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = `rgba(201,168,76,${p.a*.4})`; ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    })();
+  })();
+
+  // ══════════════════════════════════════════
+  // SCROLL REVEAL
+  // ══════════════════════════════════════════
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
+
+  // ══════════════════════════════════════════
+  // COUNTER ANIMATION
+  // ══════════════════════════════════════════
+  function fmtShort(n) {
+    if (n >= 1e9) return '$' + (n/1e9).toFixed(1) + 'B +';
+    if (n >= 1e6) return '$' + (n/1e6).toFixed(0) + 'M +';
+    return '$' + n;
+  }
+  const cObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.target, isShort = el.dataset.short === 'true';
+      const start = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - start) / 2000, 1);
+        const ease = 1 - Math.pow(1-p, 3);
+        const val = Math.round(ease * target);
+        el.textContent = isShort ? fmtShort(val) : val.toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = isShort ? fmtShort(target) : target.toLocaleString();
+      })(start);
+      cObs.unobserve(el);
+    });
+  }, { threshold: .5 });
+  document.querySelectorAll('.stat-num[data-target]').forEach(c => cObs.observe(c));
+
+  // ══════════════════════════════════════════
+  // FORM
+  // ══════════════════════════════════════════
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn2 = document.querySelector('.form-submit');
+    const sentMsg = T[lang].form_sent;
+    btn2.textContent = sentMsg;
+    btn2.style.background = 'var(--gold)';
+    btn2.style.color = '#000';
+    setTimeout(() => {
+      btn2.textContent = T[lang].form_submit;
+      btn2.style.background = 'transparent';
+      btn2.style.color = 'var(--gold)';
+    }, 4000);
+  });
+</script>
+</body>
+</html>
