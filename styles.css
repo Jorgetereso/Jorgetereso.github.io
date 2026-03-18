@@ -46,6 +46,20 @@ a { text-decoration: none; color: inherit; }
   animation-delay: 0.1s;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.header-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--fg3);
+}
+
 .header-label {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -62,6 +76,41 @@ a { text-decoration: none; color: inherit; }
   transition: color 0.2s;
 }
 .header-link:hover { color: var(--fg); }
+
+/* ── Top Activity Strip ──────────────────────────────── */
+.top-activity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem var(--gutter);
+  border-bottom: 1px solid var(--fg3);
+  opacity: 0;
+  animation: fade-in 0.5s ease forwards;
+  animation-delay: 0.15s;
+}
+
+.top-activity .activity-grid {
+  display: flex;
+  gap: 2px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  flex: 1;
+}
+
+.top-activity .activity-cell {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+.top-activity-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(170, 255, 71, 0.35);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
 /* ── Hero ────────────────────────────────────────────── */
 .hero {
@@ -85,10 +134,38 @@ a { text-decoration: none; color: inherit; }
   text-transform: uppercase;
 }
 
+.green-word {
+  color: var(--exp, #aaff47);
+}
+
+.hero-subtitle {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  color: rgba(240, 237, 230, 0.55);
+  display: block;
+  margin-top: 0.05rem;
+}
+
 .hero-brain {
   font-size: clamp(4rem, 12vw, 10rem);
   line-height: 1;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hero-brain-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg2);
 }
 
 /* ── Marquee ─────────────────────────────────────────── */
@@ -130,6 +207,14 @@ a { text-decoration: none; color: inherit; }
 /* ── Index Sections ──────────────────────────────────── */
 .index-section {
   border-bottom: 1px solid var(--fg3);
+  opacity: 0;
+  animation: fade-up 0.5s ease forwards;
+  animation-delay: 0.55s;
+}
+
+.index-section.experimental {
+  animation-delay: 0.75s;
+  margin-top: 3rem;
 }
 
 .section-header {
@@ -159,6 +244,16 @@ a { text-decoration: none; color: inherit; }
   font-size: 0.75rem;
   color: var(--fg2);
   letter-spacing: 0.05em;
+}
+
+/* ── Projects Section Color ──────────────────────────── */
+#projects .section-label {
+  color: #7eb8ff;
+}
+
+#projects .section-count {
+  color: #7eb8ff;
+  opacity: 0.6;
 }
 
 /* ── Experimental Section ────────────────────────────── */
@@ -197,6 +292,10 @@ a { text-decoration: none; color: inherit; }
   border-bottom: 1px solid var(--exp-border);
 }
 
+.index-section.experimental .item-name {
+  color: rgba(170, 255, 71, 0.75);
+}
+
 .index-section.experimental .link-row:hover {
   background: var(--exp-dim);
 }
@@ -212,6 +311,154 @@ a { text-decoration: none; color: inherit; }
 .index-section.experimental .item-num {
   color: rgba(170, 255, 71, 0.35);
 }
+
+.index-section.experimental .item-desc {
+  color: rgba(170, 255, 71, 0.25);
+}
+
+/* ── Fun Stats Section ──────────────────────────────── */
+.fun-stats {
+  padding: 4rem var(--gutter) 3rem;
+  border-bottom: 1px solid var(--fg3);
+  opacity: 0;
+  animation: fade-up 0.5s ease forwards;
+  animation-delay: 0.9s;
+}
+
+.fun-stats-title {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  margin-bottom: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--fg3);
+  border: 1px solid var(--fg3);
+}
+
+.stat-card {
+  background: var(--bg);
+  padding: 1.8rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-value {
+  font-family: "Anton", sans-serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+
+.stat-value.green { color: var(--exp); }
+.stat-value.blue  { color: #7eb8ff; }
+.stat-value.pink  { color: #ff6b9d; }
+.stat-value.amber { color: #ffc857; }
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--fg2);
+  letter-spacing: 0.06em;
+}
+
+/* bar chart */
+.bar-chart {
+  margin-top: 2.5rem;
+}
+
+.bar-chart-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  margin-bottom: 1rem;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.bar-label {
+  font-size: 0.72rem;
+  color: var(--fg2);
+  width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 18px;
+  background: rgba(240, 237, 230, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: bar-grow 1.2s ease forwards;
+  animation-delay: 1.1s;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@keyframes bar-grow {
+  to { transform: scaleX(1); }
+}
+
+.bar-pct {
+  font-family: "Anton", sans-serif;
+  font-size: 0.7rem;
+  color: var(--fg2);
+  width: 2.5rem;
+  flex-shrink: 0;
+}
+
+/* activity grid */
+.activity-section {
+  margin-top: 2.5rem;
+}
+
+.activity-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  margin-bottom: 1rem;
+}
+
+.activity-grid {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  max-width: 520px;
+}
+
+.activity-cell {
+  width: 12px;
+  height: 12px;
+  background: rgba(240, 237, 230, 0.04);
+  transition: background 0.15s;
+}
+
+.activity-cell.l1 { background: rgba(170, 255, 71, 0.15); }
+.activity-cell.l2 { background: rgba(170, 255, 71, 0.3); }
+.activity-cell.l3 { background: rgba(170, 255, 71, 0.5); }
+.activity-cell.l4 { background: rgba(170, 255, 71, 0.8); }
 
 /* ── Link List ───────────────────────────────────────── */
 .link-list { list-style: none; }

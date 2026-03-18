@@ -12,15 +12,26 @@
 <body>
 
   <header class="site-header">
-    <span class="header-label">Jorge Tereso</span>
+    <div class="header-left">
+      <img class="header-avatar" src="https://github.com/Jorgetereso.png" alt="George" />
+      <span class="header-label">Jorge Tereso</span>
+    </div>
     <a href="https://github.com/Jorgetereso" target="_blank" rel="noopener" class="header-link">GitHub ↗</a>
   </header>
 
   <main>
 
+    <div class="top-activity">
+      <div class="activity-grid" id="activity-grid-top"></div>
+      <span class="top-activity-label">Brain activity (last 90 days)</span>
+    </div>
+
     <section class="hero">
-      <h1 class="hero-title">BUILDING<br>THINGS ON<br>THE INTERNET.</h1>
-      <div class="hero-brain" aria-hidden="true">🧠</div>
+      <h1 class="hero-title">BUILDING<br>THINGS ON<br>THE <span class="green-word">INTERNETS.</span><br><span class="hero-subtitle">(with the help of universal intelligence)</span></h1>
+      <div class="hero-brain">
+        <span>🧠</span>
+        <span class="hero-brain-label">George's brain</span>
+      </div>
     </section>
 
     <div class="marquee-wrap">
@@ -112,12 +123,79 @@
       </ul>
     </section>
 
+    <section class="fun-stats">
+      <div class="fun-stats-title">Probably Accurate Stats</div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-value green">847</span>
+          <span class="stat-label">Lines of code written today</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value blue">3.2k</span>
+          <span class="stat-label">Cups of coffee (this year)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value pink">99.7%</span>
+          <span class="stat-label">Chance the code works first try (lie)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value amber">∞</span>
+          <span class="stat-label">Tabs currently open</span>
+        </div>
+      </div>
+
+      <div class="bar-chart">
+        <div class="bar-chart-title">Time allocation (very real data)</div>
+        <div class="bar-row">
+          <span class="bar-label">Coding</span>
+          <div class="bar-track"><div class="bar-fill" style="width:78%;background:#7eb8ff;"></div></div>
+          <span class="bar-pct">78%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Debugging</span>
+          <div class="bar-track"><div class="bar-fill" style="width:65%;background:var(--exp);"></div></div>
+          <span class="bar-pct">65%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Googling</span>
+          <div class="bar-track"><div class="bar-fill" style="width:52%;background:#ff6b9d;"></div></div>
+          <span class="bar-pct">52%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Overthinking</span>
+          <div class="bar-track"><div class="bar-fill" style="width:91%;background:#ffc857;"></div></div>
+          <span class="bar-pct">91%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Snacking</span>
+          <div class="bar-track"><div class="bar-fill" style="width:43%;background:var(--fg2);"></div></div>
+          <span class="bar-pct">43%</span>
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <footer class="site-footer">
     <span>© 2026 Jorge Tereso</span>
     <span>Building things on the internet.</span>
   </footer>
+
+  <script>
+    // Generate random activity grid
+    const grid = document.getElementById('activity-grid-top');
+    const levels = ['', 'l1', 'l2', 'l3', 'l4'];
+    for (let i = 0; i < 90; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'activity-cell';
+      // weighted random: more empty and low, fewer high
+      const r = Math.random();
+      if (r > 0.35) cell.classList.add(levels[1 + Math.floor(Math.random() * 4)]);
+      grid.appendChild(cell);
+    }
+  </script>
 
 </body>
 </html>
