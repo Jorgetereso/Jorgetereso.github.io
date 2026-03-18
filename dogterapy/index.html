@@ -4,22 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DogTerapy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0b0906;
-      --bg2:      #110e0a;
-      --border:   rgba(201,169,110,0.12);
-      --border-h: rgba(201,169,110,0.35);
-      --gold:     #c9a96e;
-      --gold-dim: rgba(201,169,110,0.4);
-      --text:     #ede5d8;
-      --text-dim: rgba(237,229,216,0.4);
-      --text-mid: rgba(237,229,216,0.65);
-      --warm:     #f5ede0;
-      --glow:     rgba(201,169,110,0.07);
+      --bg:        #080808;
+      --surface:   #111111;
+      --surface-2: #161616;
+      --border:    #222222;
+      --border-hi: #2e2e2e;
+      --gold:      #c9a96e;
+      --gold-dim:  #6e5228;
+      --gold-soft: rgba(201,169,110,0.12);
+      --text:      #e2d9cc;
+      --text-mid:  #998f84;
+      --text-dim:  #4a453f;
+      --warm:      #f5ede0;
     }
 
     html { scroll-behavior: smooth; }
@@ -33,374 +34,538 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 52px 24px 100px;
+      padding: 0 24px 100px;
       line-height: 1.7;
-      /* warm ambient glow from center */
-      background-image:
-        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,169,110,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 60% at 50% 100%, rgba(120,80,30,0.04) 0%, transparent 60%);
+      /* subtle noise texture via svg */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
     }
 
-    /* ── BACK ── */
-    .back-link {
-      position: fixed;
-      top: 22px;
-      left: 24px;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      color: var(--text-dim);
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .back-link:hover { color: var(--gold); }
-
-    /* ── HEADER ── */
-    header {
-      text-align: center;
-      margin-bottom: 56px;
-      animation: fade-in 1s ease both;
+    /* ── NAV ── */
+    nav {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0 0;
+      margin-bottom: 72px;
     }
 
-    .wordmark {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-bottom: 14px;
-    }
-
-    header h1 {
+    .nav-logo {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: clamp(2.8rem, 6vw, 4.4rem);
-      color: var(--warm);
-      letter-spacing: 0.06em;
-      line-height: 1;
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
     }
 
-    .rule {
-      width: 1px;
-      height: 32px;
-      background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
-      margin: 22px auto;
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
     }
 
-    header p {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.1rem;
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
     }
 
-    /* ── DOG ── */
-    .dog-section {
+    .nav-links a:hover { color: var(--text-mid); }
+
+    /* ── HERO ── */
+    .hero {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 56px;
-      animation: fade-up 1s ease 0.2s both;
-    }
-
-    .dog-wrap {
+      text-align: center;
+      margin-bottom: 80px;
       position: relative;
-      display: inline-block;
     }
 
-    /* warm halo behind the dog */
-    .dog-wrap::before {
+    /* Circular dog portrait */
+    .portrait-ring {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin-bottom: 44px;
+    }
+
+    /* Outer rotating dashed ring */
+    .portrait-ring::before {
       content: '';
       position: absolute;
-      inset: -20px;
-      background: radial-gradient(ellipse at 50% 60%, rgba(201,169,110,0.12) 0%, transparent 70%);
+      inset: -14px;
       border-radius: 50%;
-      animation: halo-pulse 4s ease-in-out infinite;
+      border: 1px dashed var(--gold-dim);
+      animation: spin 40s linear infinite;
     }
 
-    @keyframes halo-pulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50%       { opacity: 1;   transform: scale(1.06); }
+    /* Static gold circle */
+    .portrait-ring::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
     }
 
-    img#dog {
-      display: block;
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .portrait-img {
       width: 240px;
-      height: auto;
-      position: relative;
-      z-index: 1;
+      height: 240px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(8%) brightness(0.88) contrast(1.05);
+      /* inner gold glow */
+      box-shadow:
+        0 0 0 6px #0d0d0d,
+        0 0 60px rgba(201,169,110,0.1),
+        inset 0 0 40px rgba(0,0,0,0.4);
     }
 
-    /* ── QUOTE ── */
-    .quote-wrap {
-      margin-top: 32px;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
+    /* Gold arc ornament top of ring */
+    .portrait-ornament {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 14px;
+    }
+
+    /* Credential badge */
+    .badge {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      border: 1px solid var(--border-hi);
+      padding: 5px 16px;
+      white-space: nowrap;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-radius: 2px;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 7vw, 5rem);
+      color: var(--warm);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    /* Animated quote */
+    .quote-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 480px;
+    }
+
+    .quote-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim));
+    }
+
+    .quote-line.right {
+      background: linear-gradient(to left, transparent, var(--gold-dim));
     }
 
     .quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 1.2rem;
-      color: var(--text-mid);
-      line-height: 1.6;
-      min-height: 3.5rem;
+      font-size: 1rem;
+      color: var(--text-dim);
+      transition: opacity 0.6s ease;
+      text-align: center;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      max-width: 580px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: opacity 0.6s ease;
+      gap: 20px;
+      margin-bottom: 36px;
     }
 
-    /* ── INPUT AREA ── */
-    .compose {
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-diamond {
+      width: 6px;
+      height: 6px;
+      border: 1px solid var(--gold-dim);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ── SESSION ── */
+    .session-wrap {
       width: 100%;
-      max-width: 560px;
-      animation: fade-up 1s ease 0.35s both;
+      max-width: 580px;
     }
 
-    .compose-inner {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      transition: border-color 0.4s, box-shadow 0.4s;
-      background: var(--bg2);
+    .session-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .compose-inner:focus-within {
-      border-color: var(--border-h);
-      box-shadow: 0 0 0 4px rgba(201,169,110,0.05), 0 8px 40px rgba(201,169,110,0.06);
+    .session-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Live indicator dot */
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: blink 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
     }
 
     textarea {
       width: 100%;
       min-height: 140px;
-      background: transparent;
-      border: none;
-      padding: 22px 24px 16px;
-      font-size: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 20px 22px;
+      font-size: 0.95rem;
       font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--warm);
+      font-weight: 400;
+      color: var(--text);
       resize: none;
       outline: none;
+      transition: border-color 0.3s, background 0.3s;
       letter-spacing: 0.01em;
-      line-height: 1.75;
+      line-height: 1.8;
+    }
+
+    textarea:focus {
+      border-color: var(--gold-dim);
+      background: #131313;
     }
 
     textarea::placeholder {
-      color: rgba(201,169,110,0.25);
+      color: var(--text-dim);
       font-style: italic;
     }
 
-    .compose-footer {
+    .controls {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px 14px 20px;
-      border-top: 1px solid var(--border);
-    }
-
-    .compose-hint {
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    .compose-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 1px;
     }
 
     /* MIC */
     .mic-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+      width: 64px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      background: transparent;
+      border-right: none;
+      border-radius: 0;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.25s, border-color 0.25s;
+      flex-shrink: 0;
+      padding: 14px 0;
+    }
+
+    .mic-btn:hover { background: var(--surface-2); border-color: var(--gold-dim); }
+
+    .mic-btn.listening {
+      background: var(--surface-2);
+      border-color: var(--gold-dim);
+    }
+
+    .mic-btn.listening .mic-ring {
+      animation: breathe 2s ease-in-out infinite;
+    }
+
+    .mic-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: border-color 0.25s, background 0.25s;
-      flex-shrink: 0;
+      transition: border-color 0.3s;
     }
-    .mic-btn:hover { border-color: var(--gold-dim); background: var(--glow); }
-    .mic-btn.listening {
-      border-color: var(--gold);
-      background: var(--glow);
-      animation: breathe 2s ease-in-out infinite;
-    }
+
+    .mic-btn:hover .mic-ring,
+    .mic-btn.listening .mic-ring { border-color: var(--gold); }
+
     @keyframes breathe {
-      0%, 100% { box-shadow: 0 0 0 0   rgba(201,169,110,0.25); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.4); }
       50%       { box-shadow: 0 0 0 8px rgba(201,169,110,0); }
     }
-    .mic-btn svg { pointer-events: none; }
+
+    .mic-label {
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
 
     /* SEND */
     .send-btn {
-      padding: 10px 22px;
-      background: transparent;
-      border: 1px solid var(--gold-dim);
-      border-radius: 4px;
-      color: var(--gold);
+      flex: 1;
+      padding: 18px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      color: var(--text-mid);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.18em;
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
       cursor: pointer;
-      text-transform: uppercase;
       transition: background 0.25s, border-color 0.25s, color 0.25s;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
     }
-    .send-btn:hover {
-      background: rgba(201,169,110,0.08);
-      border-color: var(--gold);
-      color: var(--warm);
-    }
-    .send-btn:active { transform: scale(0.97); }
 
-    /* ── THINKING ── */
-    .thinking {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 22px 24px;
-      opacity: 0;
-      transition: opacity 0.3s;
+    .send-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(201,169,110,0.06));
+      pointer-events: none;
     }
-    .thinking.visible { opacity: 1; }
-    .thinking span {
-      width: 5px;
-      height: 5px;
-      background: var(--gold-dim);
-      border-radius: 50%;
-      animation: dot-pulse 1.4s ease-in-out infinite;
-    }
-    .thinking span:nth-child(2) { animation-delay: 0.2s; }
-    .thinking span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes dot-pulse {
-      0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
-      40%           { transform: scale(1);   opacity: 1; }
+
+    .send-btn:hover {
+      background: var(--surface-2);
+      border-color: var(--gold-dim);
+      color: var(--gold);
     }
 
     /* ── LOG ── */
     .log {
       width: 100%;
-      max-width: 560px;
-      margin-top: 12px;
+      max-width: 580px;
+      margin-top: 2px;
       display: flex;
       flex-direction: column;
+      gap: 1px;
     }
 
     .log-entry {
       padding: 22px 24px;
       font-size: 0.97rem;
-      line-height: 1.8;
-      animation: entry-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-      border-bottom: 1px solid var(--border);
+      line-height: 1.85;
+      animation: fadeSlide 0.5s ease;
+      position: relative;
     }
 
-    @keyframes entry-in {
-      from { opacity: 0; transform: translateY(12px); }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: none; }
     }
 
     .log-entry.user {
+      background: #0e0e0e;
       color: var(--text-mid);
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
       font-size: 1.05rem;
+      padding-left: 44px;
+    }
+
+    .log-entry.user::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 28px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--border-hi);
     }
 
     .log-entry.dog {
+      background: var(--surface);
       color: var(--text);
-      background: linear-gradient(90deg, rgba(201,169,110,0.03) 0%, transparent 100%);
-      border-left: 1px solid var(--gold-dim);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 28px;
     }
 
-    .log-entry .who {
+    .who {
       font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.28em;
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .log-entry.user .who { color: var(--text-dim); }
-    .log-entry.dog  .who { color: var(--gold); }
+    .log-entry.dog  .who { color: var(--gold-dim); }
 
     /* ── FOOTER ── */
-    footer {
-      margin-top: 80px;
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(201,169,110,0.15);
-      text-align: center;
+    .footer-divider {
+      width: 100%;
+      max-width: 580px;
+      height: 1px;
+      background: var(--border);
+      margin: 64px 0 28px;
     }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    footer {
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: none; }
-    }
+
+    footer span { color: var(--border-hi); }
   </style>
 </head>
 <body>
 
-<a href="/" class="back-link">← Back</a>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">DogTerapy</a>
+  <ul class="nav-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">Method</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
 
-<header>
-  <div class="wordmark">Private Practice &nbsp;·&nbsp; Always Open</div>
-  <h1>DogTerapy</h1>
-  <div class="rule"></div>
-  <p>A quiet space. No judgment. Just presence.</p>
-</header>
+<!-- HERO -->
+<div class="hero">
 
-<div class="dog-section">
-  <div class="dog-wrap">
-    <img id="dog" src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fapp-uploads.krea.ai%2Fpublic%2Fae709f7c-3131-4d38-a5e7-6a9c0e95ab0c-image.png" alt="Your therapist" />
+  <div class="portrait-ring">
+    <!-- Gold arc ornament -->
+    <svg class="portrait-ornament" viewBox="0 0 32 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 13 C6 4, 26 4, 31 13" stroke="#6e5228" stroke-width="1" fill="none"/>
+      <circle cx="16" cy="2" r="2" fill="#6e5228"/>
+      <circle cx="1"  cy="13" r="1.5" fill="#6e5228"/>
+      <circle cx="31" cy="13" r="1.5" fill="#6e5228"/>
+    </svg>
+    <img class="portrait-img" id="dog"
+         src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fapp-uploads.krea.ai%2Fpublic%2Fae709f7c-3131-4d38-a5e7-6a9c0e95ab0c-image.png"
+         alt="Your therapist" />
+    <div class="badge">Licensed &middot; Private Practice</div>
   </div>
-  <div class="quote-wrap">
+
+  <h1 class="hero-title">Dog<em>Terapy</em></h1>
+  <p class="hero-sub">A quiet space. No judgment. Just presence.</p>
+
+  <div class="quote-row">
+    <div class="quote-line"></div>
     <p class="quote" id="quote">I'm here. Take your time.</p>
+    <div class="quote-line right"></div>
   </div>
+
 </div>
 
-<div class="compose">
-  <div class="compose-inner">
-    <textarea id="input" rows="5" placeholder="Start with whatever is on your mind right now…"></textarea>
-    <div class="compose-footer">
-      <span class="compose-hint" id="hint">⌘ + Enter to share</span>
-      <div class="compose-actions">
-        <button class="mic-btn" id="micBtn" title="Speak instead">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <rect x="9" y="2" width="6" height="11" rx="3" fill="currentColor" style="color:var(--gold)"/>
-            <path d="M5 10a7 7 0 0 0 14 0" stroke="var(--gold)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="17" x2="12" y2="21" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="8"  y1="21" x2="16" y2="21" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </button>
-        <button class="send-btn" id="sendBtn">Share</button>
+<!-- SESSION -->
+<div class="session-wrap">
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="session-label">
+    <div class="live-dot"></div>
+    Session open
+  </div>
+
+  <textarea id="input" placeholder="Say whatever comes to mind. This is your space."></textarea>
+
+  <div class="controls">
+    <button class="mic-btn" id="micBtn" title="Speak">
+      <div class="mic-ring">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <rect x="9" y="2" width="6" height="11" rx="3" fill="#c9a96e"/>
+          <path d="M5 10a7 7 0 0 0 14 0" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="12" y1="17" x2="12" y2="21" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8"  y1="21" x2="16" y2="21" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
       </div>
-    </div>
+      <span class="mic-label" id="micLabel">speak</span>
+    </button>
+    <button class="send-btn" id="sendBtn">Share</button>
   </div>
 
-  <div class="thinking" id="thinking">
-    <span></span><span></span><span></span>
-  </div>
 </div>
 
+<!-- LOG -->
 <div class="log" id="log"></div>
 
-<footer>All sessions are confidential &nbsp;·&nbsp; DogTerapy</footer>
+<!-- FOOTER -->
+<div class="footer-divider"></div>
+<footer>
+  All sessions are confidential
+  <span>&middot;</span>
+  DogTerapy Private Practice
+  <span>&middot;</span>
+  Est. Today
+</footer>
 
 <script>
   const responses = [
@@ -409,14 +574,14 @@
     "That's a meaningful thing to put into words. How long have you been holding that?",
     "There's no rush here. We can sit with that for a moment.",
     "It makes complete sense that you'd feel that way. Tell me more, if you'd like.",
-    "You came here today. That alone is not a small thing.",
-    "I'm holding what you just said carefully. You didn't need to share it — but I'm glad you did.",
+    "You came here today. That's not a small thing.",
+    "I'm writing this down. Not because I'll forget — but because it deserves to be held carefully.",
     "What would it feel like to let some of that go? Even just a little.",
     "You don't need to have the answers. That's what we're here to figure out, together.",
     "I hear you. And I want you to know — none of this is too much.",
     "Sometimes the hardest part is just admitting it's hard. You just did that.",
     "What would you say to someone you love who felt exactly this way?",
-    "That sounds exhausting. How long have you been carrying it on your own?",
+    "That sounds exhausting. How long have you been at it on your own?",
     "Let's stay there for a moment. Don't move past it too quickly.",
     "What do you need most right now — to be understood, or to find a way forward?",
     "You're being very honest with yourself. That takes courage.",
@@ -432,128 +597,95 @@
     "There's nothing you need to perform for me.",
     "This is a safe space. Completely.",
     "You don't have to have the right words.",
-    "Start anywhere. I'll follow.",
   ];
 
-  let respIdx = 0;
-  let quoteIdx = 0;
-  let quoteInterval;
-  const quoteEl  = document.getElementById('quote');
-  const thinkEl  = document.getElementById('thinking');
-  const log      = document.getElementById('log');
-  const input    = document.getElementById('input');
+  let respIdx = 0, quoteIdx = 0;
+  const quoteEl = document.getElementById('quote');
 
-  function cycleQuote() {
+  setInterval(() => {
     quoteEl.style.opacity = '0';
-    setTimeout(() => {
-      quoteIdx = (quoteIdx + 1) % idleQuotes.length;
-      quoteEl.textContent = idleQuotes[quoteIdx];
-      quoteEl.style.opacity = '1';
-    }, 600);
-  }
+    quoteIdx = (quoteIdx + 1) % idleQuotes.length;
+    setTimeout(() => { quoteEl.textContent = idleQuotes[quoteIdx]; quoteEl.style.opacity = '1'; }, 600);
+  }, 6000);
 
-  quoteInterval = setInterval(cycleQuote, 7000);
-
-  function setQuote(text) {
-    clearInterval(quoteInterval);
-    quoteEl.style.opacity = '0';
-    setTimeout(() => {
-      quoteEl.textContent = text.length > 90 ? text.slice(0, 88) + '…' : text;
-      quoteEl.style.opacity = '1';
-    }, 600);
-    // restart cycling after a while
-    setTimeout(() => { quoteInterval = setInterval(cycleQuote, 7000); }, 12000);
-  }
+  const log = document.getElementById('log');
 
   function addEntry(who, text) {
     const el = document.createElement('div');
     el.className = `log-entry ${who}`;
-    const label = who === 'user' ? 'You' : 'Your Therapist';
-    el.innerHTML = `<div class="who">${label}</div>${text}`;
-    // newest entries on top
+    el.innerHTML = `<div class="who">${who === 'user' ? 'You' : 'Your Therapist'}</div>${text}`;
     log.insertBefore(el, log.firstChild);
   }
 
   function handleSubmit() {
-    const text = input.value.trim();
+    const inp = document.getElementById('input');
+    const text = inp.value.trim();
     if (!text) return;
-
     addEntry('user', text);
-    input.value = '';
-    input.focus();
-
-    // show thinking
-    thinkEl.classList.add('visible');
-    document.getElementById('hint').textContent = 'listening…';
-
-    const delay = 1200 + Math.random() * 900;
+    inp.value = '';
     setTimeout(() => {
-      thinkEl.classList.remove('visible');
-      document.getElementById('hint').textContent = '⌘ + Enter to share';
-
       const resp = responses[respIdx % responses.length];
       respIdx++;
       addEntry('dog', resp);
-      setQuote(resp);
-    }, delay);
+      quoteEl.style.opacity = '0';
+      setTimeout(() => {
+        quoteEl.textContent = resp.length > 72 ? resp.slice(0, 70) + '…' : resp;
+        quoteEl.style.opacity = '1';
+      }, 600);
+    }, 900 + Math.random() * 800);
   }
 
   document.getElementById('sendBtn').addEventListener('click', handleSubmit);
-  input.addEventListener('keydown', e => {
+  document.getElementById('input').addEventListener('keydown', e => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleSubmit();
   });
 
-  // auto-grow textarea
-  input.addEventListener('input', () => {
-    input.style.height = 'auto';
-    input.style.height = Math.max(140, input.scrollHeight) + 'px';
-  });
-
-  // ── SPEECH ──
+  // Speech
   const micBtn   = document.getElementById('micBtn');
+  const micLabel = document.getElementById('micLabel');
+  const textarea = document.getElementById('input');
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SR) {
     micBtn.style.opacity = '0.25';
     micBtn.style.cursor = 'not-allowed';
+    micLabel.textContent = 'n/a';
   } else {
     const recog = new SR();
     recog.continuous = false;
     recog.interimResults = true;
     recog.lang = 'en-US';
-
-    let listening = false;
-    let finalT = '';
+    let listening = false, finalT = '';
 
     micBtn.addEventListener('click', () => {
-      listening ? recog.stop() : (finalT = input.value, recog.start());
+      listening ? recog.stop() : (finalT = textarea.value, recog.start());
     });
 
     recog.addEventListener('start', () => {
       listening = true;
       micBtn.classList.add('listening');
+      micLabel.textContent = '···';
     });
 
     recog.addEventListener('result', e => {
       let interim = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
-        e.results[i].isFinal
-          ? finalT += e.results[i][0].transcript + ' '
-          : interim += e.results[i][0].transcript;
+        e.results[i].isFinal ? finalT += e.results[i][0].transcript + ' ' : interim += e.results[i][0].transcript;
       }
-      input.value = finalT + interim;
-      input.dispatchEvent(new Event('input'));
+      textarea.value = finalT + interim;
     });
 
     recog.addEventListener('end', () => {
       listening = false;
       micBtn.classList.remove('listening');
-      input.value = finalT.trim();
+      micLabel.textContent = 'speak';
+      textarea.value = finalT.trim();
     });
 
     recog.addEventListener('error', () => {
       listening = false;
       micBtn.classList.remove('listening');
+      micLabel.textContent = 'speak';
     });
   }
 </script>
