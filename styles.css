@@ -140,6 +140,12 @@ a { text-decoration: none; color: inherit; }
   border-bottom: 1px solid var(--fg3);
 }
 
+.section-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .section-label {
   font-size: 0.7rem;
   font-weight: 500;
@@ -153,6 +159,58 @@ a { text-decoration: none; color: inherit; }
   font-size: 0.75rem;
   color: var(--fg2);
   letter-spacing: 0.05em;
+}
+
+/* ── Experimental Section ────────────────────────────── */
+:root {
+  --exp: #aaff47;
+  --exp-dim: rgba(170, 255, 71, 0.15);
+  --exp-border: rgba(170, 255, 71, 0.18);
+}
+
+.index-section.experimental {
+  border-bottom: 1px solid var(--exp-border);
+}
+
+.index-section.experimental .section-header {
+  background: rgba(170, 255, 71, 0.03);
+  border-bottom: 1px solid var(--exp-border);
+}
+
+.index-section.experimental .section-label {
+  color: var(--exp);
+}
+
+.index-section.experimental .section-count {
+  color: var(--exp);
+  opacity: 0.6;
+}
+
+.lab-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.index-section.experimental .link-row {
+  border-bottom: 1px solid var(--exp-border);
+}
+
+.index-section.experimental .link-row:hover {
+  background: var(--exp-dim);
+}
+
+.index-section.experimental .link-row:hover .item-name {
+  color: var(--exp);
+}
+
+.index-section.experimental .link-row:hover .item-arrow {
+  color: var(--exp);
+}
+
+.index-section.experimental .item-num {
+  color: rgba(170, 255, 71, 0.35);
 }
 
 /* ── Link List ───────────────────────────────────────── */
