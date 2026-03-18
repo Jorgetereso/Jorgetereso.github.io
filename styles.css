@@ -67,6 +67,9 @@ a { text-decoration: none; color: inherit; }
 .hero {
   padding: 6vw var(--gutter) 5vw;
   border-bottom: 1px solid var(--fg3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   opacity: 0;
   animation: fade-up 0.7s ease forwards;
@@ -76,10 +79,16 @@ a { text-decoration: none; color: inherit; }
 .hero-title {
   font-family: "Anton", sans-serif;
   font-weight: 400;
-  font-size: clamp(3.5rem, 11vw, 9rem);
+  font-size: clamp(2rem, 6vw, 5rem);
   line-height: 0.95;
   letter-spacing: -0.01em;
   text-transform: uppercase;
+}
+
+.hero-brain {
+  font-size: clamp(4rem, 12vw, 10rem);
+  line-height: 1;
+  user-select: none;
 }
 
 /* ── Marquee ─────────────────────────────────────────── */

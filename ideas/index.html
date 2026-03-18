@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idea Eater</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:    #0a0a0a;
+      --fg:    #f0ede6;
+      --fg2:   rgba(240, 237, 230, 0.35);
+      --fg3:   rgba(240, 237, 230, 0.12);
+      --gutter: 4vw;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Header ── */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.6rem var(--gutter);
+      border-bottom: 1px solid var(--fg3);
+    }
+
+    .header-label {
+      font-family: "Anton", sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+    }
+
+    .header-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--fg2);
+      transition: color 0.2s;
+    }
+    .header-link:hover { color: var(--fg); }
+
+    /* ── Creature ── */
+    .creature-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4vw var(--gutter) 3vw;
+      border-bottom: 1px solid var(--fg3);
+      gap: 1rem;
+    }
+
+    .brain {
+      font-size: clamp(5rem, 16vw, 11rem);
+      line-height: 1;
+      user-select: none;
+      display: block;
+      transition: transform 0.1s;
+    }
+
+    .brain.idle    { animation: pulse 3s ease-in-out infinite; }
+    .brain.eating  { animation: eat 0.5s ease; }
+    .brain.happy   { animation: bounce 0.6s ease; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+    @keyframes eat {
+      0%   { transform: scale(1); }
+      25%  { transform: scale(1.18) rotate(-4deg); }
+      50%  { transform: scale(1.22) rotate(4deg); }
+      75%  { transform: scale(1.14) rotate(-2deg); }
+      100% { transform: scale(1); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1) translateY(0); }
+      40%       { transform: scale(1.08) translateY(-8px); }
+      70%       { transform: scale(0.98) translateY(2px); }
+    }
+
+    .creature-status {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      letter-spacing: 0.14em;
+      color: var(--fg2);
+      text-transform: uppercase;
+      transition: color 0.3s;
+      min-height: 1.4em;
+      text-align: center;
+    }
+    .creature-status.lit { color: var(--fg); }
+
+    .idea-count {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--fg2);
+      text-transform: uppercase;
+    }
+    .idea-count span {
+      font-family: "Anton", sans-serif;
+      color: var(--fg);
+      font-size: 0.9rem;
+    }
+
+    /* ── Feed form ── */
+    .feed-section {
+      padding: 2rem var(--gutter);
+      border-bottom: 1px solid var(--fg3);
+    }
+
+    .feed-label {
+      font-family: "Anton", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      color: var(--fg2);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .feed-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .feed-input {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--fg3);
+      color: var(--fg);
+      font-family: "Poppins", sans-serif;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .feed-input::placeholder { color: var(--fg2); }
+    .feed-input:focus { border-color: var(--fg2); }
+
+    .feed-btn {
+      background: var(--fg);
+      color: var(--bg);
+      border: none;
+      font-family: "Anton", sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem 1.4rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+    .feed-btn:hover { opacity: 0.85; }
+    .feed-btn:active { opacity: 0.7; }
+
+    /* ── Vault ── */
+    .vault-section {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .vault-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem var(--gutter);
+      border-bottom: 1px solid var(--fg3);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 1;
+    }
+
+    .vault-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg2);
+    }
+
+    .clear-btn {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--fg2);
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      transition: color 0.2s;
+    }
+    .clear-btn:hover { color: var(--fg); }
+
+    .vault-list {
+      list-style: none;
+    }
+
+    .vault-item {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1rem var(--gutter);
+      border-bottom: 1px solid var(--fg3);
+      animation: slide-in 0.35s ease forwards;
+    }
+
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .vault-num {
+      font-family: "Anton", sans-serif;
+      font-size: 0.7rem;
+      color: var(--fg2);
+      min-width: 2rem;
+    }
+
+    .vault-text {
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .vault-empty {
+      padding: 3rem var(--gutter);
+      font-size: 0.78rem;
+      color: var(--fg2);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      padding: 1.2rem var(--gutter);
+      border-top: 1px solid var(--fg3);
+      font-size: 0.72rem;
+      color: var(--fg2);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 600px) {
+      :root { --gutter: 6vw; }
+      .feed-row { flex-direction: column; }
+      .feed-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <span class="header-label">Idea Eater</span>
+    <a href="/" class="header-link">← Back</a>
+  </header>
+
+  <div class="creature-wrap">
+    <span class="brain idle" id="brain">🧠</span>
+    <p class="creature-status" id="status">HUNGRY FOR IDEAS</p>
+    <p class="idea-count">IDEAS CONSUMED: <span id="count">0</span></p>
+  </div>
+
+  <div class="feed-section">
+    <label class="feed-label" for="idea-input">Feed it an idea</label>
+    <div class="feed-row">
+      <input
+        id="idea-input"
+        class="feed-input"
+        type="text"
+        placeholder="Type an idea and hit Enter..."
+        autocomplete="off"
+        maxlength="300"
+      />
+      <button class="feed-btn" id="feed-btn">EAT ↗</button>
+    </div>
+  </div>
+
+  <section class="vault-section">
+    <div class="vault-header">
+      <span class="vault-label">The Brain Vault</span>
+      <button class="clear-btn" id="clear-btn">Clear all</button>
+    </div>
+    <ul class="vault-list" id="vault-list">
+      <li class="vault-empty" id="vault-empty">No ideas yet. Feed the creature.</li>
+    </ul>
+  </section>
+
+  <footer class="site-footer">
+    All ideas are stored locally in your browser.
+  </footer>
+
+  <script>
+    const brain     = document.getElementById('brain');
+    const status    = document.getElementById('status');
+    const countEl   = document.getElementById('count');
+    const input     = document.getElementById('idea-input');
+    const feedBtn   = document.getElementById('feed-btn');
+    const vaultList = document.getElementById('vault-list');
+    const vaultEmpty = document.getElementById('vault-empty');
+    const clearBtn  = document.getElementById('clear-btn');
+
+    const PHRASES = [
+      'DELICIOUS.',
+      'MMMMM YES.',
+      'MORE.',
+      'BRILLIANT.',
+      'INTERESTING…',
+      'FEEDING…',
+      'ABSORBED.',
+      'STORED FOREVER.',
+      'YESSS.',
+      'GIVE ME MORE.',
+    ];
+
+    const STORAGE_KEY = 'idea-eater-vault';
+
+    function loadIdeas() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function saveIdeas(ideas) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ideas));
+    }
+
+    let ideas = loadIdeas();
+
+    function renderVault() {
+      countEl.textContent = ideas.length;
+      vaultEmpty.style.display = ideas.length ? 'none' : 'block';
+
+      // Clear existing items (keep empty notice)
+      Array.from(vaultList.querySelectorAll('.vault-item')).forEach(el => el.remove());
+
+      // Render newest first
+      [...ideas].reverse().forEach((idea, i) => {
+        const li = document.createElement('li');
+        li.className = 'vault-item';
+        const num = ideas.length - i;
+        li.innerHTML = `<span class="vault-num">${String(num).padStart(2, '0')}</span><span class="vault-text">${escapeHtml(idea)}</span>`;
+        vaultList.appendChild(li);
+      });
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    let statusTimeout;
+    function showStatus(msg, lit = true) {
+      clearTimeout(statusTimeout);
+      status.textContent = msg;
+      status.classList.toggle('lit', lit);
+      statusTimeout = setTimeout(() => {
+        status.textContent = ideas.length > 10 ? 'FULL… BUT STILL HUNGRY.' : 'HUNGRY FOR IDEAS';
+        status.classList.remove('lit');
+      }, 2000);
+    }
+
+    function triggerEat() {
+      brain.className = 'brain eating';
+      brain.addEventListener('animationend', () => {
+        brain.className = 'brain happy';
+        brain.addEventListener('animationend', () => {
+          brain.className = 'brain idle';
+        }, { once: true });
+      }, { once: true });
+    }
+
+    function feedIdea() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      ideas.push(text);
+      saveIdeas(ideas);
+      renderVault();
+
+      const phrase = PHRASES[Math.floor(Math.random() * PHRASES.length)];
+      showStatus(phrase, true);
+      triggerEat();
+
+      input.value = '';
+      input.focus();
+    }
+
+    feedBtn.addEventListener('click', feedIdea);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') feedIdea(); });
+
+    clearBtn.addEventListener('click', () => {
+      if (!ideas.length) return;
+      if (!confirm('Clear all ideas from the vault?')) return;
+      ideas = [];
+      saveIdeas(ideas);
+      renderVault();
+      showStatus('HUNGRY FOR IDEAS', false);
+    });
+
+    renderVault();
+  </script>
+
+</body>
+</html>
