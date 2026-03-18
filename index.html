@@ -1,80 +1,108 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jorge Tereso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <header class="site-header">
+    <span class="header-label">Jorge Tereso</span>
+    <a href="https://github.com/Jorgetereso" target="_blank" rel="noopener" class="header-link">GitHub ↗</a>
+  </header>
+
   <main>
-    <header>
-      <h1>Jorge Tereso</h1>
-      <p class="tagline">Building things on the internet.</p>
-    </header>
 
-    <section>
-      <h2>Projects</h2>
+    <section class="hero">
+      <h1 class="hero-title">BUILDING<br>THINGS ON<br>THE INTERNET.</h1>
+    </section>
+
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span>PROJECTS ✦ EXPERIMENTS ✦ TOOLS ✦ IDEAS ✦ WORK IN PROGRESS ✦ PROJECTS ✦ EXPERIMENTS ✦ TOOLS ✦ IDEAS ✦ WORK IN PROGRESS ✦ </span>
+        <span aria-hidden="true">PROJECTS ✦ EXPERIMENTS ✦ TOOLS ✦ IDEAS ✦ WORK IN PROGRESS ✦ PROJECTS ✦ EXPERIMENTS ✦ TOOLS ✦ IDEAS ✦ WORK IN PROGRESS ✦ </span>
+      </div>
+    </div>
+
+    <section class="index-section" id="projects">
+      <div class="section-header">
+        <span class="section-label">Projects</span>
+        <span class="section-count">03</span>
+      </div>
+
       <ul class="link-list">
-        <li>
-          <a href="/tasks/" class="link-card">
-            <span class="link-name">Daily Tasks</span>
-            <span class="link-desc">Personal task manager</span>
-            <span class="link-arrow">↗</span>
+        <li class="link-item" style="--i:0">
+          <a href="/tasks/" class="link-row">
+            <span class="item-num">01</span>
+            <span class="item-name">Daily Tasks</span>
+            <span class="item-desc">Personal task manager</span>
+            <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li>
-          <a href="https://github.com/Jorgetereso/todo" target="_blank" rel="noopener" class="link-card">
-            <span class="link-name">Todo</span>
-            <span class="link-desc">To-do list app</span>
-            <span class="link-arrow">↗</span>
+        <li class="link-item" style="--i:1">
+          <a href="https://github.com/Jorgetereso/todo" target="_blank" rel="noopener" class="link-row">
+            <span class="item-num">02</span>
+            <span class="item-name">Todo</span>
+            <span class="item-desc">To-do list app</span>
+            <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li>
-          <a href="#" class="link-card">
-            <span class="link-name">Lorem Dashboard</span>
-            <span class="link-desc">Analytics and metrics overview</span>
-            <span class="link-arrow">↗</span>
+        <li class="link-item" style="--i:2">
+          <a href="#" class="link-row">
+            <span class="item-num">03</span>
+            <span class="item-name">Lorem Dashboard</span>
+            <span class="item-desc">Analytics and metrics overview</span>
+            <span class="item-arrow">↗</span>
           </a>
         </li>
       </ul>
     </section>
 
-    <section>
-      <h2>Experiments</h2>
+    <section class="index-section" id="experiments">
+      <div class="section-header">
+        <span class="section-label">Experiments</span>
+        <span class="section-count">03</span>
+      </div>
+
       <ul class="link-list">
-        <li>
-          <a href="#" class="link-card">
-            <span class="link-name">Ipsum Generator</span>
-            <span class="link-desc">Generative text tool built with vanilla JS</span>
-            <span class="link-arrow">↗</span>
+        <li class="link-item" style="--i:3">
+          <a href="#" class="link-row">
+            <span class="item-num">01</span>
+            <span class="item-name">Ipsum Generator</span>
+            <span class="item-desc">Generative text tool built with vanilla JS</span>
+            <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li>
-          <a href="#" class="link-card">
-            <span class="link-name">Dolor UI</span>
-            <span class="link-desc">Minimal component library exploration</span>
-            <span class="link-arrow">↗</span>
+        <li class="link-item" style="--i:4">
+          <a href="#" class="link-row">
+            <span class="item-num">02</span>
+            <span class="item-name">Dolor UI</span>
+            <span class="item-desc">Minimal component library exploration</span>
+            <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li>
-          <a href="#" class="link-card">
-            <span class="link-name">Amet Canvas</span>
-            <span class="link-desc">Particle system playing with Canvas API</span>
-            <span class="link-arrow">↗</span>
+        <li class="link-item" style="--i:5">
+          <a href="#" class="link-row">
+            <span class="item-num">03</span>
+            <span class="item-name">Amet Canvas</span>
+            <span class="item-desc">Particle system playing with Canvas API</span>
+            <span class="item-arrow">↗</span>
           </a>
         </li>
       </ul>
     </section>
 
-    <footer>
-      <a href="https://github.com/Jorgetereso" target="_blank" rel="noopener" class="gh-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-        </svg>
-        GitHub
-      </a>
-    </footer>
   </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Jorge Tereso</span>
+    <span>Building things on the internet.</span>
+  </footer>
+
 </body>
 </html>
