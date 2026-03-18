@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DogTerapy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0c0c0c;
+      --surface:  #141414;
+      --border:   #2a2a2a;
+      --gold:     #c9a96e;
+      --gold-dim: #7a5f35;
+      --text:     #e8e0d4;
+      --text-dim: #7a7168;
+      --warm:     #f0e6d3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 24px 80px;
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      color: var(--warm);
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+    }
+
+    .rule {
+      width: 48px;
+      height: 1px;
+      background: var(--gold-dim);
+      margin: 20px auto;
+    }
+
+    header p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── DOG SECTION ── */
+    .dog-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 52px;
+    }
+
+    svg#dog {
+      display: block;
+      filter: drop-shadow(0 0 40px rgba(201,169,110,0.08));
+    }
+
+    .quote {
+      margin-top: 28px;
+      max-width: 420px;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      padding: 0 20px;
+      position: relative;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    .quote::before,
+    .quote::after {
+      content: '"';
+      font-size: 2.5rem;
+      color: var(--gold-dim);
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 0;
+      position: relative;
+      top: 12px;
+    }
+
+    .quote::before { margin-right: 6px; }
+    .quote::after  { margin-left:  6px; content: '"'; }
+
+    /* ── SESSION PANEL ── */
+    .session {
+      width: 100%;
+      max-width: 580px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .session-header {
+      background: var(--surface);
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .session-header span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .session-body {
+      padding: 24px 28px 28px;
+      background: var(--surface);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 16px 18px;
+      font-size: 0.97rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.3s;
+      letter-spacing: 0.01em;
+    }
+
+    textarea:focus { border-color: var(--gold-dim); }
+    textarea::placeholder { color: #3d3730; }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    /* MIC */
+    .mic-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+    .mic-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s, border-color 0.25s;
+      flex-shrink: 0;
+    }
+
+    .mic-btn:hover { background: rgba(201,169,110,0.08); border-color: var(--gold); }
+
+    .mic-btn.listening {
+      background: rgba(201,169,110,0.12);
+      border-color: var(--gold);
+      animation: breathe 2s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.3); }
+      50%       { box-shadow: 0 0 0 10px rgba(201,169,110,0); }
+    }
+
+    .mic-btn svg { pointer-events: none; }
+
+    .mic-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* SEND */
+    .send-btn {
+      flex: 1;
+      padding: 15px 24px;
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      border-radius: 3px;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+      text-transform: uppercase;
+    }
+
+    .send-btn:hover {
+      background: rgba(201,169,110,0.08);
+      border-color: var(--gold);
+      color: var(--warm);
+    }
+
+    /* ── CONVERSATION LOG ── */
+    .log {
+      width: 100%;
+      max-width: 580px;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .log-entry {
+      padding: 20px 28px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      animation: fadeUp 0.5s ease;
+      border-left: 2px solid transparent;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .log-entry.user {
+      background: #101010;
+      border-left-color: var(--border);
+      color: #a89f94;
+    }
+
+    .log-entry.dog {
+      background: var(--surface);
+      border-left-color: var(--gold-dim);
+      color: var(--text);
+    }
+
+    .log-entry .who {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .log-entry.user .who { color: #484038; }
+    .log-entry.dog  .who { color: var(--gold-dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 64px;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #2e2a25;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" style="position:fixed;top:20px;left:24px;font-family:'Inter',sans-serif;font-size:12px;font-weight:300;letter-spacing:.08em;color:#7a7168;text-decoration:none;text-transform:uppercase;">← Back</a>
+
+<header>
+  <div class="wordmark">Est. Today &nbsp;·&nbsp; Private Practice</div>
+  <h1>DogTerapy</h1>
+  <div class="rule"></div>
+  <p>A quiet space. No judgment. Just presence.</p>
+</header>
+
+<!-- DOG -->
+<div class="dog-section">
+  <svg id="dog" width="260" height="310" viewBox="0 0 260 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <ellipse cx="130" cy="230" rx="70" ry="62" fill="#1a1a1a"/>
+
+    <!-- Ears — long, drooping -->
+    <ellipse cx="74" cy="100" rx="26" ry="50" fill="#111" transform="rotate(-12 74 100)"/>
+    <ellipse cx="186" cy="100" rx="26" ry="50" fill="#111" transform="rotate(12 186 100)"/>
+    <!-- Ear highlight -->
+    <ellipse cx="76" cy="102" rx="13" ry="32" fill="#1e1e1e" transform="rotate(-12 76 102)"/>
+    <ellipse cx="184" cy="102" rx="13" ry="32" fill="#1e1e1e" transform="rotate(12 184 102)"/>
+
+    <!-- Head -->
+    <circle cx="130" cy="120" r="66" fill="#1e1e1e"/>
+
+    <!-- Snout area -->
+    <ellipse cx="130" cy="138" rx="33" ry="25" fill="#242424"/>
+
+    <!-- Eyes -->
+    <circle cx="110" cy="112" r="12" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1"/>
+    <circle cx="150" cy="112" r="12" fill="#0a0a0a" stroke="#3a3a3a" stroke-width="1"/>
+    <!-- Eye shine -->
+    <circle cx="114" cy="108" r="4" fill="#c9a96e" opacity="0.6"/>
+    <circle cx="154" cy="108" r="4" fill="#c9a96e" opacity="0.6"/>
+    <circle cx="113" cy="107" r="1.5" fill="white" opacity="0.8"/>
+    <circle cx="153" cy="107" r="1.5" fill="white" opacity="0.8"/>
+
+    <!-- Nose -->
+    <ellipse cx="130" cy="132" rx="10" ry="7" fill="#0a0a0a"/>
+    <ellipse cx="127" cy="130" rx="3" ry="1.8" fill="#2a2a2a"/>
+
+    <!-- Mouth — subtle, calm -->
+    <path d="M120 142 Q130 150 140 142" stroke="#333" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+    <!-- Glasses — thin wire, round -->
+    <circle cx="110" cy="112" r="17" fill="none" stroke="#c9a96e" stroke-width="1.2" opacity="0.7"/>
+    <circle cx="150" cy="112" r="17" fill="none" stroke="#c9a96e" stroke-width="1.2" opacity="0.7"/>
+    <line x1="127" y1="112" x2="133" y2="112" stroke="#c9a96e" stroke-width="1.2" opacity="0.7"/>
+    <line x1="72"  y1="108" x2="93"  y2="110" stroke="#c9a96e" stroke-width="1.2" opacity="0.7"/>
+    <line x1="167" y1="110" x2="188" y2="108" stroke="#c9a96e" stroke-width="1.2" opacity="0.7"/>
+
+    <!-- Clipboard — dark, minimal -->
+    <rect x="152" y="200" width="84" height="96" rx="3" fill="#161616" stroke="#2e2e2e" stroke-width="1.2"/>
+    <!-- Clip bar top -->
+    <rect x="152" y="200" width="84" height="14" rx="3" fill="#1e1e1e"/>
+    <!-- Clip metal -->
+    <rect x="182" y="193" width="24" height="14" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <!-- Notepad lines -->
+    <line x1="162" y1="227" x2="226" y2="227" stroke="#2e2e2e" stroke-width="1"/>
+    <line x1="162" y1="239" x2="226" y2="239" stroke="#2e2e2e" stroke-width="1"/>
+    <line x1="162" y1="251" x2="218" y2="251" stroke="#2e2e2e" stroke-width="1"/>
+    <line x1="162" y1="263" x2="210" y2="263" stroke="#2e2e2e" stroke-width="1"/>
+    <line x1="162" y1="275" x2="200" y2="275" stroke="#2e2e2e" stroke-width="1"/>
+    <!-- Gold accent line on notepad — one written word -->
+    <line x1="162" y1="227" x2="200" y2="227" stroke="#c9a96e" stroke-width="1" opacity="0.35"/>
+
+    <!-- Pen / stylus -->
+    <rect x="220" y="218" width="5" height="44" rx="2.5" fill="#2a2a2a" transform="rotate(-28 220 218)"/>
+    <polygon points="0,0 5,0 2.5,9" fill="#3a3a3a" transform="translate(208,256) rotate(-28)"/>
+
+    <!-- Arm holding clipboard -->
+    <path d="M188 222 Q200 205 188 198" stroke="#1a1a1a" stroke-width="16" fill="none" stroke-linecap="round"/>
+
+    <!-- Paws -->
+    <ellipse cx="100" cy="280" rx="28" ry="18" fill="#1a1a1a"/>
+    <ellipse cx="160" cy="280" rx="28" ry="18" fill="#1a1a1a"/>
+    <!-- Subtle toe dividers -->
+    <line x1="89"  y1="273" x2="89"  y2="285" stroke="#222" stroke-width="1.5"/>
+    <line x1="100" y1="270" x2="100" y2="288" stroke="#222" stroke-width="1.5"/>
+    <line x1="111" y1="273" x2="111" y2="285" stroke="#222" stroke-width="1.5"/>
+    <line x1="149" y1="273" x2="149" y2="285" stroke="#222" stroke-width="1.5"/>
+    <line x1="160" y1="270" x2="160" y2="288" stroke="#222" stroke-width="1.5"/>
+    <line x1="171" y1="273" x2="171" y2="285" stroke="#222" stroke-width="1.5"/>
+  </svg>
+
+  <p class="quote" id="quote">I'm here. Take your time.</p>
+</div>
+
+<!-- SESSION -->
+<div class="session">
+  <div class="session-header">
+    <span>Session &mdash; Open</span>
+  </div>
+  <div class="session-body">
+    <textarea id="input" placeholder="Say whatever comes to mind."></textarea>
+    <div class="controls">
+      <div class="mic-wrap">
+        <button class="mic-btn" id="micBtn" title="Speak">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" y="2" width="6" height="11" rx="3" fill="#c9a96e"/>
+            <path d="M5 10a7 7 0 0 0 14 0" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <line x1="12" y1="17" x2="12" y2="21" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="8"  y1="21" x2="16" y2="21" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <span class="mic-label" id="micLabel">speak</span>
+      </div>
+      <button class="send-btn" id="sendBtn">Share</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOG -->
+<div class="log" id="log"></div>
+
+<footer>All sessions are confidential &nbsp;·&nbsp; DogTerapy</footer>
+
+<script>
+  const responses = [
+    "What you're describing sounds genuinely difficult. You don't have to make sense of it all at once.",
+    "I notice you're carrying quite a bit right now. What feels heaviest?",
+    "That's a meaningful thing to put into words. How long have you been holding that?",
+    "There's no rush here. We can sit with that for a moment.",
+    "It makes complete sense that you'd feel that way. Tell me more, if you'd like.",
+    "You came here today. That's not a small thing.",
+    "I'm writing this down. Not because I'll forget — but because it deserves to be held carefully.",
+    "What would it feel like to let some of that go? Even just a little.",
+    "You don't need to have the answers. That's what we're here to figure out, together.",
+    "I hear you. And I want you to know — none of this is too much.",
+    "Sometimes the hardest part is just admitting it's hard. You just did that.",
+    "What would you say to someone you love who felt exactly this way?",
+    "That sounds exhausting. How long have you been at it on your own?",
+    "Let's stay there for a moment. Don't move past it too quickly.",
+    "What do you need most right now — to be understood, or to find a way forward?",
+    "You're being very honest with yourself. That takes courage.",
+    "It's okay if this doesn't resolve today. Some things need time to unfold.",
+    "I'm not going anywhere. There's no session limit here.",
+    "What does that feel like in your body when you think about it?",
+    "You matter. Whatever brought you here today — you were right to come.",
+  ];
+
+  const idleQuotes = [
+    "I'm here. Take your time.",
+    "Whatever you bring, I can hold it.",
+    "There's nothing you need to perform for me.",
+    "This is a safe space. Completely.",
+    "You don't have to have the right words.",
+  ];
+
+  let respIdx = 0;
+  let quoteIdx = 0;
+  const quoteEl = document.getElementById('quote');
+
+  setInterval(() => {
+    quoteEl.style.opacity = '0';
+    quoteIdx = (quoteIdx + 1) % idleQuotes.length;
+    setTimeout(() => {
+      quoteEl.textContent = idleQuotes[quoteIdx];
+      quoteEl.style.opacity = '1';
+    }, 500);
+  }, 6000);
+
+  // ── LOG ──
+  const log = document.getElementById('log');
+
+  function addEntry(who, text) {
+    const el = document.createElement('div');
+    el.className = `log-entry ${who}`;
+    el.innerHTML = `<div class="who">${who === 'user' ? 'You' : 'Your Therapist'}</div>${text}`;
+    log.insertBefore(el, log.firstChild);
+  }
+
+  function handleSubmit() {
+    const inp = document.getElementById('input');
+    const text = inp.value.trim();
+    if (!text) return;
+    addEntry('user', text);
+    inp.value = '';
+
+    setTimeout(() => {
+      const resp = responses[respIdx % responses.length];
+      respIdx++;
+      addEntry('dog', resp);
+      quoteEl.style.opacity = '0';
+      setTimeout(() => {
+        quoteEl.textContent = resp.length > 80 ? resp.slice(0, 78) + '…' : resp;
+        quoteEl.style.opacity = '1';
+      }, 500);
+    }, 1000 + Math.random() * 700);
+  }
+
+  document.getElementById('sendBtn').addEventListener('click', handleSubmit);
+  document.getElementById('input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleSubmit();
+  });
+
+  // ── SPEECH ──
+  const micBtn   = document.getElementById('micBtn');
+  const micLabel = document.getElementById('micLabel');
+  const textarea = document.getElementById('input');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SR) {
+    micBtn.style.opacity = '0.3';
+    micBtn.style.cursor = 'not-allowed';
+    micLabel.textContent = 'n/a';
+  } else {
+    const recog = new SR();
+    recog.continuous = false;
+    recog.interimResults = true;
+    recog.lang = 'en-US';
+
+    let listening = false;
+    let finalT = '';
+
+    micBtn.addEventListener('click', () => {
+      listening ? recog.stop() : (finalT = textarea.value, recog.start());
+    });
+
+    recog.addEventListener('start', () => {
+      listening = true;
+      micBtn.classList.add('listening');
+      micLabel.textContent = '···';
+    });
+
+    recog.addEventListener('result', e => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        e.results[i].isFinal ? finalT += e.results[i][0].transcript + ' ' : interim += e.results[i][0].transcript;
+      }
+      textarea.value = finalT + interim;
+    });
+
+    recog.addEventListener('end', () => {
+      listening = false;
+      micBtn.classList.remove('listening');
+      micLabel.textContent = 'speak';
+      textarea.value = finalT.trim();
+    });
+
+    recog.addEventListener('error', () => {
+      listening = false;
+      micBtn.classList.remove('listening');
+      micLabel.textContent = 'speak';
+    });
+  }
+</script>
+</body>
+</html>
