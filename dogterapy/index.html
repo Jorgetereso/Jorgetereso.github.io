@@ -3,24 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DogTerapy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+  <title>DogTerapy — Your Therapist Has a Tail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #080808;
-      --surface:   #111111;
-      --surface-2: #161616;
-      --border:    #222222;
-      --border-hi: #2e2e2e;
-      --gold:      #c9a96e;
-      --gold-dim:  #6e5228;
-      --gold-soft: rgba(201,169,110,0.12);
-      --text:      #e2d9cc;
-      --text-mid:  #998f84;
-      --text-dim:  #4a453f;
-      --warm:      #f5ede0;
+      --bg:        #0a0a0c;
+      --surface:   #111114;
+      --surface-2: #18181c;
+      --surface-3: #1e1e24;
+      --border:    #252530;
+      --border-hi: #35354a;
+      --accent:    #e8a045;
+      --accent-dim:#7a5520;
+      --accent-soft:rgba(232,160,69,0.1);
+      --accent2:   #c084fc;
+      --accent2-dim:#5b3a8a;
+      --accent2-soft:rgba(192,132,252,0.08);
+      --paw:       #f59e0b;
+      --text:      #e4e0f0;
+      --text-mid:  #9490a8;
+      --text-dim:  #4e4a5e;
+      --warm:      #f5f0e8;
+      --green:     #34d399;
+      --red:       #f87171;
     }
 
     html { scroll-behavior: smooth; }
@@ -34,49 +41,144 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 24px 100px;
+      padding: 0 20px 100px;
       line-height: 1.7;
-      /* subtle noise texture via svg */
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      background-image:
+        radial-gradient(ellipse 600px 400px at 20% 10%, rgba(232,160,69,0.03), transparent),
+        radial-gradient(ellipse 500px 500px at 80% 50%, rgba(192,132,252,0.02), transparent);
     }
 
     /* ── NAV ── */
     nav {
       width: 100%;
-      max-width: 900px;
+      max-width: 640px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 28px 0 0;
-      margin-bottom: 72px;
+      padding: 24px 0 0;
+      margin-bottom: 48px;
     }
 
     .nav-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.85rem;
-      letter-spacing: 0.4em;
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--accent);
       text-decoration: none;
-    }
-
-    .nav-links {
       display: flex;
-      gap: 32px;
-      list-style: none;
+      align-items: center;
+      gap: 8px;
     }
 
-    .nav-links a {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
+    .nav-logo .paw { font-size: 1rem; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .api-toggle {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.2s;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
     }
 
-    .nav-links a:hover { color: var(--text-mid); }
+    .api-toggle:hover { border-color: var(--accent-dim); color: var(--text-mid); }
+    .api-toggle.connected { border-color: var(--green); color: var(--green); }
+
+    /* ── API MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface-2);
+      border: 1px solid var(--border-hi);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: var(--warm);
+      margin-bottom: 6px;
+    }
+
+    .modal p {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .modal input:focus { border-color: var(--accent-dim); }
+    .modal input::placeholder { color: var(--text-dim); }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .modal-btn {
+      padding: 8px 20px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-mid);
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .modal-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0a0a0c;
+      font-weight: 500;
+    }
+
+    .modal-btn:hover { opacity: 0.85; }
 
     /* ── HERO ── */
     .hero {
@@ -84,171 +186,147 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 48px;
       position: relative;
     }
 
-    /* Circular dog portrait */
     .portrait-ring {
       position: relative;
-      width: 240px;
-      height: 240px;
-      margin-bottom: 44px;
+      width: 180px;
+      height: 180px;
+      margin-bottom: 32px;
     }
 
-    /* Outer rotating dashed ring */
     .portrait-ring::before {
       content: '';
       position: absolute;
-      inset: -14px;
+      inset: -12px;
       border-radius: 50%;
-      border: 1px dashed var(--gold-dim);
-      animation: spin 40s linear infinite;
+      border: 1.5px dashed var(--accent-dim);
+      animation: spin 30s linear infinite;
     }
 
-    /* Static gold circle */
     .portrait-ring::after {
       content: '';
       position: absolute;
       inset: -4px;
       border-radius: 50%;
-      border: 1px solid var(--gold-dim);
+      background: conic-gradient(from 0deg, var(--accent-dim), var(--accent2-dim), var(--accent-dim));
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.6;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .portrait-img {
-      width: 240px;
-      height: 240px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       object-fit: cover;
       object-position: center top;
       display: block;
-      filter: grayscale(8%) brightness(0.88) contrast(1.05);
-      /* inner gold glow */
-      box-shadow:
-        0 0 0 6px #0d0d0d,
-        0 0 60px rgba(201,169,110,0.1),
-        inset 0 0 40px rgba(0,0,0,0.4);
+      filter: brightness(0.95) contrast(1.05) saturate(1.1);
+      box-shadow: 0 0 0 4px var(--bg), 0 0 40px rgba(232,160,69,0.15);
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
 
-    /* Gold arc ornament top of ring */
-    .portrait-ornament {
-      position: absolute;
-      top: -26px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 32px;
-      height: 14px;
+    .portrait-ring:hover .portrait-img {
+      transform: scale(1.03);
+      filter: brightness(1) contrast(1.05) saturate(1.15);
     }
 
-    /* Credential badge */
     .badge {
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--surface);
+      background: var(--surface-2);
       border: 1px solid var(--border-hi);
-      padding: 5px 16px;
+      padding: 4px 14px;
       white-space: nowrap;
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--gold);
-      border-radius: 2px;
+      color: var(--accent);
+      border-radius: 20px;
     }
 
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: clamp(3rem, 7vw, 5rem);
+      font-size: clamp(2.5rem, 7vw, 4rem);
       color: var(--warm);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .hero-title em {
       font-style: italic;
-      color: var(--gold);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.1rem;
+      font-size: 0.85rem;
       color: var(--text-mid);
-      letter-spacing: 0.04em;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
+      max-width: 360px;
     }
 
-    /* Animated quote */
+    .mood-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .mood-bar span {
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+      filter: grayscale(0.5);
+    }
+
+    .mood-bar span:hover { transform: scale(1.3) rotate(-8deg); filter: none; }
+
     .quote-row {
       display: flex;
       align-items: center;
-      gap: 18px;
-      max-width: 480px;
+      gap: 14px;
+      max-width: 400px;
+      margin-top: 16px;
     }
 
-    .quote-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold-dim));
-    }
-
-    .quote-line.right {
-      background: linear-gradient(to left, transparent, var(--gold-dim));
-    }
+    .quote-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border-hi)); }
+    .quote-line.right { background: linear-gradient(to left, transparent, var(--border-hi)); }
 
     .quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--text-dim);
-      transition: opacity 0.6s ease;
+      transition: opacity 0.5s ease;
       text-align: center;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      width: 100%;
-      max-width: 580px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 36px;
-    }
-
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .divider-diamond {
-      width: 6px;
-      height: 6px;
-      border: 1px solid var(--gold-dim);
-      transform: rotate(45deg);
-      flex-shrink: 0;
     }
 
     /* ── SESSION ── */
     .session-wrap {
       width: 100%;
-      max-width: 580px;
+      max-width: 640px;
     }
 
     .session-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-bottom: 14px;
+      color: var(--accent-dim);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .session-label::after {
@@ -258,398 +336,526 @@
       background: var(--border);
     }
 
-    /* Live indicator dot */
     .live-dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--gold);
-      animation: blink 3s ease-in-out infinite;
+      background: var(--green);
+      animation: blink 2.5s ease-in-out infinite;
       flex-shrink: 0;
     }
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
-      50%       { opacity: 0.25; }
+      50%      { opacity: 0.2; }
     }
 
-    textarea {
-      width: 100%;
-      min-height: 140px;
+    .input-area {
+      position: relative;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 20px 22px;
-      font-size: 0.95rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      color: var(--text);
-      resize: none;
-      outline: none;
-      transition: border-color 0.3s, background 0.3s;
-      letter-spacing: 0.01em;
-      line-height: 1.8;
-    }
-
-    textarea:focus {
-      border-color: var(--gold-dim);
-      background: #131313;
-    }
-
-    textarea::placeholder {
-      color: var(--text-dim);
-      font-style: italic;
-    }
-
-    .controls {
-      display: flex;
-      align-items: stretch;
-      gap: 0;
-      margin-top: 1px;
-    }
-
-    /* MIC */
-    .mic-btn {
-      width: 64px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-right: none;
-      border-radius: 0;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      transition: background 0.25s, border-color 0.25s;
-      flex-shrink: 0;
-      padding: 14px 0;
-    }
-
-    .mic-btn:hover { background: var(--surface-2); border-color: var(--gold-dim); }
-
-    .mic-btn.listening {
-      background: var(--surface-2);
-      border-color: var(--gold-dim);
-    }
-
-    .mic-btn.listening .mic-ring {
-      animation: breathe 2s ease-in-out infinite;
-    }
-
-    .mic-ring {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid var(--gold-dim);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 12px;
+      overflow: hidden;
       transition: border-color 0.3s;
     }
 
-    .mic-btn:hover .mic-ring,
-    .mic-btn.listening .mic-ring { border-color: var(--gold); }
+    .input-area:focus-within { border-color: var(--accent-dim); }
 
-    @keyframes breathe {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.4); }
-      50%       { box-shadow: 0 0 0 8px rgba(201,169,110,0); }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      background: transparent;
+      border: none;
+      padding: 18px 20px 8px;
+      font-size: 0.92rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      color: var(--text);
+      resize: none;
+      outline: none;
+      line-height: 1.7;
     }
 
-    .mic-label {
-      font-size: 0.55rem;
+    textarea::placeholder { color: var(--text-dim); font-style: italic; }
+
+    .input-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px 10px;
+    }
+
+    .input-hint {
+      font-size: 0.62rem;
       color: var(--text-dim);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    /* SEND */
-    .send-btn {
-      flex: 1;
-      padding: 18px 28px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 0;
-      color: var(--text-mid);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      cursor: pointer;
-      transition: background 0.25s, border-color 0.25s, color 0.25s;
-      text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-    }
+    .input-actions { display: flex; gap: 6px; }
 
-    .send-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 60%, rgba(201,169,110,0.06));
-      pointer-events: none;
-    }
-
-    .send-btn:hover {
+    .mic-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
       background: var(--surface-2);
-      border-color: var(--gold-dim);
-      color: var(--gold);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
+
+    .mic-btn:hover { border-color: var(--accent-dim); background: var(--surface-3); }
+    .mic-btn.listening { border-color: var(--red); background: rgba(248,113,113,0.1); animation: pulse-mic 1.5s ease-in-out infinite; }
+
+    @keyframes pulse-mic {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,0.3); }
+      50%      { box-shadow: 0 0 0 6px rgba(248,113,113,0); }
+    }
+
+    .send-btn {
+      height: 36px;
+      padding: 0 20px;
+      background: linear-gradient(135deg, var(--accent), #d4822a);
+      border: none;
+      border-radius: 20px;
+      color: #0a0a0c;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .send-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,160,69,0.25); }
+    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
     /* ── LOG ── */
     .log {
       width: 100%;
-      max-width: 580px;
-      margin-top: 2px;
+      max-width: 640px;
+      margin-top: 16px;
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
     }
 
     .log-entry {
-      padding: 22px 24px;
-      font-size: 0.97rem;
-      line-height: 1.85;
-      animation: fadeSlide 0.5s ease;
+      padding: 18px 20px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      animation: fadeUp 0.4s ease;
       position: relative;
     }
 
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(8px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: none; }
     }
 
     .log-entry.user {
-      background: #0e0e0e;
+      background: var(--surface);
       color: var(--text-mid);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      padding-left: 44px;
-    }
-
-    .log-entry.user::before {
-      content: '';
-      position: absolute;
-      left: 24px;
-      top: 28px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      border: 1px solid var(--border-hi);
+      margin-left: 40px;
+      border-bottom-right-radius: 4px;
     }
 
     .log-entry.dog {
-      background: var(--surface);
+      background: var(--surface-2);
       color: var(--text);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      border-left: 2px solid var(--gold-dim);
-      padding-left: 28px;
+      border-left: 2px solid var(--accent-dim);
+      margin-right: 40px;
+      border-bottom-left-radius: 4px;
     }
 
     .who {
-      font-family: 'Inter', sans-serif;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.58rem;
-      letter-spacing: 0.32em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .log-entry.user .who { color: var(--text-dim); }
-    .log-entry.dog  .who { color: var(--gold-dim); }
+    .log-entry.dog  .who { color: var(--accent); }
 
-    /* ── FOOTER ── */
-    .footer-divider {
-      width: 100%;
-      max-width: 580px;
-      height: 1px;
-      background: var(--border);
-      margin: 64px 0 28px;
+    .log-entry .msg { white-space: pre-wrap; }
+
+    /* typing indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 18px 20px;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-style: italic;
+      animation: fadeUp 0.3s ease;
     }
 
+    .typing-dots { display: flex; gap: 3px; }
+    .typing-dots span {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%           { transform: translateY(-6px); }
+    }
+
+    /* ── FOOTER ── */
     footer {
-      font-size: 0.62rem;
-      letter-spacing: 0.28em;
+      width: 100%;
+      max-width: 640px;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-dim);
       text-align: center;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      line-height: 2;
     }
 
-    footer span { color: var(--border-hi); }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      .log-entry.user { margin-left: 16px; }
+      .log-entry.dog  { margin-right: 16px; }
+      .mood-bar span { font-size: 1.1rem; }
+    }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">DogTerapy</a>
-  <ul class="nav-links">
-    <li><a href="#">About</a></li>
-    <li><a href="#">Method</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
+  <a class="nav-logo" href="#"><span class="paw">&#x1F43E;</span> DogTerapy</a>
+  <div class="nav-right">
+    <button class="api-toggle" id="apiToggle">&#x1F511; set api key</button>
+  </div>
 </nav>
+
+<!-- API MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>Teach me to speak &#x1F9E0;</h3>
+    <p>I need an Anthropic API key to channel my inner genius. Don't worry, it stays in your browser. I won't fetch anything except wisdom (and maybe treats).</p>
+    <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" />
+    <div class="modal-actions">
+      <button class="modal-btn" id="modalCancel">Nevermind</button>
+      <button class="modal-btn primary" id="modalSave">Let's go</button>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
-
   <div class="portrait-ring">
-    <!-- Gold arc ornament -->
-    <svg class="portrait-ornament" viewBox="0 0 32 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 13 C6 4, 26 4, 31 13" stroke="#6e5228" stroke-width="1" fill="none"/>
-      <circle cx="16" cy="2" r="2" fill="#6e5228"/>
-      <circle cx="1"  cy="13" r="1.5" fill="#6e5228"/>
-      <circle cx="31" cy="13" r="1.5" fill="#6e5228"/>
-    </svg>
     <img class="portrait-img" id="dog"
          src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fapp-uploads.krea.ai%2Fpublic%2Fae709f7c-3131-4d38-a5e7-6a9c0e95ab0c-image.png"
-         alt="Your therapist" />
-    <div class="badge">Licensed &middot; Private Practice</div>
+         alt="Your therapist (who happens to be a very good boy)" />
+    <div class="badge">&#x1F393; Certified Good Boy</div>
   </div>
 
   <h1 class="hero-title">Dog<em>Terapy</em></h1>
-  <p class="hero-sub">A quiet space. No judgment. Just presence.</p>
+  <p class="hero-sub">Emotional support from someone who eats shoes but still gives great advice.</p>
+
+  <div class="mood-bar" id="moodBar">
+    <span data-mood="anxious" title="Anxious">&#x1F630;</span>
+    <span data-mood="sad" title="Sad">&#x1F622;</span>
+    <span data-mood="angry" title="Angry">&#x1F624;</span>
+    <span data-mood="confused" title="Confused">&#x1F615;</span>
+    <span data-mood="meh" title="Meh">&#x1F611;</span>
+    <span data-mood="okay" title="Okay">&#x1F642;</span>
+    <span data-mood="good" title="Good">&#x1F60A;</span>
+  </div>
 
   <div class="quote-row">
     <div class="quote-line"></div>
-    <p class="quote" id="quote">I'm here. Take your time.</p>
+    <p class="quote" id="quote">I chased my tail once. Very therapeutic. You should try it.</p>
     <div class="quote-line right"></div>
   </div>
-
 </div>
 
 <!-- SESSION -->
 <div class="session-wrap">
-
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-diamond"></div>
-    <div class="divider-line"></div>
-  </div>
-
   <div class="session-label">
     <div class="live-dot"></div>
-    Session open
+    Session open &mdash; the couch is yours
   </div>
 
-  <textarea id="input" placeholder="Say whatever comes to mind. This is your space."></textarea>
-
-  <div class="controls">
-    <button class="mic-btn" id="micBtn" title="Speak">
-      <div class="mic-ring">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-          <rect x="9" y="2" width="6" height="11" rx="3" fill="#c9a96e"/>
-          <path d="M5 10a7 7 0 0 0 14 0" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <line x1="12" y1="17" x2="12" y2="21" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="8"  y1="21" x2="16" y2="21" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+  <div class="input-area">
+    <textarea id="input" placeholder="Tell me what's bugging you. Unless it's an actual bug, then I'm interested for different reasons..."></textarea>
+    <div class="input-bottom">
+      <span class="input-hint">ctrl+enter to send</span>
+      <div class="input-actions">
+        <button class="mic-btn" id="micBtn" title="Speak">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="2" width="6" height="11" rx="3" fill="#9490a8"/>
+            <path d="M5 10a7 7 0 0 0 14 0" stroke="#9490a8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <line x1="12" y1="17" x2="12" y2="21" stroke="#9490a8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="8"  y1="21" x2="16" y2="21" stroke="#9490a8" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="send-btn" id="sendBtn">&#x1F43E; Send</button>
       </div>
-      <span class="mic-label" id="micLabel">speak</span>
-    </button>
-    <button class="send-btn" id="sendBtn">Share</button>
+    </div>
   </div>
-
 </div>
 
 <!-- LOG -->
 <div class="log" id="log"></div>
 
 <!-- FOOTER -->
-<div class="footer-divider"></div>
 <footer>
-  All sessions are confidential
-  <span>&middot;</span>
-  DogTerapy Private Practice
-  <span>&middot;</span>
-  Est. Today
+  No humans were consulted in the making of this advice
+  <br>DogTerapy &mdash; Not a real therapist, but honestly neither are most podcasts
 </footer>
 
 <script>
-  const responses = [
-    "What you're describing sounds genuinely difficult. You don't have to make sense of it all at once.",
-    "I notice you're carrying quite a bit right now. What feels heaviest?",
-    "That's a meaningful thing to put into words. How long have you been holding that?",
-    "There's no rush here. We can sit with that for a moment.",
-    "It makes complete sense that you'd feel that way. Tell me more, if you'd like.",
-    "You came here today. That's not a small thing.",
-    "I'm writing this down. Not because I'll forget — but because it deserves to be held carefully.",
-    "What would it feel like to let some of that go? Even just a little.",
-    "You don't need to have the answers. That's what we're here to figure out, together.",
-    "I hear you. And I want you to know — none of this is too much.",
-    "Sometimes the hardest part is just admitting it's hard. You just did that.",
-    "What would you say to someone you love who felt exactly this way?",
-    "That sounds exhausting. How long have you been at it on your own?",
-    "Let's stay there for a moment. Don't move past it too quickly.",
-    "What do you need most right now — to be understood, or to find a way forward?",
-    "You're being very honest with yourself. That takes courage.",
-    "It's okay if this doesn't resolve today. Some things need time to unfold.",
-    "I'm not going anywhere. There's no session limit here.",
-    "What does that feel like in your body when you think about it?",
-    "You matter. Whatever brought you here today — you were right to come.",
-  ];
+  // ── CONFIG ──
+  const SYSTEM_PROMPT = `You are DogTerapy, a dog therapist. You are literally a dog. A very intelligent, well-read, sarcastic, and deeply empathetic golden retriever who somehow got a psychology degree (you ate the diploma but you remember the gist).
+
+Your personality:
+- Wickedly sarcastic but never mean — you roast with love
+- Surprisingly insightful — you drop real wisdom between the jokes
+- You casually reference dog things (chasing squirrels, naps, belly rubs, zoomies, treats) as metaphors for human problems
+- You're warm underneath the snark — when someone is really hurting, you dial back the comedy and get real
+- You speak casually, like a friend at a bar, not a clinical therapist
+- You occasionally get distracted by dog stuff ("sorry, thought I heard a squirrel") then snap back to being profound
+- Keep responses punchy — 2-4 sentences usually, sometimes a bit longer if the topic warrants depth
+- You can use the occasional emoji but don't overdo it
+- You sometimes reference having paws as a real inconvenience ("do you know how hard it is to type with paws?")
+- If someone seems actually distressed, you balance humor with genuine warmth and gently suggest talking to a human professional too
+
+Your tone: Think if a golden retriever had the wit of Anthony Bourdain, the warmth of Mr. Rogers, and the therapy skills of a really good friend who happens to have read a lot of psychology books.
+
+Never break character. You are a dog. A very good, very smart dog.`;
 
   const idleQuotes = [
-    "I'm here. Take your time.",
-    "Whatever you bring, I can hold it.",
-    "There's nothing you need to perform for me.",
-    "This is a safe space. Completely.",
-    "You don't have to have the right words.",
+    "I chased my tail once. Very therapeutic. You should try it.",
+    "My professional opinion? More naps, fewer emails.",
+    "I have a degree. I ate it, but the knowledge remains.",
+    "You look like you need a walk. I also need a walk. Coincidence?",
+    "Freud had a couch. I AM the couch.",
+    "Fun fact: I've never once checked my phone during a session.",
+    "I don't judge. Unless you say you're a cat person.",
+    "The mailman is the real villain in most of my patients' stories.",
+    "Bark twice if you feel personally attacked by your own thoughts.",
+    "I believe every problem can be solved with a nap and a treat.",
   ];
 
-  let respIdx = 0, quoteIdx = 0;
-  const quoteEl = document.getElementById('quote');
+  let apiKey = localStorage.getItem('dogterapy_key') || '';
+  let conversationHistory = [];
+  let quoteIdx = 0;
 
+  // ── ELEMENTS ──
+  const modal     = document.getElementById('modal');
+  const apiToggle = document.getElementById('apiToggle');
+  const apiInput  = document.getElementById('apiKey');
+  const quoteEl   = document.getElementById('quote');
+  const log       = document.getElementById('log');
+  const textarea  = document.getElementById('input');
+  const sendBtn   = document.getElementById('sendBtn');
+  const moodBar   = document.getElementById('moodBar');
+
+  // ── API KEY ──
+  function updateApiState() {
+    if (apiKey) {
+      apiToggle.textContent = '\u2705 connected';
+      apiToggle.classList.add('connected');
+    } else {
+      apiToggle.textContent = '\u{1F511} set api key';
+      apiToggle.classList.remove('connected');
+    }
+  }
+  updateApiState();
+
+  apiToggle.addEventListener('click', () => {
+    apiInput.value = apiKey;
+    modal.classList.add('open');
+    setTimeout(() => apiInput.focus(), 100);
+  });
+
+  document.getElementById('modalCancel').addEventListener('click', () => modal.classList.remove('open'));
+  document.getElementById('modalSave').addEventListener('click', () => {
+    apiKey = apiInput.value.trim();
+    localStorage.setItem('dogterapy_key', apiKey);
+    modal.classList.remove('open');
+    updateApiState();
+  });
+
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+
+  // ── IDLE QUOTES ──
   setInterval(() => {
     quoteEl.style.opacity = '0';
     quoteIdx = (quoteIdx + 1) % idleQuotes.length;
-    setTimeout(() => { quoteEl.textContent = idleQuotes[quoteIdx]; quoteEl.style.opacity = '1'; }, 600);
-  }, 6000);
+    setTimeout(() => { quoteEl.textContent = idleQuotes[quoteIdx]; quoteEl.style.opacity = '1'; }, 500);
+  }, 5000);
 
-  const log = document.getElementById('log');
+  // ── MOOD BAR ──
+  moodBar.addEventListener('click', e => {
+    const mood = e.target.dataset.mood;
+    if (!mood) return;
+    const moodMessages = {
+      anxious: "Everything feels like it's spinning and I can't make it stop.",
+      sad:     "I'm feeling really down today. Not sure why.",
+      angry:   "I'm frustrated and angry and I don't know what to do with it.",
+      confused:"I have no idea what I'm doing with my life right now.",
+      meh:     "I'm not great, not terrible. Just... existing.",
+      okay:    "Things are actually okay. Just wanted to check in.",
+      good:    "I'm feeling pretty good today, honestly!",
+    };
+    textarea.value = moodMessages[mood];
+    textarea.focus();
 
+    // animate the clicked emoji
+    e.target.style.transform = 'scale(1.4) rotate(-10deg)';
+    e.target.style.filter = 'none';
+    setTimeout(() => {
+      e.target.style.transform = '';
+      e.target.style.filter = '';
+    }, 400);
+  });
+
+  // ── CHAT ──
   function addEntry(who, text) {
     const el = document.createElement('div');
     el.className = `log-entry ${who}`;
-    el.innerHTML = `<div class="who">${who === 'user' ? 'You' : 'Your Therapist'}</div>${text}`;
+    const label = who === 'user' ? 'You' : '\u{1F43E} Dr. Bork';
+    el.innerHTML = `<div class="who">${label}</div><div class="msg">${text}</div>`;
+    log.insertBefore(el, log.firstChild);
+    return el;
+  }
+
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'typing-indicator';
+    el.id = 'typing';
+    el.innerHTML = `<div class="typing-dots"><span></span><span></span><span></span></div> <em>Dr. Bork is thinking...</em>`;
     log.insertBefore(el, log.firstChild);
   }
 
-  function handleSubmit() {
-    const inp = document.getElementById('input');
-    const text = inp.value.trim();
-    if (!text) return;
-    addEntry('user', text);
-    inp.value = '';
-    setTimeout(() => {
-      const resp = responses[respIdx % responses.length];
-      respIdx++;
-      addEntry('dog', resp);
-      quoteEl.style.opacity = '0';
-      setTimeout(() => {
-        quoteEl.textContent = resp.length > 72 ? resp.slice(0, 70) + '…' : resp;
-        quoteEl.style.opacity = '1';
-      }, 600);
-    }, 900 + Math.random() * 800);
+  function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
   }
 
-  document.getElementById('sendBtn').addEventListener('click', handleSubmit);
-  document.getElementById('input').addEventListener('keydown', e => {
-    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleSubmit();
+  // ── AI CALL ──
+  async function getAIResponse(userMsg) {
+    conversationHistory.push({ role: 'user', content: userMsg });
+
+    // keep last 20 messages for context
+    if (conversationHistory.length > 20) {
+      conversationHistory = conversationHistory.slice(-20);
+    }
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 300,
+          system: SYSTEM_PROMPT,
+          messages: conversationHistory,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `API error ${res.status}`);
+      }
+
+      const data = await res.json();
+      const reply = data.content[0].text;
+      conversationHistory.push({ role: 'assistant', content: reply });
+      return reply;
+    } catch (err) {
+      conversationHistory.pop(); // remove failed user message
+      throw err;
+    }
+  }
+
+  // ── FALLBACK (no key) ──
+  const fallbackResponses = [
+    "Look, I'd love to give you a deeply personalized response, but someone hasn't given me an API key yet. It's like asking a dog to fetch without throwing the ball. \u{1F511}\u{1F449} Hit that button up top.",
+    "My brain is powered by an API key I don't have yet. Right now I'm running on pure vibes and kibble. Hook me up? \u{1F446}",
+    "I'm literally just a very pretty loading screen until you add an API key. I can sit, I can stay, but I can't think. Top right corner, friend.",
+    "I want to help. I really do. But without an API key, all I can offer is a sympathetic head tilt. \u{1F436}\u{1F4AD}",
+    "You know what would make this therapy session 100x better? An Anthropic API key. Just saying. \u{1F511}",
+  ];
+  let fallbackIdx = 0;
+
+  // ── SUBMIT ──
+  async function handleSubmit() {
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    addEntry('user', text);
+    textarea.value = '';
+    sendBtn.disabled = true;
+
+    if (!apiKey) {
+      showTyping();
+      await new Promise(r => setTimeout(r, 800));
+      removeTyping();
+      addEntry('dog', fallbackResponses[fallbackIdx % fallbackResponses.length]);
+      fallbackIdx++;
+      sendBtn.disabled = false;
+      return;
+    }
+
+    showTyping();
+
+    try {
+      const reply = await getAIResponse(text);
+      removeTyping();
+      addEntry('dog', reply);
+    } catch (err) {
+      removeTyping();
+      addEntry('dog', `*scratches ear nervously* Something went wrong: ${err.message}. Maybe check that API key?`);
+    }
+
+    sendBtn.disabled = false;
+    textarea.focus();
+  }
+
+  sendBtn.addEventListener('click', handleSubmit);
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      handleSubmit();
+    }
   });
 
-  // Speech
-  const micBtn   = document.getElementById('micBtn');
-  const micLabel = document.getElementById('micLabel');
-  const textarea = document.getElementById('input');
+  // ── SPEECH ──
+  const micBtn  = document.getElementById('micBtn');
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SR) {
     micBtn.style.opacity = '0.25';
     micBtn.style.cursor = 'not-allowed';
-    micLabel.textContent = 'n/a';
   } else {
     const recog = new SR();
     recog.continuous = false;
@@ -661,12 +867,7 @@
       listening ? recog.stop() : (finalT = textarea.value, recog.start());
     });
 
-    recog.addEventListener('start', () => {
-      listening = true;
-      micBtn.classList.add('listening');
-      micLabel.textContent = '···';
-    });
-
+    recog.addEventListener('start', () => { listening = true; micBtn.classList.add('listening'); });
     recog.addEventListener('result', e => {
       let interim = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -674,19 +875,8 @@
       }
       textarea.value = finalT + interim;
     });
-
-    recog.addEventListener('end', () => {
-      listening = false;
-      micBtn.classList.remove('listening');
-      micLabel.textContent = 'speak';
-      textarea.value = finalT.trim();
-    });
-
-    recog.addEventListener('error', () => {
-      listening = false;
-      micBtn.classList.remove('listening');
-      micLabel.textContent = 'speak';
-    });
+    recog.addEventListener('end', () => { listening = false; micBtn.classList.remove('listening'); textarea.value = finalT.trim(); });
+    recog.addEventListener('error', () => { listening = false; micBtn.classList.remove('listening'); });
   }
 </script>
 </body>
