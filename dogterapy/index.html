@@ -471,6 +471,19 @@
       border-left: 2px solid var(--accent-dim);
       margin-right: 40px;
       border-bottom-left-radius: 4px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .dog-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1.5px solid var(--accent-dim);
+      margin-top: 2px;
     }
 
     .who {
@@ -566,9 +579,9 @@
 <div class="hero">
   <div class="portrait-ring">
     <img class="portrait-img" id="dog"
-         src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fapp-uploads.krea.ai%2Fpublic%2Fae709f7c-3131-4d38-a5e7-6a9c0e95ab0c-image.png"
+         src="https://i.pinimg.com/736x/19/1c/84/191c84af6327227c337a19dd158c9657.jpg"
          alt="Your therapist (who happens to be a very good boy)" />
-    <div class="badge">&#x1F393; Certified Good Boy</div>
+    <div class="badge">LMK YOUR PROBLEMS</div>
   </div>
 
   <h1 class="hero-title">Dog<em>Terapy</em></h1>
@@ -595,13 +608,13 @@
 <div class="session-wrap">
   <div class="session-label">
     <div class="live-dot"></div>
-    Session open &mdash; the couch is yours
+    Open up to dog &mdash; Trust dog
   </div>
 
   <div class="input-area">
     <textarea id="input" placeholder="Tell me what's bugging you. Unless it's an actual bug, then I'm interested for different reasons..."></textarea>
     <div class="input-bottom">
-      <span class="input-hint">ctrl+enter to send</span>
+      <span class="input-hint">enter to send &middot; shift+enter for new line</span>
       <div class="input-actions">
         <button class="mic-btn" id="micBtn" title="Speak">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -734,11 +747,16 @@ Never break character. You are a dog. A very good, very smart dog.`;
   });
 
   // ── CHAT ──
+  const DOG_IMG = 'https://i.pinimg.com/736x/19/1c/84/191c84af6327227c337a19dd158c9657.jpg';
+
   function addEntry(who, text) {
     const el = document.createElement('div');
     el.className = `log-entry ${who}`;
-    const label = who === 'user' ? 'You' : '\u{1F43E} Dr. Bork';
-    el.innerHTML = `<div class="who">${label}</div><div class="msg">${text}</div>`;
+    if (who === 'dog') {
+      el.innerHTML = `<img class="dog-avatar" src="${DOG_IMG}" alt="Dog" /><div class="dog-body"><div class="who">\u{1F43E} Dr. Bork</div><div class="msg">${text}</div></div>`;
+    } else {
+      el.innerHTML = `<div class="who">You</div><div class="msg">${text}</div>`;
+    }
     log.insertBefore(el, log.firstChild);
     return el;
   }
@@ -843,7 +861,7 @@ Never break character. You are a dog. A very good, very smart dog.`;
 
   sendBtn.addEventListener('click', handleSubmit);
   textarea.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
     }
