@@ -89,9 +89,13 @@ body {
 .nav-links a:hover { color: var(--text); }
 
 .nav-lang {
+  display: flex; align-items: center; gap: 0.4rem;
   font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em;
   color: var(--text-muted); white-space: nowrap; margin-left: 0.5rem;
+  transition: color 0.2s;
 }
+.nav-lang:hover { color: var(--text); }
+.nav-flag { width: 18px; height: 13px; border-radius: 1px; flex-shrink: 0; }
 
 .nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.2rem; cursor: pointer; }
 
