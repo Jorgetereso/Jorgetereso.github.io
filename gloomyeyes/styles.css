@@ -345,6 +345,8 @@ body {
   font-family: var(--font-heading); font-weight: 900;
   font-size: clamp(2rem, 4vw, 3.2rem); color: var(--text-light);
   letter-spacing: 0.04em; margin-bottom: 2.5rem; line-height: 1.1;
+  position: sticky; top: 60px; z-index: 50;
+  background: inherit; padding: 1rem 0; margin-top: -1rem;
 }
 
 .section-intro {
