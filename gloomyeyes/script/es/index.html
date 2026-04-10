@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gloomy Eyes — Guion 007 — Borrador de Trabajo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../script.css" />
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="../../es/" class="nav-back">&larr; Gloomy Eyes</a>
+    <a href="#hero" class="nav-logo">GUION 007</a>
+    <ul class="nav-links">
+      <li><a href="#intro">Intro</a></li>
+      <li><a href="#sc01">01</a></li>
+      <li><a href="#sc02">02</a></li>
+      <li><a href="#sc03">03</a></li>
+      <li><a href="#sc04">04</a></li>
+      <li><a href="#sc05">05</a></li>
+      <li><a href="#sc06">06</a></li>
+      <li><a href="#sc07">07</a></li>
+      <li><a href="#sc08">08</a></li>
+      <li><a href="#outro">Outro</a></li>
+    </ul>
+    <div class="nav-langs">
+      <a href="../" class="nav-flag-link" title="English"><svg class="nav-flag" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="#012169"/><path d="M0,0 L20,14 M20,0 L0,14" stroke="#fff" stroke-width="2.8"/><path d="M0,0 L20,14 M20,0 L0,14" stroke="#C8102E" stroke-width="1.4"/><path d="M10,0 V14 M0,7 H20" stroke="#fff" stroke-width="4.2"/><path d="M10,0 V14 M0,7 H20" stroke="#C8102E" stroke-width="2.4"/></svg></a>
+      <a href="#" class="nav-flag-link active" title="Español"><svg class="nav-flag" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#74ACDF"/><rect y="9.33" width="20" height="4.67" fill="#74ACDF"/><circle cx="10" cy="7" r="1.8" fill="#F6B40E" stroke="#85340A" stroke-width="0.3"/></svg></a>
+      <a href="../fr/" class="nav-flag-link" title="Français"><svg class="nav-flag" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="6.67" height="14" fill="#0055A4"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#EF4135"/></svg></a>
+    </div>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="script-hero">
+    <div class="script-hero-inner">
+      <p class="script-eyebrow">
+        <span class="eyebrow-bar"></span>
+        BORRADOR DE TRABAJO &nbsp;·&nbsp; REWRITE 4/2026
+        <span class="eyebrow-bar"></span>
+      </p>
+      <h1 class="script-title">GLOOMY EYES &amp; THE LAST STANDING</h1>
+      <p class="script-subtitle">Experiencia LBE // Guion 007</p>
+
+      <div class="script-meta">
+        <div class="meta-item"><span class="meta-key">Formato</span><span class="meta-val">LBE Inmersivo</span></div>
+        <div class="meta-item"><span class="meta-key">Escenas</span><span class="meta-val">8 + Intro + Outro</span></div>
+        <div class="meta-item"><span class="meta-key">Duración</span><span class="meta-val">~84 MIN</span></div>
+        <div class="meta-item"><span class="meta-key">Estado</span><span class="meta-val">En iteración</span></div>
+      </div>
+
+      <div class="rewrite-notice">
+        <span class="notice-tag">NOTA</span>
+        <p>Este es un borrador vivo. Las secciones marcadas con <span class="inline-tag">REWRITE</span> fueron modificadas en base a las notas de REWRITE 4/2026. El texto original que reemplazan queda conservado como bloque tachado debajo, así podés comparar y revertir si hace falta.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGEND -->
+  <section class="legend-section">
+    <div class="legend-inner">
+      <div class="legend-key"><span class="key-dot key-original"></span><span>Guion 007 Original</span></div>
+      <div class="legend-key"><span class="key-dot key-rewrite"></span><span>Reescrito a partir de las notas de REWRITE 4/2026</span></div>
+      <div class="legend-key"><span class="key-dot key-new"></span><span>Nuevo agregado</span></div>
+    </div>
+  </section>
+
+  <!-- SCRIPT BODY -->
+  <main class="script-body">
+
+    <!-- ============== INTRO ============== -->
+    <article id="intro" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag">INTRO</span>
+        <h2>El Ocultamiento del Sol</h2>
+        <span class="scene-loc">Prólogo en Miniatura de Sombras</span>
+        <span class="scene-duration">~3 MIN</span>
+      </header>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Oscuridad. Un calor lejano y grave late en algún lugar muy distante.</p>
+        <p class="action">The Gravekeeper aparece lentamente, emergiendo de la sombra. Lleva una pequeña lámpara y un puñado de polillas revolotea alrededor de la luz. No tiene nada más — ni escenario, ni proyector. Solo lo que encontró por el cementerio.</p>
+        <p class="action">Apoya la lámpara sobre una piedra lisa. Con gestos lentos y cuidadosos, empieza a contar la historia usando lo que tiene a mano: unos pocos títeres pequeños tallados en hueso y madera, las polillas atraídas por la luz, las sombras que proyectan contra las tumbas.</p>
+        <p class="action">Mientras habla, los títeres empiezan a moverse solos. Las polillas forman patrones. Las sombras toman formas. El cementerio mismo se vuelve el escenario.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Hace mucho tiempo, el sol eligió esconderse.<br>Se refugió muy adentro de las montañas, lejos de todo lo que alguna vez tocó.</p>
+        <p class="dialogue">Sin su luz, la tierra empezó a pudrirse. Los bosques se debilitaron, los animales desaparecieron, y el equilibrio entre los humanos y la naturaleza se derrumbó.</p>
+        <p class="dialogue">De esa oscuridad aparecieron los zombies. No como monstruos, sino como la consecuencia de lo que se había roto.</p>
+        <p class="dialogue">El miedo se expandió rápido, y el Tío lo convirtió en odio.</p>
+        <p class="action">Nos mira — realmente nos mira — por primera vez.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Ustedes son lo que queda ahora. Los últimos zombies sobrevivientes.<br>El Tío los metió bajo tierra, donde se supone que las cosas desaparecen.<br>Sin el sol, ya nada funcionaba bien.</p>
+        <p class="action">Levanta la lámpara de nuevo. Las polillas lo siguen.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Queda una sola chance. Gloomy sigue ahí afuera.<br>Si viene un cambio, va a empezar con él.</p>
+        <p class="action">Hace una pausa y agrega — casi como un comentario al margen, pero con peso:</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Ante la duda… sigan a las luciérnagas.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "Qué el Gravekeeper nos introduzca la historia, usando elementos que tenga a mano, pequeños como una lámpara y unas polillas." + "Ante la duda sigan a las luciérnagas."</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 01 ============== -->
+    <article id="sc01" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag scene-tag-danger">SCENE 01</span>
+        <h2>Las Mazmorras — Orden de Ejecución</h2>
+        <span class="scene-loc">Jaulas Subterráneas + Montacargas</span>
+        <span class="scene-duration">~10 MIN</span>
+      </header>
+
+      <p class="action">Hierro frío. Olor a moho y a óxido. Estamos en jaulas, uno al lado del otro, en la oscuridad. A través de los barrotes — humanos vestidos de conejos montan guardia.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">The Uncle entra con una taza de café en la mano. Toma un sorbo — hace una arcada — lo escupe.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">¿¡Quién hizo este café asqueroso!?</p>
+        <p class="action">Se da vuelta hacia los conejos guardianes.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">¿Fuiste vos? ¿O vos? ¿O VOS?</p>
+        <p class="action">Detrás de él, Nina entra con otra taza. No ve la furia. O hace como que no la ve.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">¡Lo hice yo!</p>
+        <p class="action">El Tío se congela. La furia no se va — se tapa con una sonrisa, rápido, como cuando tapás la comida antes de que lleguen los invitados.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">¡Nina! No lo puedo creer. Qué talento.<br>Siento notas frescas — como madera de ciprés. Liviano. Complejo.<br>Sedoso. Con un dejo largo que queda en la boca.</p>
+        <p class="action">Nina levanta una latita. Lee la etiqueta con voz plana.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">Le puse pomada para zapatos.</p>
+        <p class="action">El Tío aguanta una arcada visible. Traga. Sigue sonriendo.</p>
+        <p class="action">Nina pasa por al lado de él hacia nuestras jaulas. Nos mira. De verdad nos mira. Sin miedo.</p>
+        <p class="action">A sus espaldas, el Tío le alcanza la taza de café a uno de los conejos guardianes. Baja la voz.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Tomátelo. Todo.</p>
+        <p class="action">El conejo mira la taza como si fuera una bala. El Tío no se mueve. Detrás de ellos, Nina ya llegó a los barrotes de nuestra jaula. No ve nada de lo que está pasando.</p>
+        <p class="action">Ella se da vuelta.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">¿Qué les va a pasar a ellos?</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Nada.</p>
+        <p class="action">No la mira cuando lo dice. Sigue con la vista en el conejo que toma el café.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">¿Así que los vas a liberar?</p>
+        <p class="action">El Tío finalmente se da vuelta. La sonrisa desapareció.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Ya estuvieron muertos una vez.<br>Los voy a devolver al lugar que les corresponde.<br>Esta vez, más profundo. Esta vez, para siempre.</p>
+        <p class="action">Nina se aferra a los barrotes. No habla. El Tío sigue.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Mirálos. Son repugnantes.<br>No los puedo ni ver.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">A mí no me parecen tan feos. Ni siquiera me parecen tan distintos.</p>
+        <p class="action">La cara del Tío se tensa. Agarra al conejo guardián más cercano por la capucha y se la arranca de un tirón.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Claro que sí. Somos <em>muy</em> distintos. Estéticamente superiores.</p>
+        <p class="action">Mira la cara del conejo. La cara del conejo es la cosa más espantosa que te podés imaginar. El Tío chilla y le vuelve a calzar la capucha lo más rápido que puede.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Son peligrosos. Son una plaga. Los tenemos que exterminar a todos. A cada uno.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">A mí no me parecen peligrosos.</p>
+        <p class="action">El Tío se da vuelta hacia ella.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Basta.<br>Me tenés harto con tus preguntas. ¿Querés terminar como ellos? ¿Eso querés? ¿Estar MUERTA?</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">¡Yo no hice nada malo!</p>
+        <p class="action">La mano del Tío sale disparada. Le pega una piña en la cara al conejo más cercano — un guardia que no tenía nada que ver con nada. El conejo se desploma.</p>
+        <p class="action">El Tío apunta a Nina. El dedo le tiembla.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Mirá lo que me hacés hacer.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Vos. Llevátela.</p>
+        <p class="action">Un conejo agarra a Nina y empieza a arrastrarla afuera. Ella pelea, pero apenas. Conoce esta pelea.</p>
+        <p class="action">En la puerta, se detiene. Planta los pies. El conejo intenta arrastrarla — ella no se mueve. Se da vuelta hacia el Tío.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">¡Dejálos en paz!</p>
+        <p class="action">Se le quiebra la voz en la última palabra. Sabe lo que le va a costar. Igual lo hace.</p>
+        <p class="action">El Tío se da vuelta hacia nosotros. Lento. El tirano simpático ya no está. Lo que queda es más frío, más callado, y sin piedad.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Mátenlos. Ya.</p>
+        <p class="action">Sale caminando sin mirar atrás.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> Reescritura completa de la escena de las mazmorras a partir de REWRITE 4/2026. El gag del café con pomada, Nina conectada al Tío, el Tío como el violento (le pega al conejo, no a Nina). La última línea de Nina es su sacrificio — defender abiertamente a los zombies delante del régimen — basado en "Pensamiento: Nina ya rebelde, liberándonos... es el la historia suicidándose."</p>
+      </div>
+
+      <div class="beat beat-original">
+        <span class="beat-stamp">CUT</span>
+        <p class="strikethrough">El Tío entra. Está furioso.<br>UNCLE: Cómo es posible. Cómo es que siguen vivos...<br>UNCLE: Qué es esto. Esto es espantoso. ¿Quién hizo este café? <em>(le tira el café al guardia)</em><br>NINA: Me vestí sola.<br>UNCLE: Subí arriba. Andá a hacer algo apropiado. Andá a hacer cosas de chicas.<br>UNCLE: Y estos. ¿A qué hora los ejecutan?<br>BUNNY GUARD: En cinco minutos.<br>UNCLE: ¡Que sea en tres! Y que sea doloroso.</p>
+        <p class="cut-note">Todo este intercambio queda reemplazado por la versión de la pomada de arriba. El beat de "andá a hacer cosas de chicas" desaparece — Nina ya no está en modo rebelde puro. Todavía está adentro del mundo de él, apenas empezando a cuestionarlo.</p>
+      </div>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE — MAJOR</span>
+        <p class="action">Tres conejos guardianes se forman afuera de nuestra jaula. Uno tiene un hacha pesada. Otro tiene un serrucho oxidado que arrastra por el piso detrás suyo. El tercero agarra un driver de golf como si fuera una espada.</p>
+        <p class="action">Detrás de ellos, en el fondo del pasillo, algo gruñe.</p>
+        <p class="action">Dos ojos brillantes aparecen en la oscuridad.</p>
+        <p class="action">Los tres conejos se congelan. Las capuchas giran lentamente hacia el sonido. El gruñido se acerca.</p>
+        <p class="action">El conejo del hacha saca pecho. Intenta parecer valiente. Camina hacia la oscuridad.</p>
+        <p class="action">No vuelve a salir.</p>
+        <p class="action">Se escucha un sonido — corto, húmedo — y después nada.</p>
+        <p class="action">Los otros dos miran hacia la oscuridad. Después se miran entre ellos.</p>
+        <p class="char">SAW BUNNY</p>
+        <p class="dialogue">…andá vos.</p>
+        <p class="char">GOLF BUNNY</p>
+        <p class="dialogue">¿Por qué yo?</p>
+        <p class="char">SAW BUNNY</p>
+        <p class="dialogue">Vos tenés el arma más grande.</p>
+        <p class="char">GOLF BUNNY</p>
+        <p class="dialogue">Es un palo de golf.</p>
+        <p class="char">SAW BUNNY</p>
+        <p class="dialogue">Igual es más grande.</p>
+        <p class="action">Una pausa larga. Ninguno se mueve.</p>
+        <p class="char">GOLF BUNNY</p>
+        <p class="dialogue">…¿y si vamos juntos?</p>
+        <p class="char">SAW BUNNY</p>
+        <p class="dialogue">Juntos. Sí. Juntos.</p>
+        <p class="action">Estiran la mano y se agarran. Dan un paso hacia la oscuridad. La oscuridad se los traga de una. Dos sonidos chiquitos. Después nada.</p>
+        <p class="action">Un viento recorre la mazmorra. Lo sentimos en la cara. Las antorchas se van apagando una por una, todo a lo largo del pasillo.</p>
+        <p class="action">La mazmorra queda a oscuras.</p>
+        <p class="action">Justo al lado de nuestra jaula, en la oscuridad — un hacha golpea el hierro. Una vez. Dos. La cerradura se rompe. La puerta se abre.</p>
+        <p class="action">No lo vemos. Pero lo sentimos. Está acá al lado nuestro. Mirándonos. Esperando.</p>
+        <p class="action">Después se mueve. Rápido. No nos espera. Seguimos el sonido de sus pasos más y más profundo en la oscuridad.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "Cuando se quedan los tres conejos, uno con un hacha y el otro con un serrucho y el tercero con un driver de golf... uno avanza y muere rápido... los otros dos se miran: anda vos primero / no, anda vos mejor / bueno vamos juntos. Y mueren los dos juntos." SAW BUNNY es el cobarde un poco más astuto — arma un caso lógico para mandar primero a Golf. GOLF BUNNY es el cobarde un poco más valiente — propone ir juntos, que en realidad es admitir que solo no puede.</p>
+      </div>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE — NEW SEQUENCE</span>
+        <p class="action">Avanzamos por un túnel de piedra, alejándonos de las mazmorras.</p>
+        <p class="action">El túnel desemboca en un enorme pozo vertical. Un montacargas de madera gigante está ahí, a nuestro nivel. Golpeado. Antiguo. Lo bastante grande como para entrar todos. Subimos.</p>
+        <p class="action">Arriba nuestro, el pozo se pierde en la oscuridad.</p>
+        <p class="action">El montacargas empieza a subir. Lento.</p>
+
+        <p class="action">Mientras subimos, vamos pasando nivel tras nivel del mundo subterráneo del Tío.</p>
+
+        <p class="char">NIVEL — LA MINA</p>
+        <p class="action">Una operación minera enorme. Conejos humanos pican las paredes y empujan carros de piedra. Están buscando el sol.</p>
+
+        <p class="char">NIVEL — EL MERCADO NOCTURNO</p>
+        <p class="action">Las viviendas de los conejos y un comedor comunitario, sacados directamente de un mercado nocturno taiwanés. Carritos de comida humeando. Brochettes. Dumplings. Fideos.</p>
+
+        <p class="char">NIVEL — LOS GUARDIAS</p>
+        <p class="action">Un puesto de guardia. Un conejo de turno levanta la vista. Nos ve en el montacargas subiendo. Vuelve a mirar para confirmar. Toca la alarma.</p>
+
+        <p class="action">Empiezan a volar flechas hacia nosotros desde las plataformas. Algunas pegan en la madera. Otras nos pegan a nosotros. No sentimos nada.</p>
+
+        <p class="action">Entonces — Gloomy se mueve.</p>
+        <p class="action">No lo vemos. Vemos lo que hace. Un conejo cae desde una plataforma. Después otro. Después otro. Se mueve entre las filas como una sombra. Solo lo podemos rastrear por los conejos que caen.</p>
+        <p class="action">El montacargas sigue subiendo.</p>
+        <p class="action">El pozo se abre contra la piedra.</p>
+        <p class="action">Por primera vez, salimos al exterior.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "We walk through a small tunnel in the caves and we get to a large freight wooden elevator... we go up through many floors. We see the bunnies in a kind of mine where they are looking for the sun. We see how they live, how they eat (taiwanese night market) and when the bunnies realize we are escaping they start shooting arrows at us. Gloomy defends us by attacking them all from behind, in a ninja style sneak attack. We can follow his actions until we reach the top. We go outside for the first time."</p>
+        <p class="interact"><strong>Interactividad:</strong> Las flechas vuelan hacia nosotros en el montacargas — las podemos agarrar en el aire, arrancárnoslas del cuerpo zombie y devolverlas. No sentimos dolor.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 02 ============== -->
+    <article id="sc02" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag">SCENE 02</span>
+        <h2>Primera Luz — Encuentro con Gloomy</h2>
+        <span class="scene-loc">Superficie + Cruce del Río</span>
+        <span class="scene-duration">~8 MIN</span>
+      </header>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Estamos afuera.</p>
+        <p class="action">El pozo del montacargas queda atrás. El aire acá arriba es distinto — frío, húmedo, lleno de sonidos que hace mucho no escuchábamos. Hojas moviéndose. Viento entre los árboles. Algo vivo.</p>
+        <p class="action">Durante un largo momento, nadie se mueve. Parpadeamos frente a un mundo que nos habíamos olvidado que existía. No hay sol. El cielo es gris. Pero sigue para siempre.</p>
+        <p class="action">Y entonces, atrás nuestro, lo sentimos.</p>
+        <p class="action">Estuvo con nosotros todo el tiempo. Ahora, por primera vez, aparece a la vista.</p>
+        <p class="action">Gloomy.</p>
+        <p class="action">Es chiquito. Encorvado. La ropa que lleva está cosida con pedazos que fue encontrando. Los ojos le brillan suavemente. El cuerpo está tenso, como listo para salir corriendo. Todavía tiene en la mano el hacha con la que nos liberó.</p>
+        <p class="action">Nos mira — a los de su propia especie — como si no estuviera seguro de qué somos. ¿Amigos? ¿Enemigos? Estuvo solo tanto tiempo que ya no se acuerda de la diferencia.</p>
+        <p class="action">Sisea bajito. No nos movemos.</p>
+        <p class="action">Se da vuelta y nos hace un gesto para que lo sigamos. Mantiene distancia. No deja que ninguno se le acerque.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> Scene 02 reencuadrada. Ahora que Gloomy ya nos liberó en Scene 01 (sin que lo veamos), Scene 02 se vuelve el momento en que finalmente le vemos la cara. El combate de "cae desde arriba y pelea contra conejos" se elimina — todo eso ya lo hizo en el montacargas. Esta escena es la revelación cinematográfica + el comienzo de la confianza.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">Nos guía cuesta abajo, por una serie de túneles rocosos. El sonido del agua se hace más fuerte. Los túneles se abren a un río tranquilo, donde hay una balsa de madera apoyada en la orilla, medio sacada del agua. Él preparó esto. Estaba listo para nosotros.</p>
+        <p class="action">Subimos a la balsa. La corriente nos lleva. Las paredes de la cueva se van quedando atrás, y nos metemos a la deriva en el bosque de Alishan.</p>
+        <p class="action">Cipreses altos flanquean el río. La luz gris atraviesa el dosel y tiembla sobre el agua. Podemos escuchar pájaros. Pájaros de verdad. Por primera vez desde las mazmorras, el mundo se siente vivo.</p>
+        <p class="interact"><strong>Interactividad:</strong> Gloomy nos va a hacer señas para que inclinemos el peso hacia un lado o el otro de la balsa para pilotearla por la corriente.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 03 ============== -->
+    <article id="sc03" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag">SCENE 03</span>
+        <h2>La Casa de Gloomy — Malas Noticias</h2>
+        <span class="scene-loc">Refugio + Cementerio</span>
+        <span class="scene-duration">~10 MIN</span>
+      </header>
+
+      <p class="action">El grupo llega a la casa de Gloomy. La fue armando él mismo con el tiempo, usando lo que había alrededor. Plataformas, tablones y rampas apilados en capas disparejas.</p>
+      <p class="action">Cuando entramos, un pequeño jabalí salvaje sale corriendo hacia Gloomy. Por un instante parece agresivo, pero enseguida queda claro que están jugando. El jabalí lo empuja, da vueltas alrededor y después se calma, moviendo la cola antes de acercarse a olfatear al grupo. El animal es claramente su mascota.</p>
+      <p class="action">Adentro de la casa, los dibujos cubren las paredes y todas las superficies. Muchos muestran a Nina. Uno está sobre una mesa y Gloomy, avergonzado, trata de esconderlo a las apuradas. Otros dibujos muestran una figura grande y brillante disparando rayos de luz, dando pistas de su sueño de liberar al sol.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">El grupo sale hacia el cementerio cercano. La luz del bosque se atenúa un poco. The Gravekeeper ya está ahí, arrodillado al lado de un pozo abierto en la tierra. Estuvo cavando.</p>
+        <p class="action">Alrededor suyo, sobre la tierra, hay objetos que desenterró — o que quizás está por enterrar. Un cráneo chiquito de pájaro. Una foto descolorida. Un papel doblado. No los vuelve a guardar. No se los lleva a ningún lado. Los deja ahí nomás frente a él, sin tocarlos.</p>
+        <p class="action">Gloomy se le acerca con cautela. El Gravekeeper levanta la vista.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Así que. Lo lograron.</p>
+        <p class="action">Mira más allá de Gloomy, hacia el bosque.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">El Tío sabe lo que hizo Nina. Se enteró de que los ayudó a escapar.<br>La capturaron. La tiene encerrada.</p>
+        <p class="action">Pausa.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Está furioso. No se va a detener ahora.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Pero Nina no es el verdadero motivo por el que tienen que moverse.<br>El Tío construyó una máquina. Funciona sobre el tren. La locomotora misma es el arma —<br>chupa energía de todo lo que atraviesa. De las raíces. Del suelo. Del sol.</p>
+        <p class="action">Hace un gesto hacia las vías en la distancia.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Si no destruyen esa locomotora, no va a haber sol que despertar.<br>Tienen que subir al tren. Liberen a Nina si pueden. Pero la locomotora va primero.</p>
+        <p class="action">Agarra un bulto de viejos uniformes de conejo y los reparte.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Así ya no pueden seguir moviéndose. No por su territorio.<br>Con esto van a poder caminar entre ellos.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "El gravekeeper nos da la misión, que tenemos que ir a destruir la locomotora." + "El entierra cosas sabe que pasó con el sol. Las entierra pero no las desentierra." — La misión ahora es clara y física: destruir la locomotora. El gesto del Gravekeeper de desenterrar cosas pero nunca llevárselas es la pista visual de que SABE más de lo que dice.</p>
+      </div>
+
+      <div class="beat beat-original">
+        <span class="beat-stamp">CUT</span>
+        <p class="strikethrough">Original: El Gravekeeper solo dice "Capturaron a Nina" y entrega los uniformes. Sin misión. Sin locomotora. Sin motivo para arriesgarlo todo más allá de rescatar a una chica.</p>
+        <p class="cut-note">La misión era implícita. Ahora es explícita: destruir el arma que está matando al mundo. Rescatar a Nina se vuelve una complicación, no el objetivo.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">Sigue un breve momento de entrenamiento en el que el grupo intenta pararse, moverse y comportarse como humanos. Es incómodo y raro, pero necesario.</p>
+        <p class="action">Gloomy comparte un disfraz con el jabalí, parándose encima de él para parecer más alto. Se tambalea y pelea por mantener el equilibrio, lo que hace que todo el intento sea un poco ridículo.</p>
+        <p class="action">Cuando el grupo está listo, el Gravekeeper se corre a un costado y toca una melodía corta e innecesaria en la armónica. No cumple ninguna función real.</p>
+        <p class="action">En la distancia, el sonido del tren empieza a acercarse.</p>
+        <p class="interact"><strong>Interactividad:</strong> Tenemos que copiar la coreografía del Gravekeeper para parecer humanos en vez de zombies.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 04 ============== -->
+    <article id="sc04" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag scene-tag-danger">SCENE 04</span>
+        <h2>El Tren — Encubiertos</h2>
+        <span class="scene-loc">Ferrocarril del Bosque de Alishan</span>
+        <span class="scene-duration">~11 MIN</span>
+      </header>
+
+      <p class="action">El grupo se infiltra en el tren disfrazado de conejos. La plataforma está movida y controlada al detalle. Los soldados se mueven en fila, revisando posiciones y atentos a cualquier cosa fuera de lugar.</p>
+      <p class="action">Antes de subir, el Gravekeeper nos lleva a un costado para una última advertencia.</p>
+      <p class="char">GRAVEKEEPER</p>
+      <p class="dialogue">La locomotora está adelante. A Nina la tienen en el último vagón.<br>Van a tener que elegir. O encontrar la forma de hacer las dos cosas.<br>Sigan a Gloomy. Él los va a guiar.</p>
+
+      <p class="action">El tren empieza a moverse. Adentro, el espacio se siente angosto y tenso. Seguimos a Gloomy mientras nos guía por los vagones, chocando suavemente contra las paredes y los marcos de las puertas, obviamente no hechos para este tipo de disfraz.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">En uno de los vagones nos encontramos con el Tío. Pero esta vez, no está solo.</p>
+        <p class="action">Nina está con él. Parada al lado. Callada. No parece una prisionera. Parece alguien que vive a la sombra de este tipo y hace mucho que vive ahí. La cara no le dice nada.</p>
+        <p class="action">El Tío está inspeccionando el extraño dispositivo mecánico que zumba suavemente y palpita con energía. Se da vuelta hacia Nina con una ternura repentina — del tipo de ternura que no le queda bien en la cara.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Miralo, Nina. Mirá lo que vamos a hacer.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Cuando esto esté terminado, el mundo va a ser nuestro otra vez. <em>Mío.</em> Nuestro.<br>Voy a traer de vuelta el sol. <em>Yo</em> voy a salvar al mundo.<br>Y vos vas a estar parada al lado mío cuando pase.</p>
+        <p class="action">Nina no dice nada. Los ojos le vuelan — solo por un segundo — hacia donde estamos parados con nuestros disfraces. Nos ve. Nosotros la vemos verlos.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Me perdonás, ¿no? Por lo de antes. Sabés que si me enojo es porque te quiero.</p>
+        <p class="action">Es lo más expuesto que lo vamos a ver. Un destello de algo casi humano. Y después se va.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "El uncle es demasiado flat, necesita más color. Algo más con Nina. Momento vulnerable y medio weird al principio. El tío le dice a Nina que él va a salvar el mundo." — Tres segundos de vulnerabilidad, afecto convertido en arma, y una autoimagen de salvador. Ahora no es una caricatura. Es un hombre que se cree el héroe.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">El Tío ajusta partes del dispositivo, volviendo a su modo habitual.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Demasiado brillo. Se ve mal. Arreglálo.</p>
+        <p class="action">De repente, se detiene y olfatea el aire. La expresión le cambia al toque.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">¿Qué es ese olor?<br>¡Apestan! ¡Todos apestan! Esto es asqueroso.</p>
+        <p class="action">Grita que los conejos tendrían que lavarse, que esta mugre es inaceptable. Sin aviso, agarra a uno de los soldados y lo patea afuera del tren en movimiento.</p>
+        <p class="action">El vagón queda en silencio.</p>
+        <p class="action">Aterrados de que nos descubran, seguimos avanzando, bien pegados a Gloomy y evitando el contacto visual.</p>
+        <p class="action">En un momento, el camino interior queda bloqueado. La única forma de seguir es por afuera. Salimos al borde angosto exterior del tren mientras atraviesa el bosque. El viento es fuerte, el suelo queda muy abajo.</p>
+        <p class="action">Un paso en falso y caés.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 05 ============== -->
+    <article id="sc05" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag scene-tag-magic">SCENE 05</span>
+        <h2>Nina — Magia Interrumpida</h2>
+        <span class="scene-loc">Cruce Roto</span>
+        <span class="scene-duration">~10 MIN</span>
+      </header>
+
+      <p class="action">El grupo llega al último vagón al final del tren. Adentro, Nina está encerrada, custodiada y atada.</p>
+      <p class="action">Gloomy entra primero y la libera. Cuando se le aparece por atrás, Nina reacciona por instinto y lo tira al piso. Se congela cuando se da cuenta de quién es.</p>
+      <p class="char">NINA</p>
+      <p class="dialogue">Pará. ¿Gloomy?</p>
+      <p class="action">Mira alrededor y por fin entiende lo que está pasando.</p>
+      <p class="char">NINA</p>
+      <p class="dialogue">Volviste de verdad. ¡Todos volvieron!</p>
+      <p class="char">NINA</p>
+      <p class="dialogue">Vienen, nos tenemos que mover.</p>
+      <p class="action">Sin dudarlo, va al mecanismo de enganche y desacopla el vagón del resto del tren. El tren sigue avanzando mientras el vagón frena, deteniéndose en lo profundo del bosque.</p>
+      <p class="action">Salimos y nos alejamos de las vías, pero el camino por delante está roto. Parte puente, parte ruina, suspendido sobre el suelo del bosque.</p>
+      <p class="action">Gloomy salta primero y cae del otro lado. Se da vuelta y le estira la mano a Nina.</p>
+      <p class="action">Cuando las manos se tocan, algo cambia.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Por primera vez, vemos lo que pasa cuando se conectan. La luz se expande por la estructura rota. El puente empieza a reconstruirse solo, a través de energía natural. Las hojas se elevan en el aire. Las flores se abren y sueltan los pétalos, moviéndose en patrones lentos y coordinados alrededor de ellos.</p>
+        <p class="action">Y entonces — algo inesperado. El jabalí, que estuvo trotando al lado de Gloomy todo este tiempo, de repente también se despega del suelo. Flota hacia arriba, las patas pedaleando en el aire, completamente confundido. Gloomy se da cuenta de que se le va y con delicadeza estira la mano, lo baja con una mientras sigue agarrando a Nina con la otra.</p>
+        <p class="action">El jabalí aterriza firme, resopla y enseguida se mete entre Nina y Gloomy. Levanta la vista hacia Nina. No le confía. Pisa fuerte una vez, una mini advertencia. Gloomy le apoya la mano en la cabeza y el jabalí gruñe pero se queda.</p>
+        <p class="action">Por un momento, todo está quieto.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "Cuando Nina y Gloomy flotan por primera vez, el chochan también flota y lo baja a Gloomy. El chochan desconfía de Nina." — Alivio cómico que además siembra conflicto emocional. La desconfianza del jabalí hacia Nina es un pequeño recordatorio visual de que no todos están convencidos — y más adelante, esa desconfianza va a resultar justificada.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">De a poco, la luz se apaga. Gloomy y Nina vuelven a bajar al suelo, aterrizando sobre una superficie ahora cubierta de hojas secas. Alrededor nuestro, algo se mueve entre las sombras. Ojos enormes se abren en la oscuridad. Los mismos ladridos aterradores y gruñidos profundos que escuchamos en la mazmorra resuenan cerca.</p>
+        <p class="action">Las mascotas del Tío.</p>
+        <p class="action">Las formas quedan difusas en la oscuridad, mirándonos, claramente hambrientas y listas para atacar. Nina se pone más cerca detrás de Gloomy.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">Esos bichos están salvajes. Están muertos de hambre.<br>Si nos quedamos acá, morimos. No hay salida.</p>
+        <p class="action">A medida que los leopardos se acercan y parece imposible escapar, se abre un portal cerca. Del otro lado, podemos ver otra parte del mundo.</p>
+        <p class="action">No hay tiempo para dudar.</p>
+        <p class="action">Nos metemos por el portal juntos.</p>
+        <p class="interact"><strong>Interactividad:</strong> Podemos tocar las flores cuando pasan cerca, haciendo que suelten los pétalos.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 06 ============== -->
+    <article id="sc06" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag scene-tag-nature">SCENE 06</span>
+        <h2>Pacha — Lo Que Todavía Vive</h2>
+        <span class="scene-loc">El Santuario de Pacha</span>
+        <span class="scene-duration">~12 MIN</span>
+      </header>
+
+      <p class="action">Llegamos al interior de la cueva de Pacha, un lugar lleno de vida y movimiento. El espacio se siente crecido en vez de construido, como el interior del Árbol de las Tres Generaciones. Raíces se retuercen por las paredes y el techo. Las estanterías están cubiertas de enredaderas, sosteniendo objetos raros recolectados a lo largo del tiempo.</p>
+      <p class="action">Entre las raíces, aparece Pacha. Se mueve lento, con el cuerpo doblado y frágil, como una mujer muy mayor. Su energía cambia todo el tiempo. Un momento está filosa e intensa, y al siguiente se pone dormilona y empieza a roncar en la mitad de una frase.</p>
+      <p class="action">El jabalí trota directo hacia Pacha y se frota contra su pierna. Ella sonríe por primera vez y le rasca las orejas. Ya se conocen. Se conocen bien.</p>
+      <p class="rewrite-note"><strong>Fuente:</strong> "El chancho y pacha se llevan muy bien."</p>
+
+      <p class="char">PACHA</p>
+      <p class="dialogue">Ay. Mirátelos.<br>Ya me estaba preguntando cuándo iban a aparecer.<br>Vengan, vengan más cerca.<br>Los veo cansados…</p>
+      <p class="char">PACHA</p>
+      <p class="dialogue">El sol no se fue.<br>Todos creen que sí, pero no.</p>
+      <p class="action">De golpe se endereza, con energía.</p>
+      <p class="char">PACHA</p>
+      <p class="dialogue">Sigue vivo. Su energía nunca se fue.<br>Se fue para abajo.</p>
+      <p class="action">La voz se le suaviza. Se dispersa.</p>
+      <p class="char">PACHA</p>
+      <p class="dialogue">Debajo del bosque. En las raíces. En los árboles…</p>
+      <p class="action">Se detiene, cierra los ojos. Nina suavemente la pincha con un palito para despertarla. Pacha parpadea, se vuelve a enfocar.</p>
+      <p class="char">PACHA</p>
+      <p class="dialogue">Cierto. ¡Eso! Solo, no puede despertarse.</p>
+      <p class="action">Mira al grupo.</p>
+      <p class="char">PACHA</p>
+      <p class="dialogue">Humanos y zombies. ¡Juntos! Esa es la única manera.</p>
+      <p class="action">Nos muestra cómo conectar con el bosque. Cómo activar su energía. Aprendemos a llamar a las almas de los árboles y a sentir cómo la naturaleza responde cuando actuamos como grupo en vez de como individuos.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Pacha agarra dos piedritas de un estante tejido entre las raíces. Las sostiene en alto.</p>
+        <p class="char">PACHA</p>
+        <p class="dialogue">Los portales que vienen usando —<br>No son magia. No son regalos.<br>Son grietas. Heridas del mundo que se abrieron cuando el sol se fue.</p>
+        <p class="action">Choca las piedras suavemente una contra la otra. Una chispita queda suspendida en el aire.</p>
+        <p class="char">PACHA</p>
+        <p class="dialogue">Cuando pasás por uno, el mundo se acuerda un poco menos de vos.<br>Ese es el precio. Así funcionan.<br>Cada puerta cuesta algo.</p>
+        <p class="action">Nina baja la mirada. Ya usó muchos de esos portales.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "Que pacha explique biennn que son los portales." — Estableciendo las reglas de los portales. Ahora tienen un precio. El público ya no puede suponer que son una huida gratis.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">A medida que la lección sigue, se juntan luciérnagas, flotando por el espacio y moviéndose lento hacia la salida, guiándonos hacia afuera.</p>
+      </div>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE — MAJOR</span>
+        <p class="action">De repente, los escuchamos venir.</p>
+        <p class="action">No el Tío. Las mascotas. Los mismos ladridos aterradores del puente — más cerca ahora. Mucho más cerca.</p>
+        <p class="action">Y detrás de los ladridos: soldados conejo. Botas pesadas. Armas.</p>
+        <p class="action">Pacha se da vuelta hacia Nina. Tiene la cara triste. No sorprendida. <em>Triste.</em></p>
+        <p class="char">PACHA</p>
+        <p class="dialogue"><em>(suavemente)</em> Siguieron el rastro.<br>Las marquitas. Las pisadas en el musgo. Las ramas rotas.<br>Sé quién las dejó, nena.</p>
+        <p class="action">Nina se congela. La cara se le pone blanca.</p>
+        <p class="char">PACHA</p>
+        <p class="dialogue">Está bien.<br>Tenía que pasar así.<br>Todo pasa por algo.</p>
+        <p class="action">Nina empieza a llorar. Lágrimas reales. Años de lágrimas. El jabalí le gruñe bajito — confirmación. Siempre lo supo.</p>
+        <p class="action">Las mascotas y los conejos irrumpen en la cueva. Gloomy se mueve para defender a Pacha. Pacha le apoya la mano en el brazo con suavidad.</p>
+        <p class="char">PACHA</p>
+        <p class="dialogue">Vos no. Yo.</p>
+        <p class="action">Pacha da un paso adelante para enfrentar el ataque. Levanta las manos y las raíces de la cueva responden — envolviendo a los conejos, frenando a las mascotas. Pero son demasiados.</p>
+        <p class="action">Un leopardo la alcanza primero. Ella no pelea. Deja que pase.</p>
+        <p class="action">Mientras su cuerpo cae, empuja una última ola de energía hacia afuera — hacia Gloomy. A él le destellan los ojos. Se tambalea.</p>
+        <p class="char">PACHA</p>
+        <p class="dialogue"><em>(a Gloomy, débil)</em> La semilla. Llevála por mí. Despertá al sol.</p>
+        <p class="action">Pacha se desploma entre las raíces. La cueva se oscurece.</p>
+        <p class="action">Gloomy deja salir un sonido que ninguno de nosotros escuchó antes de él. Dolor. Dolor real, crudo.</p>
+        <p class="action">Nina abre un portal — y se detiene. Se acuerda de lo que Pacha acaba de decir. Sabe el costo.</p>
+        <p class="action">Lo hace igual. Nos arrastra a través en el último segundo posible, escapando mientras la cueva se hunde en la oscuridad.</p>
+        <p class="rewrite-note"><strong>Fuente (Reescritura Mayor):</strong> "Usar mucho los perros, que en la 6 no aparezca y que pacha sea atacada por perros y bunnies. Nina deja pistas a los perros. Gravísimo." + "she's ancient from sacrifice, se sacrifica por ellos, vemos como la atacan. pacha sabe que nina estuvo dejando pistas, que 'trabaja' para los malos. Pacha la consuela y le dice que es lo que tenia que pasar. que todo sucede por algo. Nina llora." — Este es el cambio más grande del guion entero. El Tío ya no está en esta escena. Los perros y los conejos hacen el ataque. La traición secreta de Nina queda expuesta no por una acusación sino por la compasión de Pacha. Pacha se sacrifica en vez de ser una víctima pasiva. La desconfianza del jabalí de Scene 05 se paga acá.</p>
+      </div>
+
+      <div class="beat beat-original">
+        <span class="beat-stamp">CUT</span>
+        <p class="strikethrough">El Tío ataca de nuevo, entrando a la fuerza en el espacio. Levanta su arma y la usa directamente sobre Gloomy, drenándole la energía de los ojos. Gloomy se desploma al suelo. NINA: ¡¡¡¡Nooooooo!!!! Creyéndolo muerto, Nina abre un portal y nos arrastra a través.</p>
+        <p class="cut-note">El Tío ya no está en esta escena. Las mascotas + los conejos + la traición de Nina cargan con el peso. Gloomy queda herido por la transferencia de energía de Pacha moribunda, no por el arma del Tío.</p>
+      </div>
+
+      <div class="beat">
+        <p class="interact"><strong>Interactividad:</strong> Tenemos que subir y bajar las manos, como hace Pacha, permitiendo que partículas de luz nos conecten con el entorno natural.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 07 ============== -->
+    <article id="sc07" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag scene-tag-danger">SCENE 07</span>
+        <h2>Las Montañas — Todo Se Cae a Pedazos</h2>
+        <span class="scene-loc">Caminos en Miniatura — Acantilados de Montaña</span>
+        <span class="scene-duration">~7 MIN</span>
+      </header>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Salimos a un mundo cubierto de niebla. El aire es frío y pesado, y el sonido se siente lejano.</p>
+        <p class="action">Nina se derrumba. No en sentido figurado — físicamente. Las rodillas le fallan. Se sienta en el suelo mojado y no se levanta más.</p>
+        <p class="action">Gloomy está apenas consciente por la transferencia de energía de Pacha, tirado en el musgo. El jabalí se para entre Nina y Gloomy, alerta.</p>
+        <p class="action">Nadie está liderando.</p>
+        <p class="action">Durante un largo rato, no pasa nada. La niebla se mueve alrededor. La montaña respira a lo lejos. Estamos solos con lo que acabamos de perder.</p>
+        <p class="action">Entonces — pequeñas luces. Las luciérnagas. Apenas unas pocas. Empiezan a flotar a través de la niebla, alejándose de nosotros, más profundo hacia las montañas. Hacia algo.</p>
+        <p class="action">Nina no levanta la vista.</p>
+        <p class="action">El jabalí nos mira. The Last Standing. Espera.</p>
+        <p class="action">Uno de nosotros tiene que dar el primer paso. <em>(Este es el primer acto de liderazgo real del público. No hay música. No hay narración. Solo la decisión de caminar.)</em></p>
+        <p class="action">Cuando el grupo por fin empieza a moverse, el mundo responde. Aparecen los caminos en miniatura — versiones chiquitas de montañas, valles, acantilados y ruinas que se forman y se reforman en la niebla frente a nosotros. Estamos caminando a través de distancias imposibles.</p>
+        <p class="action">La voz del Gravekeeper nos llega suavemente por encima de la escena, casi como un recuerdo.</p>
+        <p class="char">GRAVEKEEPER (V.O.)</p>
+        <p class="dialogue">Ante la duda… sigan a las luciérnagas.</p>
+        <p class="action">Detrás nuestro, finalmente, escuchamos pasos. Nina se paró. Nos está siguiendo. No liderando. <em>Siguiendo.</em> Porque los que ella traicionó no la dejaron atrás.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "Scene 07 Is Narratively Hollow — buenísimo lo que propone." (refiriéndose a la reescritura de la sección de Soluciones) + "Ante la duda sigan a las luciérnagas." — El público lidera por primera vez. Nina sigue, quebrada pero redimible. Las luciérnagas guían. El mundo en miniatura se vuelve el sonido de la distancia, no un truco visual.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">La escena en miniatura se desvanece. Estamos de vuelta en escala real, en las montañas, siguiendo huellas luminosas.</p>
+        <p class="action">El camino se angosta hasta convertirse en una senda fina por el borde de un acantilado. Debajo nuestro, el suelo se pierde en la niebla. Adelante, la senda desemboca en una caverna enorme tallada en lo profundo de la montaña.</p>
+        <p class="action">Empieza a aparecer luz a través de la niebla. Rayos nítidos atraviesan los huecos de la roca. La bruma se afina, revelando la magnitud del espacio.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue"><em>(bajito)</em> Está acá. El sol está acá abajo.</p>
+        <p class="action">Antes de que pueda pasar cualquier otra cosa, el Tío irrumpe, entrando a la fuerza a la caverna. Se da vuelta directo hacia Nina.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">Lo elegiste a él en vez de a mí. Y cada paso que diste hacia él me trajo exactamente adonde yo quería estar.</p>
+        <p class="action">El suelo empieza a temblar. Se abren grietas en la piedra debajo de nuestros pies. El Tío avanza, levantando su arma. Golpea el suelo y la piedra se fractura a nuestro alrededor.</p>
+        <p class="char">UNCLE</p>
+        <p class="dialogue">¡¡Caminen!! Total ya están muertos. ¡¡Sigan moviéndose!!</p>
+        <p class="action">La montaña sigue derrumbándose alrededor nuestro. No queda tiempo.</p>
+      </div>
+    </article>
+
+    <!-- ============== SCENE 08 ============== -->
+    <article id="sc08" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag scene-tag-gold">SCENE 08</span>
+        <h2>Confrontación Final — Despertando al Sol</h2>
+        <span class="scene-loc">La Caverna del Sol</span>
+        <span class="scene-duration">~10 MIN</span>
+      </header>
+
+      <p class="action">El Tío se prepara para activar su máquina. El dispositivo zumba más fuerte, tirando energía del vacío de abajo.</p>
+      <p class="action">De repente, un portal se abre arriba, a 45 grados. Gloomy regresa a través del portal en un salto amplio y descontrolado. Aterriza con fuerza entre el Tío y Nina, apenas sosteniéndose parado. Tiene el cuerpo dañado. Los ojos le arden — pero ahora con la luz de Pacha, no solo la suya.</p>
+      <p class="char">UNCLE</p>
+      <p class="dialogue">¡Vos de nuevo! No puede ser. Estabas muerto.</p>
+      <p class="action">Gloomy no duda. Ataca al toque, empujado por una energía cruda y descontrolada. Los ojos le arden en rojo. El pelo se le levanta y se mueve como fuego. Cada golpe hace temblar el suelo debajo de ellos.</p>
+      <p class="action">La pelea es violenta y caótica. El Tío trata de defenderse, pero Gloomy lo empuja hacia atrás una y otra vez, forzándolo hacia el borde.</p>
+      <p class="action">Nina se adelanta, tratando de frenarlo.</p>
+      <p class="char">NINA</p>
+      <p class="dialogue">¡Pará! Por favor. Pará.</p>
+      <p class="action">El Tío se da vuelta y le pega, tirándola al suelo.</p>
+      <p class="char">UNCLE</p>
+      <p class="dialogue">No te metas.</p>
+      <p class="action">Algo se rompe dentro de Gloomy. Con un último estallido de energía, arremete hacia adelante y tira al Tío al abismo de abajo. El sonido se pierde en la oscuridad.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Justo antes de caer del borde, el Tío mira a Nina. Por medio segundo, su cara no es la cara del tirano. Es la cara del hombre que dijo "Yo voy a salvar al mundo." Es la cara de alguien que realmente lo creía.</p>
+        <p class="action">Y después se fue.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> Tres segundos de momento humano para el villano, cobrados. De "El uncle es demasiado flat, necesita más color." Su caída es triste, no solo satisfactoria.</p>
+      </div>
+
+      <div class="beat">
+        <p class="action">Gloomy se desploma inmediatamente después, agotado e inmóvil.</p>
+        <p class="action">Nina gatea hacia él, apenas podiendo pararse. Llega hasta él y lo abraza un momento. Después levanta la vista hacia nosotros.</p>
+        <p class="char">NINA</p>
+        <p class="dialogue">¡Háganlo! Lo que aprendieron. Ahora.</p>
+        <p class="action">Levanta las manos y nos muestra el movimiento. Lento y deliberado. El mismo gesto que practicamos antes. Lo repite, insistiendo para que la sigamos.</p>
+        <p class="action">Copiamos el movimiento en conjunto.</p>
+        <p class="action">La montaña responde.</p>
+        <p class="action">Miles de luciérnagas se elevan del suelo y de las paredes, girando en el aire antes de volcarse dentro de Gloomy. La luz se le expande por el cuerpo.</p>
+        <p class="action">Lentamente, despierta.</p>
+        <p class="action">La montaña empieza a reconstruirse. Las grietas se cierran. La piedra vuelve a su lugar.</p>
+        <p class="action">Detrás de ellos, el sol sale por primera vez. La luz inunda la caverna.</p>
+        <p class="action">Gloomy y Nina se sostienen el uno al otro mientras el mundo a su alrededor cambia.</p>
+        <p class="interact"><strong>Interactividad:</strong> Tenemos que subir y bajar las manos, como hace Nina, permitiendo que partículas de luz nos conecten con el entorno natural.</p>
+      </div>
+    </article>
+
+    <!-- ============== OUTRO ============== -->
+    <article id="outro" class="scene">
+      <header class="scene-head">
+        <span class="scene-tag">OUTRO</span>
+        <h2>Un Nuevo Amanecer</h2>
+        <span class="scene-loc">Epílogo en Miniatura de Sombras</span>
+        <span class="scene-duration">~3 MIN</span>
+      </header>
+
+      <p class="action">La voz del Gravekeeper vuelve, calma y distante, resonando suavemente por el espacio.</p>
+      <p class="char">GRAVEKEEPER</p>
+      <p class="dialogue">El sol volvió.</p>
+      <p class="action">La luz se expande por toda la tierra. El aire se siente más cálido.</p>
+      <p class="char">GRAVEKEEPER</p>
+      <p class="dialogue">La naturaleza vuelve a respirar.</p>
+      <p class="action">Los animales van saliendo de a poco del bosque. Los pájaros empiezan a cantar mientras la luz se hace más fuerte. La noche se retira, dándole lugar a la mañana.</p>
+      <p class="char">GRAVEKEEPER</p>
+      <p class="dialogue">Caminaron por donde nada debía sobrevivir.<br>Estuvieron juntos cuando todo se caía a pedazos.</p>
+
+      <div class="beat beat-rewrite">
+        <span class="beat-stamp">REWRITE</span>
+        <p class="action">Pausa. Mira hacia la cueva donde cayó Pacha.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">No todos volvimos.<br>Algunos entregaron lo último que tenían para que esta mañana pudiera existir.</p>
+        <p class="action">Mira hacia el horizonte. En una dirección, el nuevo sol sale y el bosque está vivo. En la otra dirección — lejos, más allá de las montañas — el cielo sigue oscuro. Sigue muerto.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Este mundo es frágil. Siempre lo fue.</p>
+        <p class="action">Una sonrisa apenas.</p>
+        <p class="char">GRAVEKEEPER</p>
+        <p class="dialogue">Pero hoy, vive.<br>Por ahora.</p>
+        <p class="action">La luz se expande — pero no en todos lados. Un nuevo amanecer empieza. El trabajo no está terminado.</p>
+        <p class="rewrite-note"><strong>Fuente:</strong> "ENDING — They resolve enough to give hope, and leave enough unresolved to give the story teeth." — A Pacha se la reconoce como muerta. El sol sale acá, pero no en todos lados. "Por ahora" ya no es poesía. Es una advertencia.</p>
+      </div>
+
+      <p class="end-mark">FIN</p>
+    </article>
+
+  </main>
+
+  <footer class="script-footer">
+    <p>Borrador de trabajo &nbsp;·&nbsp; REWRITE 4/2026 aplicado &nbsp;·&nbsp; En iteración</p>
+  </footer>
+
+  <script src="../../script.js"></script>
+</body>
+</html>
