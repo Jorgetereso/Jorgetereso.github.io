@@ -87,6 +87,11 @@ body {
   text-transform: uppercase; color: var(--text-muted); transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--text); }
+.nav-links a.nav-script {
+  color: var(--gold-light); border: 1px solid var(--border-gold);
+  padding: 0.25rem 0.6rem; background: rgba(154,120,48,0.05);
+}
+.nav-links a.nav-script:hover { color: #ffd166; background: rgba(154,120,48,0.12); }
 
 .nav-lang {
   display: flex; align-items: center; gap: 0.4rem;
