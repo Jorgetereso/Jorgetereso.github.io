@@ -148,6 +148,17 @@ body {
   color: var(--text-muted);
 }
 
+.scene-duration {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-light);
+  border: 1px solid var(--border-gold);
+  background: rgba(154,120,48,0.08);
+  padding: 0.3rem 0.7rem;
+  white-space: nowrap;
+}
+
 /* BEAT (block of action/dialogue) */
 .beat {
   margin-bottom: 2rem;
