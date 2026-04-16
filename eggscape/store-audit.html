@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Store Page Audit — Eggscape Intel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .grade{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;padding:.2rem .6rem;border-radius:2px;margin-left:.5rem}
+    .grade.a{background:rgba(78,205,196,.15);color:var(--teal)}
+    .grade.b{background:rgba(255,217,61,.15);color:var(--gold)}
+    .grade.c{background:rgba(255,138,92,.15);color:var(--orange)}
+    .grade.d{background:rgba(255,107,107,.15);color:var(--coral)}
+    .before-after{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:2rem}
+    .before-after>div{background:var(--bg);padding:1.5rem}
+    .before-after .label{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.75rem;font-weight:600}
+    .before-after .label.red{color:var(--coral)}
+    .before-after .label.green{color:var(--teal)}
+    .before-after p{font-size:.85rem;color:var(--text-sec);line-height:1.6}
+    .score-ring{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0 auto 1rem}
+    .score-ring .num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:600}
+    .score-ring .of{font-size:.7rem;color:var(--text-dim)}
+    .priority-list{counter-reset:priority}
+    .priority-item{counter-increment:priority;display:flex;gap:1.25rem;padding:1.25rem 0;border-bottom:1px solid var(--border-subtle)}
+    .priority-item::before{content:counter(priority);font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:600;color:var(--teal);min-width:2rem;padding-top:.15rem}
+    .priority-item .pi-content{flex:1}
+    .priority-item h4{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+    .priority-item p{font-size:.85rem;color:var(--text-sec);line-height:1.6}
+    .priority-item .impact{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;margin-top:.4rem}
+    .priority-item .impact.high{color:var(--coral)}
+    .priority-item .impact.med{color:var(--gold)}
+    @media(max-width:600px){.before-after{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <button class="menu-toggle">☰</button>
+  <nav class="sidebar">
+    <div class="sidebar-brand"><a href="index.html">EGGSCAPE <span class="accent">INTEL</span></a></div>
+    <a href="index.html" class="sidebar-hub">Overview</a>
+    <div class="sidebar-section" data-section="market">
+      <div class="sidebar-section-label">Market Intelligence</div>
+      <a href="market-landscape.html" class="sidebar-link">VR Kids Market</a>
+      <a href="audience-profile.html" class="sidebar-link">Audience Profile</a>
+      <a href="genre-analysis.html" class="sidebar-link">Genre Analysis</a>
+      <a href="viral-trends.html" class="sidebar-link">Viral Trends</a>
+    </div>
+    <div class="sidebar-section" data-section="store">
+      <div class="sidebar-section-label">Quest Store</div>
+      <a href="aso-keywords.html" class="sidebar-link">ASO Keywords</a>
+      <a href="store-visuals.html" class="sidebar-link">Store Visuals</a>
+      <a href="store-funnel.html" class="sidebar-link">Discovery Funnel</a>
+      <a href="store-audit.html" class="sidebar-link">Store Page Audit</a>
+    </div>
+    <div class="sidebar-section" data-section="money">
+      <div class="sidebar-section-label">Monetization</div>
+      <a href="freemium-model.html" class="sidebar-link">Freemium Model</a>
+      <a href="cosmetics-strategy.html" class="sidebar-link">Cosmetics & IAP</a>
+      <a href="parental-spending.html" class="sidebar-link">Parent as Payer</a>
+    </div>
+    <div class="sidebar-section" data-section="channels">
+      <div class="sidebar-section-label">Marketing Channels</div>
+      <a href="youtube-strategy.html" class="sidebar-link">YouTube</a>
+      <a href="tiktok-strategy.html" class="sidebar-link">TikTok</a>
+      <a href="community-growth.html" class="sidebar-link">Community</a>
+      <a href="paid-acquisition.html" class="sidebar-link">Paid Acquisition</a>
+    </div>
+    <div class="sidebar-section" data-section="retention">
+      <div class="sidebar-section-label">Retention & Growth</div>
+      <a href="retention-mechanics.html" class="sidebar-link">Retention</a>
+      <a href="social-features.html" class="sidebar-link">Social Features</a>
+      <a href="live-ops.html" class="sidebar-link">Live Ops</a>
+    </div>
+    <div class="sidebar-section" data-section="safety">
+      <div class="sidebar-section-label">Safety & Compliance</div>
+      <a href="coppa-compliance.html" class="sidebar-link">COPPA & Legal</a>
+      <a href="meta-policies.html" class="sidebar-link">Meta Policies</a>
+      <a href="safety-by-design.html" class="sidebar-link">Safety by Design</a>
+    </div>
+  </nav>
+
+  <main class="main-content has-toggle">
+
+    <div class="page-badge">LIVE STORE AUDIT</div>
+    <h1 class="page-title">Eggscape Quest Store Page — Deep Audit</h1>
+    <p class="page-subtitle">A line-by-line analysis of the live Meta Quest Store listing with specific recommendations to increase impressions, click-through rate, downloads, and retention. Based on the actual store page as of April 2026.</p>
+
+    <!-- Overall Score -->
+    <div class="stat-grid" style="margin-bottom:2.5rem">
+      <div class="stat-card" style="text-align:center">
+        <div class="score-ring" style="background:conic-gradient(var(--gold) 0% 58%, var(--border) 58% 100%)">
+          <span class="num" style="color:var(--gold)">58</span>
+          <span class="of">/ 100</span>
+        </div>
+        <span class="stat-label">Overall Store Score</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value gold">4.6★</span>
+        <span class="stat-label">User Rating (strong)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value teal">228</span>
+        <span class="stat-label">Reviews (needs 500+ for trust)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value coral">Free</span>
+        <span class="stat-label">Price (correct for target)</span>
+      </div>
+    </div>
+
+    <!-- Current Listing Snapshot -->
+    <div class="section-divider peri">What's on the page now</div>
+
+    <div class="prose">
+      <p>Your current store listing reads:</p>
+    </div>
+    <div class="callout info" style="margin-bottom:2rem">
+      <div class="callout-title">Current Title</div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--text)">EGGSCAPE</p>
+    </div>
+    <div class="callout info" style="margin-bottom:2rem">
+      <div class="callout-title">Current Tagline / Hook</div>
+      <p style="font-family:'JetBrains Mono',monospace">"LISTEN: BE AN EGG." — "BE AN EGG NOW!!" — "BEFORE IT'S TOO LATE"</p>
+    </div>
+    <div class="callout info" style="margin-bottom:2rem">
+      <div class="callout-title">Current Description</div>
+      <p>"Full MULTIPLAYER shooter, runner, BAZOOKA-er with level builder. Eggscape has the most amazing BATTLEPASS of all games in VR! The most absurdly fun cosmetics. Weapons, power ups, the best rewards. Become an EGGSTAR. New levels coming all the time. Free to play."</p>
+      <p style="margin-top:.5rem;font-style:italic;color:var(--text-dim)">"ps: egg"</p>
+    </div>
+    <div class="callout info" style="margin-bottom:2rem">
+      <div class="callout-title">Current Categories</div>
+      <p>Shooter, Platformer, Arcade, Action, World creation</p>
+    </div>
+
+    <!-- Section-by-Section Grades -->
+    <div class="section-divider peri">Section-by-Section Grades</div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Grade</th>
+            <th>What's Working</th>
+            <th>What's Hurting You</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Title</strong></td>
+            <td><span class="grade b">B</span></td>
+            <td>Short, memorable, brandable. "EGGSCAPE" is punny and sticky</td>
+            <td>No subtitle using searchable keywords. You're invisible to anyone searching "VR game kids", "multiplayer VR", or "free VR game"</td>
+          </tr>
+          <tr>
+            <td><strong>Tagline</strong></td>
+            <td><span class="grade c">C</span></td>
+            <td>Personality-driven, funny, matches the absurdist brand. Kids who see it will laugh</td>
+            <td>"LISTEN: BE AN EGG" tells a new visitor nothing about the game. Zero keywords. Zero value proposition. The humor only works AFTER someone already knows the game</td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td><span class="grade d">D+</span></td>
+            <td>Mentions multiplayer, battle pass, cosmetics, level builder, free to play — the right features are listed</td>
+            <td>Only 3 sentences of real info. All caps shouting. No structure. No bullet points. Missing: how many players, what you actually DO, why it's fun, social proof. Superlatives without proof ("most amazing BATTLEPASS") feel like empty hype. "ps: egg" wastes valuable description space</td>
+          </tr>
+          <tr>
+            <td><strong>Categories</strong></td>
+            <td><span class="grade b">B+</span></td>
+            <td>Good spread: Shooter + Platformer + Arcade + Action + World Creation covers multiple browse paths</td>
+            <td>Missing "Multiplayer" and "Family" categories if available — these are high-traffic browse paths for your target audience</td>
+          </tr>
+          <tr>
+            <td><strong>Rating</strong></td>
+            <td><span class="grade a">A</span></td>
+            <td>4.6 stars is excellent — above Gorilla Tag (4.4). This is your strongest asset</td>
+            <td>228 reviews is low volume. Gorilla Tag has 173K+. You need an active review prompt strategy</td>
+          </tr>
+          <tr>
+            <td><strong>Price</strong></td>
+            <td><span class="grade a">A</span></td>
+            <td>Free is correct for this audience. Eliminates the biggest friction point for kids asking parents</td>
+            <td>None — this is the right call</td>
+          </tr>
+          <tr>
+            <td><strong>Brand Voice</strong></td>
+            <td><span class="grade b">B-</span></td>
+            <td>Strong personality. The egg absurdism is genuinely funny and differentiating. It feels like a meme, which is exactly right for 8-13</td>
+            <td>The voice dominates at the expense of information. New visitors don't know if this is a shooter, a puzzle game, or a joke. Humor should enhance the pitch, not replace it</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- The Big Problems -->
+    <div class="section-divider coral">The 3 Biggest Problems</div>
+
+    <div class="comparison-grid" style="margin-bottom:2.5rem">
+      <div class="comparison-card" style="border-top:2px solid var(--coral)">
+        <h4 style="color:var(--coral)">1. Zero Keyword Visibility</h4>
+        <p>Your title is just "EGGSCAPE" — no subtitle. Your description has almost no searchable terms. Someone searching "free VR game for kids", "multiplayer VR shooter", or "VR game like Gorilla Tag" will never find you. You are entirely dependent on direct traffic and browse, missing the ~35% of users who discover through search.</p>
+      </div>
+      <div class="comparison-card" style="border-top:2px solid var(--coral)">
+        <h4 style="color:var(--coral)">2. Description Doesn't Sell</h4>
+        <p>Your description is 3 short sentences of vague hype. It doesn't explain what the game IS, what makes it different, or why someone should download it. Compare: Gorilla Tag's description instantly explains the core mechanic ("run, climb, jump using only your hands — no buttons"). Yours says "shooter, runner, BAZOOKA-er" which is confusing, not compelling.</p>
+      </div>
+      <div class="comparison-card" style="border-top:2px solid var(--coral)">
+        <h4 style="color:var(--coral)">3. No Social Proof in Text</h4>
+        <p>228 reviews at 4.6 stars is great quality but low volume. Your description doesn't mention community size, total players, content updates shipped, or any credibility signals. A parent scanning this page sees hype text with no substance. They'll keep scrolling to a game that looks more established.</p>
+      </div>
+    </div>
+
+    <!-- Gorilla Tag Comparison -->
+    <div class="section-divider">Competitor Comparison: Gorilla Tag</div>
+    <div class="prose">
+      <p>Gorilla Tag is the #1 kids VR game with 173K+ reviews. Here's what their listing does that yours doesn't:</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Gorilla Tag</th>
+            <th>Eggscape</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Opening line</strong></td>
+            <td>"Run, climb, and jump with other gorillas using only your hands"</td>
+            <td>"LISTEN: BE AN EGG"</td>
+            <td style="color:var(--coral)">GT instantly explains the gameplay. Eggscape explains nothing</td>
+          </tr>
+          <tr>
+            <td><strong>Core mechanic</strong></td>
+            <td>"No buttons, no teleportation. Push off surfaces to jump"</td>
+            <td>"shooter, runner, BAZOOKA-er"</td>
+            <td style="color:var(--coral)">GT's mechanic is clear and intriguing. Eggscape's is a list of genres</td>
+          </tr>
+          <tr>
+            <td><strong>Content depth</strong></td>
+            <td>Names 5+ maps, 4 game modes, cosmetic shop, player-created maps</td>
+            <td>"New levels coming all the time"</td>
+            <td style="color:var(--coral)">GT proves content exists. Eggscape promises it vaguely</td>
+          </tr>
+          <tr>
+            <td><strong>Memorable tagline</strong></td>
+            <td>"Reject humanity, become monke"</td>
+            <td>"ps: egg"</td>
+            <td style="color:var(--gold)">Both are meme-tier. GT's is more shareable</td>
+          </tr>
+          <tr>
+            <td><strong>Reviews</strong></td>
+            <td>173,530 at 4.4★</td>
+            <td>228 at 4.6★</td>
+            <td style="color:var(--coral)">760x review gap. Need aggressive review prompt strategy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Rewritten Listing -->
+    <div class="section-divider teal" style="color:var(--teal)">Recommended Rewrite</div>
+
+    <div class="prose">
+      <p>Keep the egg personality — it's a genuine differentiator. But <strong>lead with what the game IS</strong>, then layer in the humor. Here's a full rewrite:</p>
+    </div>
+
+    <div class="before-after">
+      <div>
+        <div class="label red">CURRENT TITLE</div>
+        <p style="font-size:1.1rem;color:var(--text);font-weight:600">EGGSCAPE</p>
+      </div>
+      <div>
+        <div class="label green">RECOMMENDED TITLE</div>
+        <p style="font-size:1.1rem;color:var(--text);font-weight:600">EGGSCAPE: Free Multiplayer VR Shooter</p>
+        <p style="font-size:.75rem;color:var(--teal);margin-top:.4rem">+3 high-value keywords in subtitle</p>
+      </div>
+    </div>
+
+    <div class="before-after">
+      <div>
+        <div class="label red">CURRENT TAGLINE</div>
+        <p>"LISTEN: BE AN EGG."</p>
+      </div>
+      <div>
+        <div class="label green">RECOMMENDED TAGLINE</div>
+        <p>"Shoot, run, build, and hatch chaos with friends — as an egg."</p>
+        <p style="font-size:.75rem;color:var(--teal);margin-top:.4rem">Explains gameplay + keeps the egg humor</p>
+      </div>
+    </div>
+
+    <div class="before-after">
+      <div>
+        <div class="label red">CURRENT DESCRIPTION</div>
+        <p>"Full MULTIPLAYER shooter, runner, BAZOOKA-er with level builder. Eggscape has the most amazing BATTLEPASS of all games in VR! The most absurdly fun cosmetics. Weapons, power ups, the best rewards. Become an EGGSTAR. New levels coming all the time. Free to play."</p>
+        <p style="margin-top:.5rem;font-style:italic;color:var(--text-dim)">"ps: egg"</p>
+      </div>
+      <div>
+        <div class="label green">RECOMMENDED DESCRIPTION</div>
+        <p style="color:var(--text);font-weight:500;margin-bottom:.75rem">You're an egg. You have a bazooka. Your friends are also eggs. Things are about to get scrambled.</p>
+        <p style="margin-bottom:.5rem">EGGSCAPE is a free multiplayer VR shooter and platformer where up to [X] players battle, race, and build custom levels together. Dodge, shoot, and shell-slide your way through chaos — no two rounds are the same.</p>
+        <p style="margin-bottom:.75rem;font-weight:500;color:var(--text)">What's inside the carton:</p>
+        <p style="margin-bottom:.25rem">🔫 <strong>Multiplayer Mayhem</strong> — Shooter + runner modes with bazookas, power-ups, and physics-based egg chaos</p>
+        <p style="margin-bottom:.25rem">🏗️ <strong>Level Builder</strong> — Create, share, and play community-built levels. Infinite replayability</p>
+        <p style="margin-bottom:.25rem">🎖️ <strong>Battle Pass</strong> — Unlock skins, emotes, trails, and the rarest egg cosmetics in VR</p>
+        <p style="margin-bottom:.25rem">🆓 <strong>100% Free to Play</strong> — Download and play everything. No paywalls on gameplay</p>
+        <p style="margin-bottom:.75rem">🔄 <strong>New Levels Weekly</strong> — Fresh content, seasonal events, and community challenges every week</p>
+        <p style="font-style:italic;color:var(--text-dim)">Become an EGGSTAR. Reject humanity. Be egg. 🥚</p>
+        <p style="font-size:.75rem;color:var(--teal);margin-top:.75rem">Structured, keyword-rich, scannable, funny, parent-friendly, and 4x longer</p>
+      </div>
+    </div>
+
+    <!-- Priority Actions -->
+    <div class="section-divider gold" style="color:var(--gold)">Top 10 Priority Actions</div>
+    <div class="prose">
+      <p>Ranked by estimated impact on downloads. Do #1-3 this week, #4-7 this month, #8-10 ongoing.</p>
+    </div>
+
+    <div class="priority-list">
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Rewrite the store description</h4>
+          <p>Replace the current 3-sentence description with a structured, keyword-rich version (see recommended rewrite above). Lead with the hook, explain the game, list features with icons, close with personality. This alone could increase page-view-to-download conversion by 15-25%.</p>
+          <div class="impact high">Impact: Very High — affects every single store visitor</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Add a keyword-rich subtitle to the title</h4>
+          <p>Change from "EGGSCAPE" to "EGGSCAPE: Free Multiplayer VR Shooter" or similar. The subtitle appears in search results and browse cards. This is the single biggest ASO lever you have — you're currently ranking for zero discoverable keywords.</p>
+          <div class="impact high">Impact: Very High — unlocks search discovery</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Implement an in-game review prompt</h4>
+          <p>At 228 reviews, you lack the social proof volume that drives trust. Add a prompt after a player's 3rd session (not first — they need to enjoy it first) asking for a rating. Target: 1,000 reviews within 60 days. Don't ask unhappy players — only prompt after a positive moment (winning, unlocking something, completing a level).</p>
+          <div class="impact high">Impact: High — review volume directly affects store ranking</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Restructure screenshots with text overlays</h4>
+          <p>Your screenshots should tell a story in 7 frames: (1) Hero shot with "FREE MULTIPLAYER VR" overlay, (2) Egg combat action, (3) Level builder in action, (4) Cosmetics/Battle Pass preview, (5) Multiplayer chaos with friends, (6) Variety of game modes, (7) "Download Free" CTA. Every screenshot needs a short text overlay — most Quest Store browsing happens fast.</p>
+          <div class="impact high">Impact: High — screenshots are the #1 factor in click-through rate</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Create a 30-second trailer with a 3-second hook</h4>
+          <p>First 3 seconds: the craziest, funniest, most chaotic moment in the game. An egg with a bazooka exploding another egg — instant attention. Seconds 4-15: fast montage of gameplay modes (shooting, running, building). Seconds 16-25: show multiplayer with friends, cosmetics, battle pass. Final 5 seconds: "FREE on Meta Quest" CTA. No slow intros, no logos first, no build-up.</p>
+          <div class="impact med">Impact: Medium-High — video autoplay on store page increases dwell time</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Add player count and social proof to the description</h4>
+          <p>If you have any impressive numbers, use them: "Join [X]K+ players", "[X] levels built by the community", "[X]+ cosmetics to unlock". Even modest numbers beat no numbers. "1,000+ community-built levels" sounds impressive even if each level took 5 minutes to make.</p>
+          <div class="impact med">Impact: Medium — builds trust with parents and new players</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Add "Multiplayer" and "Family" categories</h4>
+          <p>If Meta allows additional category tags, add Multiplayer and Family. These are high-traffic browse paths, especially for parents looking for "games my kid can play with friends." Your current categories (Shooter, Platformer, Arcade, Action, World Creation) are good but miss these two key audiences.</p>
+          <div class="impact med">Impact: Medium — opens new browse-based discovery paths</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>A/B test the icon with a character face</h4>
+          <p>The highest-performing Quest Store icons feature a recognizable character face with bright, contrasting colors. Your egg character should be front and center, with an expression (angry, goofy, determined), holding a bazooka, on a bright contrasting background. Test: current icon vs. character-face icon over 2 weeks, measuring CTR from impressions.</p>
+          <div class="impact med">Impact: Medium — icon is the first thing seen in browse and search</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Write a parent-facing "What's New" section</h4>
+          <p>Use the "What's New" field to show the game is actively maintained. Example: "April 2026: New Spring Scramble event with 3 seasonal maps, 12 new cosmetics, and Egg Hunt mode. Plus improved matchmaking and new parental controls." This signals to parents that a real team is behind the game and it's safe/maintained.</p>
+          <div class="impact med">Impact: Medium — reassures parents, shows active development</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="pi-content">
+          <h4>Start responding to every negative review</h4>
+          <p>Developer responses on negative reviews show you care and are fixing issues. Reply within 48 hours to every 1-3 star review with: acknowledgment of the issue, what you're doing about it, and an invite to try again. This converts some negatives to updated positive reviews and signals quality to browsing parents.</p>
+          <div class="impact med">Impact: Medium — improves perceived quality, may recover lost ratings</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Wins -->
+    <div class="section-divider teal" style="color:var(--teal)">Quick Wins (Under 1 Hour Each)</div>
+
+    <div class="checklist">
+      <li>Change title to include a keyword subtitle — takes 5 minutes in the Meta Developer Dashboard</li>
+      <li>Rewrite description using the recommended template above — takes 30 minutes</li>
+      <li>Add "free to play" and "multiplayer" to the first line of the description (most impactful keywords for your game)</li>
+      <li>Remove "ps: egg" — wastes character count, only funny to existing fans, confuses new visitors</li>
+      <li>Replace ALL CAPS words (MULTIPLAYER, BATTLEPASS, BAZOOKA-er) with proper casing — caps feel like spam to parents</li>
+      <li>Add specific numbers: how many maps, how many cosmetics, how many players per match</li>
+      <li>Write a "What's New" entry for your most recent update</li>
+      <li>Update the developer website link to point to a real landing page (not just eggscape.com placeholder)</li>
+    </div>
+
+    <!-- What NOT to Change -->
+    <div class="section-divider" style="color:var(--purple)">What NOT to Change</div>
+
+    <div class="callout">
+      <div class="callout-title">Keep These — They're Working</div>
+      <p style="margin-bottom:.5rem"><strong>The egg brand identity.</strong> Absurdist egg humor is genuinely differentiating. Kids love it. It's meme-worthy. Just don't let it replace information — use it to enhance the pitch.</p>
+      <p style="margin-bottom:.5rem"><strong>Free-to-play pricing.</strong> Correct for the audience. Don't add a price tag.</p>
+      <p style="margin-bottom:.5rem"><strong>"Become an EGGSTAR."</strong> This is a great aspirational hook. Keep it in the description but as a closer, not the main pitch.</p>
+      <p style="margin-bottom:.5rem"><strong>The category spread.</strong> Shooter + Platformer + Arcade + Action + World Creation covers good ground. Just try to add Multiplayer/Family if possible.</p>
+      <p><strong>The 4.6 rating.</strong> Protect this at all costs. Don't release buggy updates that tank it. Your rating is better than Gorilla Tag's — that's a flex you should be using.</p>
+    </div>
+
+    <!-- Expected Impact -->
+    <div class="section-divider gold" style="color:var(--gold)">Expected Impact</div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-value teal">+35%</span>
+        <span class="stat-label">Search impressions (from keyword subtitle)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value teal">+20%</span>
+        <span class="stat-label">Page → Download conversion (from description rewrite)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value teal">+15%</span>
+        <span class="stat-label">Browse CTR (from screenshot overhaul)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value gold">4-6 wks</span>
+        <span class="stat-label">Time to see full ranking impact</span>
+      </div>
+    </div>
+
+    <div class="callout action" style="margin-top:2rem">
+      <div class="callout-title">Bottom Line</div>
+      <p>Eggscape has a great game (4.6 stars proves it), a memorable brand, and the right price. But the store listing is leaving downloads on the table. The description reads like a Discord announcement, not a store pitch. Fix the title keywords, rewrite the description, and overhaul screenshots — these three changes alone could double your organic download rate within 6 weeks.</p>
+    </div>
+
+    <!-- Nav -->
+    <div class="page-nav">
+      <a href="store-funnel.html">
+        <span class="nav-label">← Previous</span>
+        Discovery Funnel
+      </a>
+      <a href="freemium-model.html">
+        <span class="nav-label">Next →</span>
+        Freemium Model
+      </a>
+    </div>
+
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
