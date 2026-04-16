@@ -20,9 +20,10 @@
     .before-after .label.red{color:var(--coral)}
     .before-after .label.green{color:var(--teal)}
     .before-after p{font-size:.85rem;color:var(--text-sec);line-height:1.6}
-    .score-ring{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0 auto 1rem}
-    .score-ring .num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:600}
-    .score-ring .of{font-size:.7rem;color:var(--text-dim)}
+    .score-ring{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0 auto 1rem;position:relative}
+    .score-ring::after{content:'';position:absolute;inset:10px;border-radius:50%;background:var(--bg)}
+    .score-ring .num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:600;position:relative;z-index:1}
+    .score-ring .of{font-size:.7rem;color:var(--text-dim);position:relative;z-index:1}
     .priority-list{counter-reset:priority}
     .priority-item{counter-increment:priority;display:flex;gap:1.25rem;padding:1.25rem 0;border-bottom:1px solid var(--border-subtle)}
     .priority-item::before{content:counter(priority);font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:600;color:var(--teal);min-width:2rem;padding-top:.15rem}
