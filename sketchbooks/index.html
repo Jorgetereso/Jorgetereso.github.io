@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sketchbooks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --paper: #ece6d7;
+    --ink: #f2efe7;
+    --accent: #d93b1e;
+    --muted: #6a6a66;
+    --rule: #2a2a28;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Archivo', system-ui, sans-serif;
+    overflow: hidden;
+  }
+  /* Subtle film-grain noise for the Kazmierski-esque print feel */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    z-index: 2;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+  }
+  #stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  header {
+    position: fixed;
+    top: 24px;
+    left: 28px;
+    right: 28px;
+    z-index: 50;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-top: 2px solid var(--ink);
+    padding-top: 10px;
+  }
+  header h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  header h1 .dash {
+    color: var(--accent);
+  }
+  header .sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  header .idx {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: right;
+  }
+  header .idx b { color: var(--ink); font-weight: 500; }
+  #book-wrap {
+    position: relative;
+    width: min(90vw, 1100px);
+    height: min(75vh, 720px);
+    z-index: 10;
+  }
+  #book { width: 100%; height: 100%; }
+  .page {
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+    position: relative;
+  }
+  .page-inner {
+    position: absolute;
+    inset: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .page .meta {
+    position: absolute;
+    bottom: 16px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: #9a8a78;
+    text-transform: uppercase;
+  }
+  .page svg.sketch {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .page.cover {
+    background: #111;
+    color: var(--ink);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 32px;
+  }
+  .page.cover .title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 54px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-top: auto;
+  }
+  .page.cover .title .red { color: var(--accent); }
+  .page.cover .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+    width: 100%;
+  }
+  /* Paper texture */
+  .page:not(.cover) .page-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(139, 110, 70, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(139, 110, 70, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+
+  /* Hand canvas overlay */
+  #hand-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 30;
+  }
+  /* Webcam feed — 320×240, B&W, hard-edged with a stark outline */
+  #cam-box {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 320px;
+    height: 240px;
+    overflow: hidden;
+    border: 1px solid var(--ink);
+    z-index: 40;
+    background: #000;
+  }
+  #cam-box::after {
+    content: 'CAM.01';
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    background: var(--accent);
+    padding: 2px 6px;
+    z-index: 3;
+  }
+  #cam-box.off { display: none; }
+  #webcam {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    filter: grayscale(1) contrast(1.15) brightness(0.9);
+    display: block;
+  }
+  #hand-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    mix-blend-mode: difference;
+  }
+  #hand-hint svg {
+    width: 130px;
+    height: 130px;
+    animation: handSway 2.4s ease-in-out infinite;
+  }
+  @keyframes handSway {
+    0%, 100% { transform: translateX(-22px); }
+    50% { transform: translateX(22px); }
+  }
+  #cam-label {
+    position: absolute;
+    bottom: 8px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: #fff;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* Welcome overlay */
+  #welcome {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+  #welcome.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #welcome .w-inner {
+    text-align: left;
+    padding: 48px;
+    max-width: 520px;
+    width: 100%;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  #welcome .w-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  #welcome .w-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(56px, 10vw, 110px);
+    line-height: 0.9;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  #welcome .w-title .red { color: var(--accent); }
+  #welcome .w-hint {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: var(--ink);
+    margin-top: 32px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #welcome .w-hint::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  #welcome .w-hint b { font-weight: 700; animation: pulse 1.6s ease-in-out infinite; }
+
+  /* Controls */
+  #controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 45;
+  }
+  button {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 10px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+  button:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  #book-picker {
+    position: fixed;
+    top: 80px;
+    left: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 45;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  #book-picker .label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  #book-picker button {
+    padding: 6px 10px;
+    font-size: 10px;
+    min-width: 80px;
+    text-align: left;
+    border-color: var(--rule);
+    color: var(--muted);
+  }
+  #book-picker button:hover { color: var(--ink); background: transparent; border-color: var(--ink); }
+  #book-picker button.active { color: var(--ink); background: transparent; border-color: var(--accent); border-left-width: 3px; }
+
+  #status {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    z-index: 45;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  /* Gesture ripple */
+  .ripple {
+    position: fixed;
+    pointer-events: none;
+    width: 140px;
+    height: 140px;
+    border: 1px solid var(--accent);
+    transform: translate(-50%, -50%) scale(0);
+    animation: ripple 0.8s ease-out forwards;
+    z-index: 35;
+  }
+  @keyframes ripple {
+    to {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>SKETCH<span class="dash">—</span>BOOKS</h1>
+    <div class="sub">Jorge &middot; 3dar &middot; MMXXVI</div>
+  </div>
+  <div class="idx">
+    ARCHIVE / <b id="hdr-book">01</b><br/>
+    METHOD / GESTURE
+  </div>
+</header>
+
+<div id="stage">
+  <div id="book-wrap">
+    <div id="book"></div>
+  </div>
+</div>
+
+<canvas id="hand-canvas"></canvas>
+
+<div id="cam-box" class="off">
+  <video id="webcam" autoplay muted playsinline></video>
+  <div id="hand-hint">
+    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 70
+               L30 42 Q30 36 36 36 Q42 36 42 42 L42 58
+               M42 58 L42 28 Q42 22 48 22 Q54 22 54 28 L54 58
+               M54 58 L54 24 Q54 18 60 18 Q66 18 66 24 L66 58
+               M66 58 L66 32 Q66 26 72 26 Q78 26 78 32 L78 66
+               Q78 100 54 110 Q30 110 30 82 L30 70
+               Q26 66 22 62 Q18 58 22 54 Q26 50 30 54 L30 70 Z"
+            fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div id="cam-label">— move hand to flip —</div>
+</div>
+
+<div id="welcome">
+  <div class="w-inner">
+    <div class="w-meta">
+      <span>VOL. 01–03</span>
+      <span>MMXXVI</span>
+    </div>
+    <div class="w-title">SKETCH<br/><span class="red">BOOKS</span>.</div>
+    <div class="w-hint"><b>TAP</b> TO ENTER — CAMERA REQUIRED</div>
+  </div>
+</div>
+
+<div id="status"></div>
+
+<div id="book-picker">
+  <div class="label">Index</div>
+  <button data-book="0" class="active">01 / BOOK</button>
+  <button data-book="1">02 / BOOK</button>
+  <button data-book="2">03 / BOOK</button>
+</div>
+
+<div id="controls">
+  <button id="btn-prev">← PREV</button>
+  <button id="btn-cam">ENABLE CAM</button>
+  <button id="btn-next">NEXT →</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js" crossorigin="anonymous"></script>
+
+<script>
+/* ---------- Seeded random for consistent placeholder sketches ---------- */
+function mulberry32(seed) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* ---------- Placeholder sketch generator ----------
+   Produces varied hand-drawn looking SVG compositions so the flipbook
+   doesn't look empty while the real sketches are being uploaded. */
+function generateSketchSVG(seed, width = 500, height = 700) {
+  const rand = mulberry32(seed);
+  const choice = (arr) => arr[Math.floor(rand() * arr.length)];
+  const palette = ['#3a2e20', '#2b2520', '#5a4530', '#4a3525', '#6b4a2a'];
+  const style = Math.floor(rand() * 5);
+
+  let content = '';
+
+  // base: subtle paper stain
+  const stainX = rand() * width;
+  const stainY = rand() * height;
+  content += `<ellipse cx="${stainX}" cy="${stainY}" rx="${150 + rand() * 100}" ry="${100 + rand() * 80}" fill="rgba(180,150,100,0.04)"/>`;
+
+  if (style === 0) {
+    // Figure study: loose gestural lines
+    const cx = width * (0.4 + rand() * 0.2);
+    const cy = height * 0.35;
+    const col = choice(palette);
+    // head
+    content += `<ellipse cx="${cx}" cy="${cy}" rx="${35 + rand() * 10}" ry="${45 + rand() * 10}" stroke="${col}" stroke-width="1.8" fill="none" opacity="0.85"/>`;
+    // body strokes
+    for (let i = 0; i < 8; i++) {
+      const x1 = cx + (rand() - 0.5) * 80;
+      const y1 = cy + 40 + i * 30 + (rand() - 0.5) * 20;
+      const x2 = x1 + (rand() - 0.5) * 100;
+      const y2 = y1 + 30 + rand() * 40;
+      content += `<path d="M${x1},${y1} Q${(x1+x2)/2 + (rand()-0.5)*30},${(y1+y2)/2} ${x2},${y2}" stroke="${col}" stroke-width="${1 + rand()*1.2}" fill="none" opacity="${0.4 + rand()*0.4}"/>`;
+    }
+    // limbs
+    for (let i = 0; i < 4; i++) {
+      const x1 = cx + (rand() - 0.5) * 60;
+      const y1 = cy + 80 + rand() * 150;
+      const x2 = x1 + (rand() - 0.5) * 180;
+      const y2 = y1 + rand() * 200;
+      content += `<path d="M${x1},${y1} Q${(x1+x2)/2 + (rand()-0.5)*50},${(y1+y2)/2 + (rand()-0.5)*50} ${x2},${y2}" stroke="${col}" stroke-width="1.5" fill="none" opacity="0.7"/>`;
+    }
+  } else if (style === 1) {
+    // Still life: clustered circles and boxes
+    const col = choice(palette);
+    const items = 3 + Math.floor(rand() * 4);
+    const baseY = height * 0.55;
+    let x = width * 0.2;
+    for (let i = 0; i < items; i++) {
+      const shape = Math.floor(rand() * 3);
+      const size = 40 + rand() * 70;
+      if (shape === 0) {
+        content += `<ellipse cx="${x + size/2}" cy="${baseY - size/2}" rx="${size/2}" ry="${size/2 * (0.7 + rand()*0.5)}" stroke="${col}" stroke-width="1.5" fill="none" opacity="0.8"/>`;
+      } else if (shape === 1) {
+        const w = size, h = size * (0.8 + rand() * 0.8);
+        content += `<path d="M${x},${baseY} L${x},${baseY-h} L${x+w},${baseY-h} L${x+w},${baseY} Z" stroke="${col}" stroke-width="1.5" fill="none" opacity="0.8"/>`;
+        // shading hatches
+        for (let j = 0; j < 5; j++) {
+          content += `<line x1="${x+w-10-j*6}" y1="${baseY-5}" x2="${x+w-5}" y2="${baseY-10-j*6}" stroke="${col}" stroke-width="0.7" opacity="0.5"/>`;
+        }
+      } else {
+        // bottle
+        content += `<path d="M${x+size*0.3},${baseY} L${x+size*0.3},${baseY-size*0.6} L${x+size*0.4},${baseY-size*0.8} L${x+size*0.6},${baseY-size*0.8} L${x+size*0.7},${baseY-size*0.6} L${x+size*0.7},${baseY} Z" stroke="${col}" stroke-width="1.5" fill="none" opacity="0.85"/>`;
+      }
+      x += size + 10 + rand() * 20;
+    }
+    // table line
+    content += `<line x1="40" y1="${baseY}" x2="${width-40}" y2="${baseY+2}" stroke="${col}" stroke-width="1" opacity="0.5"/>`;
+  } else if (style === 2) {
+    // Landscape: horizon + abstract
+    const col = choice(palette);
+    const horizon = height * (0.5 + rand() * 0.2);
+    content += `<line x1="20" y1="${horizon}" x2="${width-20}" y2="${horizon + (rand()-0.5)*20}" stroke="${col}" stroke-width="1.2" opacity="0.7"/>`;
+    // mountains
+    let px = 20;
+    let path = `M${px},${horizon}`;
+    while (px < width - 20) {
+      const peakW = 60 + rand() * 120;
+      const peakH = 30 + rand() * 100;
+      path += ` L${px + peakW/2},${horizon - peakH} L${px + peakW},${horizon}`;
+      px += peakW;
+    }
+    content += `<path d="${path}" stroke="${col}" stroke-width="1.3" fill="none" opacity="0.6"/>`;
+    // foreground marks
+    for (let i = 0; i < 20; i++) {
+      const x = 20 + rand() * (width - 40);
+      const y = horizon + 10 + rand() * (height - horizon - 30);
+      const len = 5 + rand() * 15;
+      content += `<line x1="${x}" y1="${y}" x2="${x + (rand()-0.5)*len}" y2="${y - len}" stroke="${col}" stroke-width="0.8" opacity="${0.3 + rand()*0.4}"/>`;
+    }
+  } else if (style === 3) {
+    // Abstract composition
+    const n = 3 + Math.floor(rand() * 4);
+    for (let i = 0; i < n; i++) {
+      const col = choice(palette);
+      const cx = rand() * width;
+      const cy = rand() * height;
+      const r = 40 + rand() * 120;
+      // irregular blob via spline
+      let d = '';
+      const pts = 8;
+      for (let j = 0; j <= pts; j++) {
+        const a = (j / pts) * Math.PI * 2;
+        const rr = r * (0.7 + rand() * 0.5);
+        const px = cx + Math.cos(a) * rr;
+        const py = cy + Math.sin(a) * rr;
+        d += (j === 0 ? 'M' : 'L') + px.toFixed(1) + ',' + py.toFixed(1) + ' ';
+      }
+      d += 'Z';
+      content += `<path d="${d}" stroke="${col}" stroke-width="${0.8 + rand()*1.2}" fill="none" opacity="${0.3 + rand()*0.4}"/>`;
+    }
+    // cross-hatch patch
+    const hx = rand() * width * 0.7;
+    const hy = rand() * height * 0.7;
+    for (let i = 0; i < 15; i++) {
+      content += `<line x1="${hx}" y1="${hy + i*5}" x2="${hx + 80}" y2="${hy + i*5 + 20}" stroke="${choice(palette)}" stroke-width="0.6" opacity="0.4"/>`;
+    }
+  } else {
+    // Portrait bust
+    const col = choice(palette);
+    const cx = width/2 + (rand()-0.5)*40;
+    const cy = height * 0.4;
+    // head
+    content += `<ellipse cx="${cx}" cy="${cy}" rx="60" ry="80" stroke="${col}" stroke-width="1.8" fill="none" opacity="0.9"/>`;
+    // features
+    content += `<path d="M${cx-25},${cy-10} Q${cx-18},${cy-15} ${cx-10},${cy-10}" stroke="${col}" stroke-width="1.2" fill="none"/>`;
+    content += `<path d="M${cx+10},${cy-10} Q${cx+18},${cy-15} ${cx+25},${cy-10}" stroke="${col}" stroke-width="1.2" fill="none"/>`;
+    content += `<line x1="${cx}" y1="${cy-5}" x2="${cx+2}" y2="${cy+15}" stroke="${col}" stroke-width="1" opacity="0.7"/>`;
+    content += `<path d="M${cx-15},${cy+30} Q${cx},${cy+38} ${cx+15},${cy+30}" stroke="${col}" stroke-width="1.2" fill="none"/>`;
+    // hair
+    for (let i = 0; i < 20; i++) {
+      const a = Math.PI + (i/20) * Math.PI;
+      const x1 = cx + Math.cos(a) * 55;
+      const y1 = cy + Math.sin(a) * 70;
+      const x2 = x1 + Math.cos(a) * (15 + rand()*20);
+      const y2 = y1 + Math.sin(a) * (15 + rand()*20);
+      content += `<path d="M${x1},${y1} Q${(x1+x2)/2+(rand()-0.5)*10},${(y1+y2)/2} ${x2},${y2}" stroke="${col}" stroke-width="0.9" fill="none" opacity="0.6"/>`;
+    }
+    // shoulders
+    content += `<path d="M${cx-60},${cy+110} Q${cx-30},${cy+90} ${cx},${cy+95} Q${cx+30},${cy+90} ${cx+60},${cy+110}" stroke="${col}" stroke-width="1.5" fill="none" opacity="0.8"/>`;
+    content += `<line x1="${cx-70}" y1="${cy+120}" x2="${cx-90}" y2="${cy+180}" stroke="${col}" stroke-width="1.2" opacity="0.7"/>`;
+    content += `<line x1="${cx+70}" y1="${cy+120}" x2="${cx+90}" y2="${cy+180}" stroke="${col}" stroke-width="1.2" opacity="0.7"/>`;
+  }
+
+  return `<svg class="sketch" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
+}
+
+/* ---------- Build the book ---------- */
+const BOOK_EL = document.getElementById('book');
+let pageFlip = null;
+let currentBook = 0;
+
+function buildBook(bookIndex) {
+  if (pageFlip) {
+    try { pageFlip.destroy(); } catch (e) {}
+    BOOK_EL.innerHTML = '';
+  }
+
+  const pageCount = 20;
+  const frag = document.createDocumentFragment();
+
+  // Front cover
+  const cover = document.createElement('div');
+  cover.className = 'page page-cover cover';
+  cover.setAttribute('data-density', 'hard');
+  cover.innerHTML = `
+    <div class="num">VOL. ${String(bookIndex + 1).padStart(2, '0')} / ${pageCount} PP.</div>
+    <div class="title">SKETCH<br/><span class="red">BOOK.</span></div>
+    <div class="num" style="border-top:none;border-bottom:1px solid #333;padding-top:0;padding-bottom:12px;margin-top:0;">JORGE &middot; 3DAR &middot; MMXXVI</div>
+  `;
+  frag.appendChild(cover);
+
+  // Inside cover
+  const inside = document.createElement('div');
+  inside.className = 'page';
+  inside.innerHTML = `
+    <div class="page-inner" style="align-items:center;justify-content:center;">
+      <div style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.25em;color:#6b5a48;text-transform:uppercase;">
+        <div style="font-family:'Archivo Black',sans-serif;font-size:28px;letter-spacing:0;color:#2a1f15;margin-bottom:16px;">${String(bookIndex + 1).padStart(2, '0')}</div>
+        ${pageCount} pages &nbsp;·&nbsp; gesture controlled
+      </div>
+    </div>
+  `;
+  frag.appendChild(inside);
+
+  // Content pages
+  for (let i = 1; i <= pageCount; i++) {
+    const p = document.createElement('div');
+    p.className = 'page';
+    const seed = bookIndex * 1000 + i * 37;
+    p.innerHTML = `
+      <div class="page-inner">
+        ${generateSketchSVG(seed)}
+        <div class="meta">Book ${String(bookIndex + 1).padStart(2, '0')} &middot; Page ${String(i).padStart(2, '0')}</div>
+      </div>
+    `;
+    frag.appendChild(p);
+  }
+
+  // Back cover
+  const back = document.createElement('div');
+  back.className = 'page page-cover cover';
+  back.setAttribute('data-density', 'hard');
+  back.innerHTML = `
+    <div class="num">—</div>
+    <div class="title" style="font-size:72px;margin-top:auto;">END.</div>
+  `;
+  frag.appendChild(back);
+
+  BOOK_EL.appendChild(frag);
+
+  pageFlip = new St.PageFlip(BOOK_EL, {
+    width: 500,
+    height: 700,
+    size: 'stretch',
+    minWidth: 300,
+    maxWidth: 600,
+    minHeight: 400,
+    maxHeight: 800,
+    maxShadowOpacity: 0.5,
+    showCover: true,
+    mobileScrollSupport: false,
+    flippingTime: 900,
+    useMouseEvents: true,
+    drawShadow: true
+  });
+
+  pageFlip.loadFromHTML(BOOK_EL.querySelectorAll('.page'));
+}
+
+buildBook(0);
+
+/* ---------- Book picker ---------- */
+document.querySelectorAll('#book-picker button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const i = parseInt(btn.dataset.book, 10);
+    if (i === currentBook) return;
+    currentBook = i;
+    document.querySelectorAll('#book-picker button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const hdr = document.getElementById('hdr-book');
+    if (hdr) hdr.textContent = String(i + 1).padStart(2, '0');
+    buildBook(i);
+  });
+});
+
+/* ---------- Manual controls ---------- */
+let lastFlip = 0;
+const FLIP_COOLDOWN = 850;
+
+function flipNext() {
+  if (Date.now() - lastFlip < FLIP_COOLDOWN) return;
+  lastFlip = Date.now();
+  pageFlip && pageFlip.flipNext();
+}
+function flipPrev() {
+  if (Date.now() - lastFlip < FLIP_COOLDOWN) return;
+  lastFlip = Date.now();
+  pageFlip && pageFlip.flipPrev();
+}
+
+document.getElementById('btn-next').addEventListener('click', flipNext);
+document.getElementById('btn-prev').addEventListener('click', flipPrev);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') flipNext();
+  if (e.key === 'ArrowLeft') flipPrev();
+});
+
+/* ---------- Hand tracking overlay ---------- */
+const canvas = document.getElementById('hand-canvas');
+const ctx = canvas.getContext('2d');
+const video = document.getElementById('webcam');
+const statusEl = document.getElementById('status');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Trail of past fingertip + palm positions, fades over time → ghostly feel
+const trail = [];
+const TRAIL_MS = 700;
+let wristHistory = [];
+const SWIPE_WINDOW_MS = 350;
+
+function drawGhost(landmarks) {
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+  const now = Date.now();
+
+  if (landmarks) {
+    // mirror X (video is mirrored)
+    const pts = landmarks.map(l => ({ x: (1 - l.x) * w, y: l.y * h }));
+    // Sample points we want to leave a trail of: 5 fingertips + palm center
+    const palm = {
+      x: (pts[0].x + pts[5].x + pts[17].x) / 3,
+      y: (pts[0].y + pts[5].y + pts[17].y) / 3
+    };
+    [pts[4], pts[8], pts[12], pts[16], pts[20], palm].forEach((p, i) => {
+      trail.push({ x: p.x, y: p.y, t: now, big: i === 5 });
+    });
+  }
+
+  // prune old trail
+  while (trail.length && now - trail[0].t > TRAIL_MS) trail.shift();
+
+  // Smoky white/red glow — reads on near-black bg, sober & editorial
+  ctx.globalCompositeOperation = 'lighter';
+  for (const pt of trail) {
+    const age = (now - pt.t) / TRAIL_MS; // 0 fresh → 1 old
+    const life = 1 - age;
+    const radius = pt.big ? 130 * life + 45 : 60 * life + 22;
+    const alpha = (pt.big ? 0.08 : 0.12) * life;
+    const g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, radius);
+    g.addColorStop(0, `rgba(217, 59, 30, ${alpha * 1.4})`);
+    g.addColorStop(0.4, `rgba(230, 225, 215, ${alpha * 0.8})`);
+    g.addColorStop(1, 'rgba(230, 225, 215, 0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+function showRipple(x, direction) {
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = x + 'px';
+  r.style.top = '50%';
+  r.style.borderColor = direction === 'next' ? '#e8d8a8' : '#a8c8e8';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 800);
+}
+
+/* Simple, generous swipe detection.
+   If the hand moved more than 12% of screen width within ~350ms, flip. */
+function detectSwipe(landmarks) {
+  const now = Date.now();
+  if (now - lastFlip < FLIP_COOLDOWN) return;
+
+  const wrist = landmarks[0];
+  const x = 1 - wrist.x; // mirror to match screen
+  wristHistory.push({ x, t: now });
+  while (wristHistory.length && now - wristHistory[0].t > SWIPE_WINDOW_MS) {
+    wristHistory.shift();
+  }
+  if (wristHistory.length < 3) return;
+
+  // Use min/max within window so a quick flick registers even if hand drifts back
+  let minX = Infinity, maxX = -Infinity, minT = now, maxT = 0;
+  for (const p of wristHistory) {
+    if (p.x < minX) { minX = p.x; minT = p.t; }
+    if (p.x > maxX) { maxX = p.x; maxT = p.t; }
+  }
+  const span = maxX - minX;
+  const SWIPE_THRESHOLD = 0.12;
+  if (span < SWIPE_THRESHOLD) return;
+
+  // Direction: whichever extreme came LAST is where the hand ended up
+  const movedRight = maxT > minT;
+  if (movedRight) {
+    flipPrev();
+    showRipple(window.innerWidth * maxX, 'prev');
+  } else {
+    flipNext();
+    showRipple(window.innerWidth * minX, 'next');
+  }
+  wristHistory = [];
+}
+
+/* ---------- MediaPipe setup ---------- */
+let hands = null;
+let camera = null;
+let cameraRunning = false;
+
+async function startCamera() {
+  if (cameraRunning) return;
+  statusEl.textContent = 'requesting camera…';
+  try {
+    hands = new Hands({
+      locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${f}`
+    });
+    hands.setOptions({
+      maxNumHands: 1,
+      modelComplexity: 0,
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.5
+    });
+    hands.onResults((results) => {
+      if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+        const landmarks = results.multiHandLandmarks[0];
+        latestLandmarks = landmarks;
+        detectSwipe(landmarks);
+      } else {
+        latestLandmarks = null;
+        wristHistory = [];
+      }
+    });
+
+    camera = new Camera(video, {
+      onFrame: async () => {
+        await hands.send({ image: video });
+      },
+      width: 640,
+      height: 480
+    });
+    await camera.start();
+    cameraRunning = true;
+    document.getElementById('cam-box').classList.remove('off');
+    document.getElementById('btn-cam').textContent = 'CAM LIVE';
+    document.getElementById('btn-cam').classList.add('active');
+    statusEl.textContent = 'SWIPE HAND  ·  LEFT → NEXT  ·  RIGHT → PREV';
+    hideWelcome();
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = 'CAM OFFLINE  ·  USE ARROWS OR BUTTONS';
+    hideWelcome();
+  }
+}
+
+// Continuous render so trails fade smoothly even between MediaPipe frames
+let latestLandmarks = null;
+function renderLoop() {
+  drawGhost(latestLandmarks);
+  requestAnimationFrame(renderLoop);
+}
+renderLoop();
+
+const welcomeEl = document.getElementById('welcome');
+function hideWelcome() { welcomeEl.classList.add('hidden'); }
+
+welcomeEl.addEventListener('click', () => {
+  startCamera();
+});
+
+document.getElementById('btn-cam').addEventListener('click', startCamera);
+
+// Try auto-start. If permission is already granted from a previous visit
+// it will start silently. Otherwise the welcome overlay waits for a tap.
+(async function tryAutoStart() {
+  try {
+    if (navigator.permissions && navigator.permissions.query) {
+      const perm = await navigator.permissions.query({ name: 'camera' });
+      if (perm.state === 'granted') {
+        startCamera();
+        return;
+      }
+    }
+  } catch (e) { /* not supported — fall through */ }
+  // Give the page a moment to render before attempting — some browsers
+  // will prompt for permission on load without requiring a click.
+  setTimeout(() => {
+    if (!cameraRunning) startCamera();
+  }, 300);
+})();
+
+</script>
+</body>
+</html>

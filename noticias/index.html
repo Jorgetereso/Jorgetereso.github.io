@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Noticias</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
+
+    #last-updated {
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+
+    .refresh-btn {
+      background: #e94560;
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .refresh-btn:hover { background: #c73652; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 16px 24px 0;
+      border-bottom: 2px solid #ddd;
+      background: white;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+    }
+    .tab.active { color: #e94560; border-bottom-color: #e94560; }
+    .tab:hover:not(.active) { color: #333; }
+
+    .feed-count {
+      display: inline-block;
+      background: #e0e0e0;
+      color: #555;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      padding: 1px 7px;
+      margin-left: 5px;
+    }
+    .tab.active .feed-count { background: #fce4e9; color: #e94560; }
+
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .articles {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .article {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: box-shadow 0.15s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .article:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.13); }
+
+    .article-img {
+      width: 130px;
+      min-width: 130px;
+      background: #e8e8e8;
+      overflow: hidden;
+    }
+    .article-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .article-body {
+      padding: 14px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .article-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #111;
+    }
+
+    .article-desc {
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .article-meta {
+      font-size: 0.75rem;
+      color: #999;
+      margin-top: auto;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 0;
+      color: #888;
+      font-size: 0.95rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #eee;
+      border-top-color: #e94560;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error {
+      background: #fff0f0;
+      border: 1px solid #fcc;
+      border-radius: 8px;
+      padding: 16px;
+      color: #c00;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .article-img { width: 100px; min-width: 100px; }
+      .tabs { padding: 12px 12px 0; }
+      .content { padding: 14px 10px; }
+      header { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Mis Noticias</h1>
+    <div id="last-updated"></div>
+  </div>
+  <button class="refresh-btn" onclick="loadAll()">Actualizar</button>
+</header>
+
+<div class="tabs">
+  <button class="tab active" data-tab="all">Todas <span class="feed-count" id="count-all">–</span></button>
+  <button class="tab" data-tab="infobae">Infobae <span class="feed-count" id="count-infobae">–</span></button>
+  <button class="tab" data-tab="ole">Ole <span class="feed-count" id="count-ole">–</span></button>
+</div>
+
+<div class="content">
+  <div id="panel-all" class="panel active">
+    <div class="loading"><div class="spinner"></div>Cargando noticias…</div>
+  </div>
+  <div id="panel-infobae" class="panel">
+    <div class="loading"><div class="spinner"></div>Cargando Infobae…</div>
+  </div>
+  <div id="panel-ole" class="panel">
+    <div class="loading"><div class="spinner"></div>Cargando Ole…</div>
+  </div>
+</div>
+
+<script>
+const FEEDS = [
+  {
+    id: "infobae",
+    name: "Infobae",
+    url: "https://www.infobae.com/feeds/rss/",
+    color: "#e94560"
+  },
+  {
+    id: "ole",
+    name: "Ole",
+    url: "https://www.ole.com.ar/rss/ultimas-noticias/",
+    color: "#006400"
+  }
+];
+
+// CORS proxy — uses allorigins.win (free, no API key needed)
+const PROXY = url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+let allArticles = [];
+
+// --- Tab switching ---
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+  });
+});
+
+// --- Fetch & parse RSS ---
+async function fetchFeed(feed) {
+  const res = await fetch(PROXY(feed.url));
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(data.contents, "text/xml");
+  const items = Array.from(doc.querySelectorAll("item"));
+  return items.map(item => {
+    const get = tag => item.querySelector(tag)?.textContent?.trim() || "";
+    // Try to find image
+    let image = "";
+    const enclosure = item.querySelector("enclosure[type^='image']");
+    if (enclosure) image = enclosure.getAttribute("url") || "";
+    if (!image) {
+      const mediaThumbnail = item.querySelector("thumbnail");
+      if (mediaThumbnail) image = mediaThumbnail.getAttribute("url") || "";
+    }
+    if (!image) {
+      // Try to extract from description HTML
+      const descHtml = get("description");
+      const match = descHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if (match) image = match[1];
+    }
+    return {
+      source: feed.id,
+      sourceName: feed.name,
+      sourceColor: feed.color,
+      title: get("title"),
+      link: get("link"),
+      description: stripHtml(get("description")),
+      pubDate: parseDate(get("pubDate")),
+      image
+    };
+  });
+}
+
+function stripHtml(html) {
+  const tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  return tmp.textContent || "";
+}
+
+function parseDate(str) {
+  if (!str) return null;
+  const d = new Date(str);
+  return isNaN(d) ? null : d;
+}
+
+function timeAgo(date) {
+  if (!date) return "";
+  const diff = Math.floor((Date.now() - date) / 1000);
+  if (diff < 60) return "Hace un momento";
+  if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
+  if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
+  return date.toLocaleDateString("es-AR", { day: "numeric", month: "short" });
+}
+
+// --- Render ---
+function renderArticles(articles, containerId) {
+  const container = document.getElementById(containerId);
+  if (!articles.length) {
+    container.innerHTML = `<div class="error">No se pudieron cargar las noticias. Intenta de nuevo.</div>`;
+    return;
+  }
+  container.innerHTML = `<div class="articles">${articles.map(articleHTML).join("")}</div>`;
+}
+
+function articleHTML(a) {
+  const imgPart = a.image
+    ? `<div class="article-img"><img src="${escHtml(a.image)}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
+    : "";
+  return `
+    <a class="article" href="${escHtml(a.link)}" target="_blank" rel="noopener">
+      ${imgPart}
+      <div class="article-body">
+        <div class="article-title">${escHtml(a.title)}</div>
+        ${a.description ? `<div class="article-desc">${escHtml(a.description)}</div>` : ""}
+        <div class="article-meta">
+          <span style="color:${a.sourceColor};font-weight:600">${a.sourceName}</span>
+          ${a.pubDate ? ` · ${timeAgo(a.pubDate)}` : ""}
+        </div>
+      </div>
+    </a>`;
+}
+
+function escHtml(str) {
+  return (str || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// --- Load everything ---
+async function loadAll() {
+  // Reset
+  allArticles = [];
+  document.getElementById("panel-all").innerHTML = `<div class="loading"><div class="spinner"></div>Cargando noticias…</div>`;
+  document.getElementById("count-all").textContent = "–";
+  document.getElementById("count-infobae").textContent = "–";
+  document.getElementById("count-ole").textContent = "–";
+
+  await Promise.allSettled(
+    FEEDS.map(async feed => {
+      const panelId = "panel-" + feed.id;
+      document.getElementById(panelId).innerHTML = `<div class="loading"><div class="spinner"></div>Cargando ${feed.name}…</div>`;
+      try {
+        const articles = await fetchFeed(feed);
+        allArticles.push(...articles);
+        renderArticles(articles, panelId);
+        document.getElementById("count-" + feed.id).textContent = articles.length;
+      } catch (e) {
+        document.getElementById(panelId).innerHTML = `<div class="error">No se pudo cargar ${feed.name}. ${e.message}</div>`;
+        document.getElementById("count-" + feed.id).textContent = "!";
+      }
+    })
+  );
+
+  // Sort all by date
+  allArticles.sort((a, b) => (b.pubDate || 0) - (a.pubDate || 0));
+  renderArticles(allArticles, "panel-all");
+  document.getElementById("count-all").textContent = allArticles.length;
+
+  const now = new Date();
+  document.getElementById("last-updated").textContent =
+    "Actualizado " + now.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
+}
+
+loadAll();
+</script>
+</body>
+</html>
