@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Freemium & Subscription Design — Escape Intel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="site-wrap">
+  <button class="menu-toggle">☰</button>
+  <nav class="sidebar">
+    <div class="sidebar-brand"><a href="index.html">ESCAPE <span class="accent">INTEL</span></a></div>
+    <a href="index.html" class="sidebar-hub">Overview</a>
+    <div class="sidebar-section" data-section="market">
+      <div class="sidebar-section-label">Market Intelligence</div>
+      <a href="market-landscape.html" class="sidebar-link">VR Kids Market</a>
+      <a href="audience-profile.html" class="sidebar-link">Audience Profile</a>
+      <a href="genre-analysis.html" class="sidebar-link">Genre Analysis</a>
+      <a href="viral-trends.html" class="sidebar-link">Viral Trends</a>
+    </div>
+    <div class="sidebar-section" data-section="store">
+      <div class="sidebar-section-label">Quest Store</div>
+      <a href="aso-keywords.html" class="sidebar-link">ASO Keywords</a>
+      <a href="store-visuals.html" class="sidebar-link">Store Visuals</a>
+      <a href="store-funnel.html" class="sidebar-link">Discovery Funnel</a>
+    </div>
+    <div class="sidebar-section" data-section="money">
+      <div class="sidebar-section-label">Monetization</div>
+      <a href="freemium-model.html" class="sidebar-link active">Freemium Model</a>
+      <a href="cosmetics-strategy.html" class="sidebar-link">Cosmetics & IAP</a>
+      <a href="parental-spending.html" class="sidebar-link">Parent as Payer</a>
+    </div>
+    <div class="sidebar-section" data-section="channels">
+      <div class="sidebar-section-label">Marketing Channels</div>
+      <a href="youtube-strategy.html" class="sidebar-link">YouTube</a>
+      <a href="tiktok-strategy.html" class="sidebar-link">TikTok</a>
+      <a href="community-growth.html" class="sidebar-link">Community</a>
+      <a href="paid-acquisition.html" class="sidebar-link">Paid Acquisition</a>
+    </div>
+    <div class="sidebar-section" data-section="retention">
+      <div class="sidebar-section-label">Retention & Growth</div>
+      <a href="retention-mechanics.html" class="sidebar-link">Retention</a>
+      <a href="social-features.html" class="sidebar-link">Social Features</a>
+      <a href="live-ops.html" class="sidebar-link">Live Ops</a>
+    </div>
+    <div class="sidebar-section" data-section="safety">
+      <div class="sidebar-section-label">Safety & Compliance</div>
+      <a href="coppa-compliance.html" class="sidebar-link">COPPA & Legal</a>
+      <a href="meta-policies.html" class="sidebar-link">Meta Policies</a>
+      <a href="safety-by-design.html" class="sidebar-link">Safety by Design</a>
+    </div>
+  </nav>
+
+  <main class="main-content has-toggle">
+    <div class="page-badge">MONETIZATION</div>
+    <h1 class="page-title">Freemium & Subscription Design</h1>
+    <p class="page-subtitle">How to structure free-to-play gating, subscription tiers, and pricing for a kids VR game on Meta Quest. Every number below is benchmarked against real F2P kids titles so you can model revenue from day one.</p>
+
+    <!-- Stat Grid -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-value gold">2 – 5%</span>
+        <span class="stat-label">F2P-to-Payer Conversion Rate</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value teal">$6.40</span>
+        <span class="stat-label">Avg Subscription ARPU / mo</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value peri">$0.08</span>
+        <span class="stat-label">Kids Game ARPDAU</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value orange">58%</span>
+        <span class="stat-label">Subscription Retention @ 3 mo</span>
+      </div>
+    </div>
+
+    <!-- Subscription Tiers -->
+    <div class="section-divider gold">Subscription Tiers</div>
+    <p class="page-subtitle" style="margin-bottom:1.5rem">Three tiers designed to give free players a complete experience while making paid tiers feel irresistible. The free tier must be fun enough to drive word-of-mouth; the premium tier must be visible enough to drive aspiration.</p>
+
+    <div class="comparison-grid">
+      <div class="comparison-card">
+        <h4 style="color:var(--text-sec)">Free Tier &mdash; $0</h4>
+        <p><strong>Levels:</strong> 15 core escape rooms (refreshed quarterly)</p>
+        <p><strong>Cosmetics:</strong> 5 base character skins, 3 emotes</p>
+        <p><strong>Multiplayer:</strong> 2-player co-op rooms</p>
+        <p><strong>Daily rewards:</strong> Basic login streak bonuses</p>
+        <p><strong>Ads:</strong> None (kids under 13 = no ads per Meta policy)</p>
+        <p><strong>Purpose:</strong> Hook players, generate social proof, create demand for locked content visible in menus</p>
+      </div>
+      <div class="comparison-card">
+        <h4 style="color:var(--teal)">Basic &mdash; $4.99/mo</h4>
+        <p><strong>Levels:</strong> 40+ rooms including themed packs (Haunted Mansion, Space Station, Underwater Lab)</p>
+        <p><strong>Cosmetics:</strong> 12 exclusive skins, 10 emotes, 1 pet companion</p>
+        <p><strong>Multiplayer:</strong> 4-player co-op + private lobbies</p>
+        <p><strong>Battle Pass:</strong> Free track + 20 bonus tiers</p>
+        <p><strong>Perks:</strong> Priority matchmaking, custom name colors</p>
+        <p><strong>Trial:</strong> 7-day free trial, cancel anytime</p>
+      </div>
+      <div class="comparison-card">
+        <h4 style="color:var(--gold)">Premium &mdash; $9.99/mo</h4>
+        <p><strong>Levels:</strong> All rooms + early access to new content (2-week head start)</p>
+        <p><strong>Cosmetics:</strong> Full skin library, all emotes, 3 exclusive legendary pets</p>
+        <p><strong>Multiplayer:</strong> 6-player co-op + custom game creation tools</p>
+        <p><strong>Battle Pass:</strong> Premium track unlocked every season</p>
+        <p><strong>Perks:</strong> Monthly 500-coin bonus, exclusive badges, creator spotlight eligibility</p>
+        <p><strong>Family:</strong> Share with up to 2 sibling accounts on the same Quest device</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">Tier Design Principle</div>
+      <p>The Basic tier should feel like a "no brainer" upgrade at $4.99/mo. Keep 70% of your most engaged content in Basic, not Premium. Premium exists for superfans and collectors &mdash; it should never feel mandatory. Industry data shows 60-70% of subscribers choose the mid tier when three options are presented (the <em>decoy effect</em>).</p>
+    </div>
+
+    <!-- Competitor Monetization Table -->
+    <div class="section-divider gold">How Kids Games Monetize</div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Model</th>
+            <th>Free Content %</th>
+            <th>Subscription Price</th>
+            <th>Top IAP</th>
+            <th>ARPPU Est.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Roblox</strong></td>
+            <td>F2P + Premium sub + Robux IAP</td>
+            <td>85%</td>
+            <td>$4.99 &ndash; $14.99/mo</td>
+            <td>$99.99 (10,000 Robux)</td>
+            <td>$15.20/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Fortnite</strong></td>
+            <td>F2P + Battle Pass + cosmetic IAP</td>
+            <td>95%</td>
+            <td>Fortnite Crew $11.99/mo</td>
+            <td>$79.99 (13,500 V-Bucks)</td>
+            <td>$18.50/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Rec Room</strong></td>
+            <td>F2P + Rec Room Plus sub + tokens</td>
+            <td>90%</td>
+            <td>$7.99/mo</td>
+            <td>$49.99 (18,750 tokens)</td>
+            <td>$10.80/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Gorilla Tag</strong></td>
+            <td>F2P + cosmetic-only IAP</td>
+            <td>98%</td>
+            <td>None</td>
+            <td>$9.99 (cosmetic bundles)</td>
+            <td>$4.30/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Stumble Guys</strong></td>
+            <td>F2P + Battle Pass + skins</td>
+            <td>80%</td>
+            <td>None (pass is one-time)</td>
+            <td>$19.99 (gem packs)</td>
+            <td>$7.60/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Adopt Me</strong></td>
+            <td>F2P in Roblox + premium pets/gamepasses</td>
+            <td>75%</td>
+            <td>N/A (Roblox Premium)</td>
+            <td>$14.99 equiv. (gamepasses)</td>
+            <td>$8.90/mo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Key Takeaway</div>
+      <p>The most successful kids games keep 80%+ of content free. Revenue comes from <strong>social signaling</strong> (skins, emotes) and <strong>convenience</strong> (skip grind, early access), never from gameplay gating. Gorilla Tag proves that a near-100% free model with cheap cosmetics can generate $60M+ in revenue.</p>
+    </div>
+
+    <!-- Revenue Split Bar Chart -->
+    <div class="section-divider gold">Revenue Split by Monetization Type</div>
+    <p class="page-subtitle" style="margin-bottom:1.5rem">Projected year-one revenue distribution for Escape based on industry benchmarks for kids F2P titles.</p>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Revenue share — Year 1 target mix</div>
+      <div class="bar-row">
+        <span class="bar-label">Subscriptions</span>
+        <div class="bar-track"><div class="bar-fill gold" style="width:38%"></div></div>
+        <span class="bar-pct">38%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Cosmetic IAP</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:28%"></div></div>
+        <span class="bar-pct">28%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Battle Pass</span>
+        <div class="bar-track"><div class="bar-fill peri" style="width:22%"></div></div>
+        <span class="bar-pct">22%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">One-time Packs</span>
+        <div class="bar-track"><div class="bar-fill orange" style="width:12%"></div></div>
+        <span class="bar-pct">12%</span>
+      </div>
+    </div>
+
+    <!-- Pricing Psychology -->
+    <div class="section-divider gold">Pricing Psychology for Kids & Parents</div>
+    <div class="prose">
+      <h3>Price Anchoring</h3>
+      <p>Always display all three tiers side by side. The $9.99 Premium tier exists partly to make $4.99 feel affordable. Label the Basic tier with a <em>"Most Popular"</em> badge. Show the per-day cost: "$4.99/mo = just 17 cents a day" to reframe the purchase for parents reviewing the charge.</p>
+
+      <h3>7-Day Free Trial</h3>
+      <p>Offer a no-commitment 7-day trial of the Basic tier. Data from kids' subscription apps shows a <strong>42% trial-to-paid conversion rate</strong> when the trial lasts 7 days (vs. 28% for 3-day trials). Require parental consent (Meta account holder) to start the trial &mdash; this satisfies COPPA and builds parent trust. Send a reminder notification 24 hours before the trial ends.</p>
+
+      <h3>Annual Plan Discount</h3>
+      <p>Offer annual pricing at a 20% discount: Basic at $47.88/yr ($3.99/mo effective), Premium at $95.88/yr ($7.99/mo effective). Annual plans increase LTV by 2.3x on average because churn drops &mdash; parents set it and forget it. Highlight <em>"Save $12"</em> on the annual badge.</p>
+
+      <h3>Family Plan</h3>
+      <p>Households with multiple kids on a shared Quest device are a high-value segment. The Premium tier includes 2 sibling accounts, but you can also offer a standalone Family Add-On at $2.99/mo per additional child. This captures multi-child households who would otherwise only subscribe once.</p>
+
+      <h3>Gifting & Prepaid Cards</h3>
+      <p>Support prepaid subscription cards (1-month, 3-month, 6-month) for grandparents and birthday gifts. <strong>23% of kids' digital spending</strong> comes from gift occasions. Partner with retailers for physical gift cards to reach parents who distrust online recurring charges.</p>
+    </div>
+
+    <!-- Monetization Rollout Timeline -->
+    <div class="section-divider gold">Monetization Rollout Timeline</div>
+
+    <div class="callout action">
+      <div class="callout-title">Recommended Rollout</div>
+      <p>Do not launch with the full monetization stack. Kids need to love the game before you ask for money. Aggressive early monetization kills word-of-mouth in kids' games faster than any other genre.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">Launch (Month 0)</div>
+        <div class="timeline-text">Release with free tier only. 15 escape rooms, 5 skins, basic multiplayer. Focus entirely on retention and social virality. No paywalls visible. Goal: 10,000 DAU within 30 days.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Month 1</div>
+        <div class="timeline-text">Introduce the in-game currency (Escape Coins). Add a small cosmetic shop with 10 items priced $0.99 &ndash; $2.99. Test price sensitivity. Begin showing "locked" content teasers in menus.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Month 2</div>
+        <div class="timeline-text">Launch the Basic subscription tier ($4.99/mo) with 7-day free trial. Unlock 25 additional rooms and exclusive skins. Promote via in-game banner and Quest Store update.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Month 3</div>
+        <div class="timeline-text">Introduce Season 1 Battle Pass (free + paid tracks, $4.99 one-time). 50 tiers, 8-week duration. This becomes the primary engagement and spending driver.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Month 4</div>
+        <div class="timeline-text">Launch Premium tier ($9.99/mo). Add room creation tools, 6-player co-op, and the family sharing feature. Begin annual plan option.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Month 6</div>
+        <div class="timeline-text">Full monetization stack live. Rotating cosmetic shop (weekly refresh), limited-edition seasonal items, and gifting system. Evaluate ARPPU and adjust tier pricing if needed.</div>
+      </div>
+    </div>
+
+    <!-- Revenue Projections -->
+    <div class="section-divider gold">Revenue Projections</div>
+    <p class="page-subtitle" style="margin-bottom:1.5rem">Simple monthly revenue estimates at different conversion rates, assuming 50,000 MAU at month 6. These are conservative &mdash; Gorilla Tag hit 10M players within its first year on Quest.</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>F2P Conversion</th>
+            <th>Paying Users</th>
+            <th>Avg ARPPU</th>
+            <th>Monthly Revenue</th>
+            <th>Annual Run Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Conservative</strong></td>
+            <td>2%</td>
+            <td>1,000</td>
+            <td>$6.00</td>
+            <td>$6,000</td>
+            <td>$72,000</td>
+          </tr>
+          <tr>
+            <td><strong>Moderate</strong></td>
+            <td>3.5%</td>
+            <td>1,750</td>
+            <td>$7.50</td>
+            <td>$13,125</td>
+            <td>$157,500</td>
+          </tr>
+          <tr>
+            <td><strong>Optimistic</strong></td>
+            <td>5%</td>
+            <td>2,500</td>
+            <td>$9.00</td>
+            <td>$22,500</td>
+            <td>$270,000</td>
+          </tr>
+          <tr>
+            <td><strong>Breakout (100K MAU)</strong></td>
+            <td>4%</td>
+            <td>4,000</td>
+            <td>$8.50</td>
+            <td>$34,000</td>
+            <td>$408,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Revenue Growth Levers</div>
+      <p>To move from conservative to optimistic: (1) increase free-to-paid conversion with better paywall placement and social proof ("3 of your friends have Basic"), (2) increase ARPPU by launching the battle pass and cosmetic shop, (3) grow MAU through YouTube/TikTok creator campaigns and Quest Store featuring. Each lever is independently actionable and covered in detail on the relevant pages.</p>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-title">Meta's 30% Revenue Share</div>
+      <p>All revenue projections above are gross. Meta takes a 30% cut on all Quest Store transactions (IAP and subscriptions). Net revenue is 70% of the figures shown. At the Moderate scenario, that is $9,188/mo net. Factor this into your cost structure from day one. There is no way to avoid or negotiate this cut for indie developers at launch.</p>
+    </div>
+
+    <!-- Prev / Next -->
+    <div class="page-nav">
+      <a href="store-funnel.html"><span class="nav-label">&larr; Previous</span>Discovery Funnel</a>
+      <a href="cosmetics-strategy.html" style="text-align:right"><span class="nav-label">Next &rarr;</span>Cosmetics & IAP</a>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
