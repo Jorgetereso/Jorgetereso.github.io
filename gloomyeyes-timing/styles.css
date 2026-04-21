@@ -20,6 +20,7 @@
   --pink:     #ff6b9d;
   --amber:    #ffc857;
   --violet:   #b48bff;
+  --coral:    #ff9154;
   --today:    #ff5b5b;
 
   --blue-dim:   rgba(126, 184, 255, 0.15);
@@ -212,7 +213,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .gantt {
-  min-width: 1080px;
+  min-width: 1400px;
 }
 
 .gantt-row {
@@ -386,6 +387,7 @@ a { text-decoration: none; color: inherit; }
 .bar.pink   { background: var(--pink);   }
 .bar.amber  { background: var(--amber);  }
 .bar.violet { background: var(--violet); }
+.bar.coral  { background: var(--coral);  }
 
 .bar:hover {
   filter: brightness(1.1);
@@ -525,6 +527,7 @@ a { text-decoration: none; color: inherit; }
 .sw.pink   { background: var(--pink);   }
 .sw.amber  { background: var(--amber);  }
 .sw.violet { background: var(--violet); }
+.sw.coral  { background: var(--coral);  }
 .sw.today {
   background: transparent;
   border-left: 2px dashed var(--today);
