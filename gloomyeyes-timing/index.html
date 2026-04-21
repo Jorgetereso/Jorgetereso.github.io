@@ -17,7 +17,7 @@
       <span class="header-divider"></span>
       <span class="header-label">Gloomy Eyes — Timing</span>
     </div>
-    <span class="header-meta">v0.1 · draft</span>
+    <span class="header-meta">v0.2 · draft</span>
   </header>
 
   <main>
@@ -33,7 +33,7 @@
     <section class="milestones">
       <div class="milestone">
         <span class="milestone-tag blue">Milestone 01</span>
-        <span class="milestone-name">Vertical Slice</span>
+        <span class="milestone-name">Vertical Slice: Dungeons</span>
         <span class="milestone-date">Mon, June 15, 2026</span>
         <span class="milestone-delta" id="delta-vs"></span>
       </div>
@@ -47,173 +47,188 @@
 
     <section class="gantt-section">
       <div class="section-header">
-        <span class="section-label">Vertical Slice · 8-week plan</span>
-        <span class="section-count">Apr 20 → Jun 14, 2026</span>
+        <span class="section-label">Vertical Slice: Dungeons · 13-week plan</span>
+        <span class="section-count">Mar 23 → Jun 15, 2026</span>
       </div>
 
-      <div class="gantt">
+      <div class="gantt-scroll">
+        <div class="gantt">
 
-        <!-- Weeks header -->
-        <div class="gantt-row gantt-head">
-          <div class="gantt-label"></div>
-          <div class="gantt-track head-track">
-            <div class="week-head"><span class="w-num">W1</span><span class="w-date">Apr 20</span></div>
-            <div class="week-head"><span class="w-num">W2</span><span class="w-date">Apr 27</span></div>
-            <div class="week-head"><span class="w-num">W3</span><span class="w-date">May 04</span></div>
-            <div class="week-head"><span class="w-num">W4</span><span class="w-date">May 11</span></div>
-            <div class="week-head"><span class="w-num">W5</span><span class="w-date">May 18</span></div>
-            <div class="week-head"><span class="w-num">W6</span><span class="w-date">May 25</span></div>
-            <div class="week-head"><span class="w-num">W7</span><span class="w-date">Jun 01</span></div>
-            <div class="week-head"><span class="w-num">W8</span><span class="w-date">Jun 08</span></div>
-          </div>
-        </div>
-
-        <!-- PRE-PRODUCTION -->
-        <div class="gantt-group">Pre-production</div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Planning breakdown</div>
-          <div class="gantt-track">
-            <div class="bar blue" style="--s:1; --e:2"><span>Plan</span></div>
-          </div>
-        </div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Concept Art</div>
-          <div class="gantt-track">
-            <div class="bar blue" style="--s:1; --e:4"><span>Concept</span></div>
-          </div>
-        </div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Animatic</div>
-          <div class="gantt-track">
-            <div class="bar blue" style="--s:2; --e:5"><span>Animatic</span></div>
-          </div>
-        </div>
-
-        <!-- CHARACTERS -->
-        <div class="gantt-group">Characters <span class="group-hint">Sculpt · UV · Final · Rig</span></div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Uncle</div>
-          <div class="gantt-track">
-            <div class="bar green segmented" style="--s:3; --e:6">
-              <span class="seg">Sculpt</span>
-              <span class="seg">UV</span>
-              <span class="seg">Final</span>
-              <span class="seg">Rig</span>
+          <!-- Weeks header -->
+          <div class="gantt-row gantt-head">
+            <div class="gantt-label"></div>
+            <div class="gantt-track head-track">
+              <div class="today-label"><span>● TODAY · Apr 20</span></div>
+              <div class="week-head"><span class="w-num">W1</span><span class="w-date">Mar 23</span></div>
+              <div class="week-head"><span class="w-num">W2</span><span class="w-date">Mar 30</span></div>
+              <div class="week-head"><span class="w-num">W3</span><span class="w-date">Apr 06</span></div>
+              <div class="week-head"><span class="w-num">W4</span><span class="w-date">Apr 13</span></div>
+              <div class="week-head now"><span class="w-num">W5</span><span class="w-date">Apr 20</span></div>
+              <div class="week-head"><span class="w-num">W6</span><span class="w-date">Apr 27</span></div>
+              <div class="week-head"><span class="w-num">W7</span><span class="w-date">May 04</span></div>
+              <div class="week-head"><span class="w-num">W8</span><span class="w-date">May 11</span></div>
+              <div class="week-head"><span class="w-num">W9</span><span class="w-date">May 18</span></div>
+              <div class="week-head"><span class="w-num">W10</span><span class="w-date">May 25</span></div>
+              <div class="week-head"><span class="w-num">W11</span><span class="w-date">Jun 01</span></div>
+              <div class="week-head"><span class="w-num">W12</span><span class="w-date">Jun 08</span></div>
+              <div class="week-head"><span class="w-num">W13</span><span class="w-date">Jun 15</span></div>
             </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Nina</div>
-          <div class="gantt-track">
-            <div class="bar green segmented" style="--s:3; --e:6">
-              <span class="seg">Sculpt</span>
-              <span class="seg">UV</span>
-              <span class="seg">Final</span>
-              <span class="seg">Rig</span>
+          <!-- PRE-PRODUCTION -->
+          <div class="gantt-group">Pre-production</div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">Planning breakdown</div>
+            <div class="gantt-track">
+              <div class="bar blue done" style="--s:1; --e:3"><span>Plan ✓</span></div>
             </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Clone Bunnies ×2</div>
-          <div class="gantt-track">
-            <div class="bar green segmented" style="--s:4; --e:6">
-              <span class="seg">Sculpt</span>
-              <span class="seg">UV</span>
-              <span class="seg">Final</span>
-              <span class="seg">Rig</span>
+          <div class="gantt-row">
+            <div class="gantt-label">Concept Art</div>
+            <div class="gantt-track">
+              <div class="bar blue active" style="--s:4; --e:9"><span>Concept</span></div>
             </div>
           </div>
-        </div>
 
-        <!-- SPACES -->
-        <div class="gantt-group">Spaces</div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Layout</div>
-          <div class="gantt-track">
-            <div class="bar pink" style="--s:3; --e:5"><span>Layout</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Animatic</div>
+            <div class="gantt-track">
+              <div class="bar blue" style="--s:5; --e:9"><span>Animatic</span></div>
+            </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Polish</div>
-          <div class="gantt-track">
-            <div class="bar pink" style="--s:5; --e:7"><span>Polish</span></div>
+          <!-- CHARACTERS -->
+          <div class="gantt-group">Characters <span class="group-hint">Sculpt · UV · Final · Rig</span></div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">Uncle</div>
+            <div class="gantt-track">
+              <div class="bar green segmented active" style="--s:5; --e:9">
+                <span class="seg pulse">Sculpt</span>
+                <span class="seg">UV</span>
+                <span class="seg">Final</span>
+                <span class="seg">Rig</span>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- VOICES -->
-        <div class="gantt-group">Voices</div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Record voices</div>
-          <div class="gantt-track">
-            <div class="bar amber" style="--s:3; --e:5"><span>Record</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Nina</div>
+            <div class="gantt-track">
+              <div class="bar green segmented active" style="--s:5; --e:9">
+                <span class="seg pulse">Sculpt</span>
+                <span class="seg">UV</span>
+                <span class="seg">Final</span>
+                <span class="seg">Rig</span>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- ANIMATION -->
-        <div class="gantt-group">Animation</div>
-
-        <div class="gantt-row">
-          <div class="gantt-label">Layout</div>
-          <div class="gantt-track">
-            <div class="bar amber" style="--s:5; --e:6"><span>Layout</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Clone Bunnies ×2</div>
+            <div class="gantt-track">
+              <div class="bar green segmented" style="--s:7; --e:11">
+                <span class="seg">Sculpt</span>
+                <span class="seg">UV</span>
+                <span class="seg">Final</span>
+                <span class="seg">Rig</span>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Spline</div>
-          <div class="gantt-track">
-            <div class="bar amber" style="--s:5; --e:8"><span>Spline</span></div>
+          <!-- SPACES -->
+          <div class="gantt-group">Spaces</div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">Layout</div>
+            <div class="gantt-track">
+              <div class="bar pink active" style="--s:4; --e:8"><span>Layout</span></div>
+            </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Polish</div>
-          <div class="gantt-track">
-            <div class="bar amber" style="--s:7; --e:9"><span>Polish</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Polish</div>
+            <div class="gantt-track">
+              <div class="bar pink" style="--s:8; --e:12"><span>Polish</span></div>
+            </div>
           </div>
-        </div>
 
-        <!-- POST -->
-        <div class="gantt-group">Post</div>
+          <!-- VOICES -->
+          <div class="gantt-group">Voices</div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Light</div>
-          <div class="gantt-track">
-            <div class="bar violet" style="--s:7; --e:9"><span>Light</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Record voices</div>
+            <div class="gantt-track">
+              <div class="bar amber" style="--s:5; --e:8"><span>Record</span></div>
+            </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">VFX</div>
-          <div class="gantt-track">
-            <div class="bar violet" style="--s:7; --e:9"><span>VFX</span></div>
+          <!-- ANIMATION -->
+          <div class="gantt-group">Animation</div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">Layout</div>
+            <div class="gantt-track">
+              <div class="bar amber" style="--s:6; --e:9"><span>Layout</span></div>
+            </div>
           </div>
-        </div>
 
-        <div class="gantt-row">
-          <div class="gantt-label">Sound</div>
-          <div class="gantt-track">
-            <div class="bar violet" style="--s:8; --e:9"><span>Sound</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Blocking</div>
+            <div class="gantt-track">
+              <div class="bar amber" style="--s:8; --e:12"><span>Blocking</span></div>
+            </div>
           </div>
-        </div>
 
-        <!-- Delivery marker row -->
-        <div class="gantt-row gantt-delivery">
-          <div class="gantt-label">◆ Delivery</div>
-          <div class="gantt-track">
-            <div class="bar delivery" style="--s:8; --e:9"><span>Vertical Slice — Jun 15</span></div>
+          <div class="gantt-row">
+            <div class="gantt-label">Polish</div>
+            <div class="gantt-track">
+              <div class="bar amber" style="--s:10; --e:13"><span>Polish</span></div>
+            </div>
           </div>
-        </div>
 
+          <!-- POST -->
+          <div class="gantt-group">Post</div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">Light</div>
+            <div class="gantt-track">
+              <div class="bar violet" style="--s:10; --e:13"><span>Light</span></div>
+            </div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">VFX</div>
+            <div class="gantt-track">
+              <div class="bar violet" style="--s:10; --e:13"><span>VFX</span></div>
+            </div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-label">Sound</div>
+            <div class="gantt-track">
+              <div class="bar violet" style="--s:11; --e:13"><span>Sound</span></div>
+            </div>
+          </div>
+
+          <!-- Deliveries -->
+          <div class="gantt-row gantt-delivery">
+            <div class="gantt-label">◆ Internal</div>
+            <div class="gantt-track">
+              <div class="bar delivery internal" style="--s:12; --e:13"><span>Full internal · Jun 8</span></div>
+            </div>
+          </div>
+
+          <div class="gantt-row gantt-delivery final">
+            <div class="gantt-label">◆ Final</div>
+            <div class="gantt-track">
+              <div class="bar delivery final" style="--s:13; --e:14"><span>Jun 15 · Dungeons</span></div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <div class="legend">
@@ -222,48 +237,7 @@
         <span class="lg"><i class="sw pink"></i> Spaces</span>
         <span class="lg"><i class="sw amber"></i> Voices + Animation</span>
         <span class="lg"><i class="sw violet"></i> Post</span>
-      </div>
-    </section>
-
-    <section class="notes-section">
-      <div class="section-header">
-        <span class="section-label">Notes</span>
-      </div>
-      <ul class="notes">
-        <li><span class="n-num">01</span><span>Character phases (Sculpt → UV → Final → Rig) run sequentially inside each character's window.</span></li>
-        <li><span class="n-num">02</span><span>Clone Bunnies share a single sculpt pass (one asset, duplicated) to save a week.</span></li>
-        <li><span class="n-num">03</span><span>Animation layout starts once rigs land on W5; spline + polish overlap light/VFX in the final stretch.</span></li>
-        <li><span class="n-num">04</span><span>W8 is a hard integration week — sound lock, final lighting, VFX passes, export.</span></li>
-        <li><span class="n-num">05</span><span>Anything slipping past W6 eats directly into polish. Protect W7–W8.</span></li>
-      </ul>
-    </section>
-
-    <section class="full-project">
-      <div class="section-header">
-        <span class="section-label">Full Project · May 2027</span>
-        <span class="section-count">to be detailed after vertical slice</span>
-      </div>
-      <div class="fp-grid">
-        <div class="fp-card">
-          <span class="fp-phase">Phase A</span>
-          <span class="fp-window">Jun — Sep 2026</span>
-          <span class="fp-desc">Slice review · full breakdown · extended cast &amp; spaces</span>
-        </div>
-        <div class="fp-card">
-          <span class="fp-phase">Phase B</span>
-          <span class="fp-window">Oct 2026 — Jan 2027</span>
-          <span class="fp-desc">Asset production at scale · voice sessions · animatic lock</span>
-        </div>
-        <div class="fp-card">
-          <span class="fp-phase">Phase C</span>
-          <span class="fp-window">Feb — Apr 2027</span>
-          <span class="fp-desc">Animation · lighting · VFX · sound design</span>
-        </div>
-        <div class="fp-card accent">
-          <span class="fp-phase">Delivery</span>
-          <span class="fp-window">May 2027</span>
-          <span class="fp-desc">Final integration, mastering &amp; release</span>
-        </div>
+        <span class="lg"><i class="sw today"></i> Today line</span>
       </div>
     </section>
 
