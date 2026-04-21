@@ -29,8 +29,8 @@
   --amber-dim:  rgba(255, 200, 87, 0.15);
   --violet-dim: rgba(180, 139, 255, 0.15);
 
-  /* Today = start of W5 in a 13-column grid */
-  --today-x:  calc(100% * 4 / 13);
+  /* Today = start of W3 in an 11-column grid */
+  --today-x:  calc(100% * 2 / 11);
 }
 
 html { scroll-behavior: smooth; }
@@ -213,7 +213,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .gantt {
-  min-width: 1400px;
+  min-width: 1200px;
 }
 
 .gantt-row {
@@ -248,11 +248,11 @@ a { text-decoration: none; color: inherit; }
 .gantt-track {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(11, 1fr);
   height: 28px;
   background:
     linear-gradient(to right,
-      var(--fg4) 1px, transparent 1px) 0 0 / 7.6923% 100% repeat-x;
+      var(--fg4) 1px, transparent 1px) 0 0 / 9.0909% 100% repeat-x;
 }
 
 .gantt-track::after {
@@ -264,15 +264,17 @@ a { text-decoration: none; color: inherit; }
   background: var(--fg4);
 }
 
-/* Today vertical line (dashed red) on every track */
+/* Today vertical line (solid red with glow) on every track */
 .gantt-track::before {
   content: "";
   position: absolute;
   left: var(--today-x);
   top: -5px;
   bottom: -5px;
-  width: 0;
-  border-left: 2px dashed var(--today);
+  width: 2px;
+  background: var(--today);
+  box-shadow: 0 0 10px rgba(255, 91, 91, 0.55),
+              0 0 2px rgba(255, 91, 91, 0.9);
   z-index: 3;
   pointer-events: none;
 }
@@ -421,7 +423,7 @@ a { text-decoration: none; color: inherit; }
 /* Segmented char bar */
 .bar.segmented {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   padding: 0;
   gap: 1px;
   background: transparent;
@@ -432,17 +434,20 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   background: var(--green);
   color: var(--bg);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   position: relative;
+  padding: 0 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.bar.segmented .seg:nth-child(1) { opacity: 0.55; }
-.bar.segmented .seg:nth-child(2) { opacity: 0.70; }
-.bar.segmented .seg:nth-child(3) { opacity: 0.85; }
-.bar.segmented .seg:nth-child(4) { opacity: 1;    }
+.bar.segmented .seg:nth-child(1) { opacity: 0.60; }
+.bar.segmented .seg:nth-child(2) { opacity: 0.80; }
+.bar.segmented .seg:nth-child(3) { opacity: 1;    }
 
 /* Pulsing "now" segment */
 .bar.segmented .seg.pulse {
@@ -529,10 +534,10 @@ a { text-decoration: none; color: inherit; }
 .sw.violet { background: var(--violet); }
 .sw.coral  { background: var(--coral);  }
 .sw.today {
-  background: transparent;
-  border-left: 2px dashed var(--today);
-  border-radius: 0;
-  width: 4px;
+  background: var(--today);
+  box-shadow: 0 0 6px rgba(255, 91, 91, 0.55);
+  border-radius: 1px;
+  width: 2px;
   height: 12px;
 }
 
