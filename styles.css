@@ -563,3 +563,86 @@ a { text-decoration: none; color: inherit; }
     grid-template-columns: 2rem 1fr auto;
   }
 }
+
+/* ── Gate / Keypad (ASCII) ───────────────────────────── */
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.gate.unlocking {
+  animation: gate-out 0.35s ease forwards;
+  pointer-events: none;
+}
+
+.gate-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--fg2);
+  letter-spacing: 0.05em;
+}
+
+.gate-dots {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.gate-dots span {
+  width: 7px;
+  text-align: center;
+  color: var(--fg3);
+}
+.gate-dots span::before { content: "_"; }
+.gate-dots span.filled { color: var(--fg); }
+.gate-dots span.filled::before { content: "*"; }
+
+.gate.shake .gate-dots { animation: gate-shake 0.35s ease; }
+.gate.shake .gate-dots span { color: #ff6b9d; }
+
+.gate-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 24px);
+  gap: 2px;
+}
+
+.gate-pad button {
+  height: 22px;
+  width: 24px;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0;
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gate-pad button:hover { color: #aaff47; }
+.gate-pad button:active { color: var(--bg); background: var(--fg); }
+.gate-pad button.gate-aux { color: var(--fg2); }
+
+@keyframes gate-shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px); }
+}
+
+@keyframes gate-out {
+  to { opacity: 0; }
+}

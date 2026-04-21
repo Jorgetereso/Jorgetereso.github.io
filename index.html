@@ -8,8 +8,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Pre-paint gate: hide content until unlocked to avoid flash */
+    html.locked body > header,
+    html.locked body > main,
+    html.locked body > footer { visibility: hidden; }
+    html:not(.locked) body > .gate { display: none; }
+  </style>
+  <script>
+    // Tag <html> with lock state before paint so CSS can hide content without flash
+    document.documentElement.className =
+      sessionStorage.getItem('gate-ok') === '1' ? '' : 'locked';
+  </script>
 </head>
 <body>
+
+  <div class="gate" aria-hidden="false">
+    <div class="gate-inner">
+      <div class="gate-dots" id="gate-dots">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="gate-pad" id="gate-pad">
+        <button type="button" data-k="1">[1]</button>
+        <button type="button" data-k="2">[2]</button>
+        <button type="button" data-k="3">[3]</button>
+        <button type="button" data-k="4">[4]</button>
+        <button type="button" data-k="5">[5]</button>
+        <button type="button" data-k="6">[6]</button>
+        <button type="button" data-k="7">[7]</button>
+        <button type="button" data-k="8">[8]</button>
+        <button type="button" data-k="9">[9]</button>
+        <button type="button" data-k="back" class="gate-aux">[&lt;]</button>
+        <button type="button" data-k="0">[0]</button>
+        <button type="button" data-k="clear" class="gate-aux">[x]</button>
+      </div>
+    </div>
+  </div>
 
   <header class="site-header">
     <div class="header-left">
@@ -224,6 +258,62 @@
   </footer>
 
   <script>
+    // Gate keypad
+    (function () {
+      const CODE = '2522';
+      const gate = document.querySelector('.gate');
+      if (!gate || !document.documentElement.classList.contains('locked')) return;
+
+      const dots = document.querySelectorAll('#gate-dots span');
+      const pad = document.getElementById('gate-pad');
+      let buf = '';
+
+      const render = () => {
+        dots.forEach((d, i) => d.classList.toggle('filled', i < buf.length));
+      };
+
+      const unlock = () => {
+        sessionStorage.setItem('gate-ok', '1');
+        gate.classList.add('unlocking');
+        setTimeout(() => {
+          document.documentElement.classList.remove('locked');
+        }, 450);
+      };
+
+      const reject = () => {
+        gate.classList.add('shake');
+        setTimeout(() => {
+          gate.classList.remove('shake');
+          buf = '';
+          render();
+        }, 450);
+      };
+
+      const press = (k) => {
+        if (k === 'back') { buf = buf.slice(0, -1); render(); return; }
+        if (k === 'clear') { buf = ''; render(); return; }
+        if (buf.length >= CODE.length) return;
+        buf += k;
+        render();
+        if (buf.length === CODE.length) {
+          if (buf === CODE) unlock();
+          else reject();
+        }
+      };
+
+      pad.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-k]');
+        if (btn) press(btn.dataset.k);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!document.documentElement.classList.contains('locked')) return;
+        if (e.key >= '0' && e.key <= '9') press(e.key);
+        else if (e.key === 'Backspace') press('back');
+        else if (e.key === 'Escape') press('clear');
+      });
+    })();
+
     // Generate random activity grid
     const grid = document.getElementById('activity-grid-top');
     const levels = ['', 'l1', 'l2', 'l3', 'l4'];
