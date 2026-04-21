@@ -97,7 +97,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Hero ────────────────────────────────────────────── */
 .hero {
-  padding: 5vw var(--gutter) 3.5vw;
+  padding: 2.5vw var(--gutter) 2vw;
   border-bottom: 1px solid var(--fg3);
   opacity: 0;
   animation: fade-up 0.7s ease forwards;
@@ -107,20 +107,13 @@ a { text-decoration: none; color: inherit; }
 .hero-title {
   font-family: "Anton", sans-serif;
   font-weight: 400;
-  font-size: clamp(2rem, 5.5vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
 .hero-title .accent { color: var(--amber); }
-
-.hero-sub {
-  margin-top: 1rem;
-  font-size: 0.78rem;
-  color: var(--fg2);
-  letter-spacing: 0.04em;
-}
 
 /* ── Milestones ──────────────────────────────────────── */
 .milestones {
