@@ -268,6 +268,19 @@ a { text-decoration: none; color: inherit; }
   color: var(--fg);
   letter-spacing: 0.04em;
   margin-top: 0.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.node-pct small {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.58rem;
+  font-weight: 400;
+  color: var(--fg2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .node.root {
