@@ -141,7 +141,7 @@ a { text-decoration: none; color: inherit; }
 .total {
   opacity: 0;
   animation: fade-up 0.6s ease forwards;
-  animation-delay: 0.3s;
+  animation-delay: 0.5s;
   border-bottom: 1px solid var(--fg3);
 }
 
@@ -224,7 +224,7 @@ a { text-decoration: none; color: inherit; }
 .tree-section {
   opacity: 0;
   animation: fade-up 0.6s ease forwards;
-  animation-delay: 0.5s;
+  animation-delay: 0.3s;
 }
 
 .tree {
