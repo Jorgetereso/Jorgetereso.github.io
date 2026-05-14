@@ -78,10 +78,16 @@
     <section class="index-section" id="projects">
       <div class="section-header">
         <span class="section-label">Projects</span>
-        <span class="section-count">07</span>
+        <div class="section-header-right">
+          <button type="button" class="refresh-btn" id="refresh-projects-btn" aria-label="Refresh project list from repo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.4L3 16"/><path d="M3 21v-5h5"/></svg>
+            <span class="refresh-btn-label">Refresh Projects</span>
+          </button>
+          <span class="section-count" id="projects-count">09</span>
+        </div>
       </div>
 
-      <ul class="link-list">
+      <ul class="link-list" id="projects-list">
         <li class="link-item" style="--i:0">
           <a href="/aoitravels/" class="link-row">
             <span class="item-num">01</span>
@@ -131,8 +137,24 @@
           </a>
         </li>
         <li class="link-item" style="--i:6">
-          <a href="https://jorgetereso.github.io/HIRAKU/" target="_blank" rel="noopener" class="link-row">
+          <a href="/gloomyeyes-ownership/" class="link-row">
             <span class="item-num">07</span>
+            <span class="item-name">Gloomy Eyes — Ownership</span>
+            <span class="item-desc">IP ownership pitch deck (LBE co-production)</span>
+            <span class="item-arrow">↗</span>
+          </a>
+        </li>
+        <li class="link-item" style="--i:7">
+          <a href="/gloomyeyes-timing/" class="link-row">
+            <span class="item-num">08</span>
+            <span class="item-name">Gloomy Eyes — Timing</span>
+            <span class="item-desc">Production timeline overview</span>
+            <span class="item-arrow">↗</span>
+          </a>
+        </li>
+        <li class="link-item" style="--i:8">
+          <a href="https://jorgetereso.github.io/HIRAKU/" target="_blank" rel="noopener" class="link-row">
+            <span class="item-num">09</span>
             <span class="item-name">Hiraku</span>
             <span class="item-desc">Interactive live experience</span>
             <span class="item-arrow">↗</span>
@@ -154,7 +176,7 @@
       </div>
 
       <ul class="link-list">
-        <li class="link-item" style="--i:7">
+        <li class="link-item" style="--i:9">
           <a href="/finance-tracker/" class="link-row">
             <span class="item-num">01</span>
             <span class="item-name">Finance Tracker</span>
@@ -162,7 +184,7 @@
             <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li class="link-item" style="--i:8">
+        <li class="link-item" style="--i:10">
           <a href="/noticias/" class="link-row">
             <span class="item-num">02</span>
             <span class="item-name">Mis Noticias</span>
@@ -170,7 +192,7 @@
             <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li class="link-item" style="--i:9">
+        <li class="link-item" style="--i:11">
           <a href="/ideas/" class="link-row">
             <span class="item-num">03</span>
             <span class="item-name">Idea Eater</span>
@@ -178,7 +200,7 @@
             <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li class="link-item" style="--i:10">
+        <li class="link-item" style="--i:12">
           <a href="/dogterapy/" class="link-row">
             <span class="item-num">04</span>
             <span class="item-name">DogTerapy</span>
@@ -186,7 +208,7 @@
             <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li class="link-item" style="--i:11">
+        <li class="link-item" style="--i:13">
           <a href="/eyesonyou/" class="link-row">
             <span class="item-num">05</span>
             <span class="item-name">Eyes On You</span>
@@ -194,7 +216,7 @@
             <span class="item-arrow">↗</span>
           </a>
         </li>
-        <li class="link-item" style="--i:12">
+        <li class="link-item" style="--i:14">
           <a href="/sebuki/" class="link-row">
             <span class="item-num">06</span>
             <span class="item-name">SEBUKI</span>
@@ -319,6 +341,101 @@
         if (e.key >= '0' && e.key <= '9') press(e.key);
         else if (e.key === 'Backspace') press('back');
         else if (e.key === 'Escape') press('clear');
+      });
+    })();
+
+    // Refresh Projects: scan repo via GitHub API, append any missing project folders
+    (function () {
+      const btn = document.getElementById('refresh-projects-btn');
+      if (!btn) return;
+      const labelEl = btn.querySelector('.refresh-btn-label');
+      const projList = document.getElementById('projects-list');
+      const expList = document.querySelector('#experimental .link-list');
+      const projCount = document.getElementById('projects-count');
+
+      // folders that are listed but live at an external/non-folder path
+      const KNOWN_EXTERNAL = {
+        accion: true, hiraku: true, gloomyeyes: true
+      };
+      // folders to never auto-add (infra, build output, etc.)
+      const SKIP = new Set(['.git', '.github', 'node_modules', 'assets', 'images', 'img']);
+
+      const titleCase = (s) => s
+        .replace(/[-_]+/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+
+      const currentFolders = () => {
+        const set = new Set();
+        document.querySelectorAll('.link-row').forEach((a) => {
+          const href = a.getAttribute('href') || '';
+          // match /folder/ or absolute github.io/folder/
+          const m = href.match(/(?:^|\/)([A-Za-z0-9_-]+)\/?$/);
+          if (m) set.add(m[1].toLowerCase());
+        });
+        return set;
+      };
+
+      const setLabel = (text, isError) => {
+        labelEl.textContent = text;
+        btn.dataset.state = isError ? 'error' : '';
+      };
+
+      const restoreLabel = () => {
+        setTimeout(() => {
+          setLabel('Refresh Projects', false);
+          btn.disabled = false;
+        }, 2200);
+      };
+
+      const renderRow = (folder, index) => {
+        const li = document.createElement('li');
+        li.className = 'link-item link-item--new';
+        li.style.setProperty('--i', String(index));
+        const num = String(index + 1).padStart(2, '0');
+        li.innerHTML = `
+          <a href="/${folder}/" class="link-row">
+            <span class="item-num">${num}</span>
+            <span class="item-name">${titleCase(folder)} <span class="new-pill">new</span></span>
+            <span class="item-desc">Auto-discovered</span>
+            <span class="item-arrow">↗</span>
+          </a>`;
+        return li;
+      };
+
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        setLabel('Scanning…', false);
+        try {
+          const res = await fetch('https://api.github.com/repos/Jorgetereso/jorgetereso.github.io/contents/');
+          if (!res.ok) throw new Error('http ' + res.status);
+          const items = await res.json();
+          const dirs = items
+            .filter((i) => i.type === 'dir' && !SKIP.has(i.name) && !i.name.startsWith('.'))
+            .map((i) => i.name);
+
+          const have = currentFolders();
+          const missing = dirs.filter((d) => !have.has(d.toLowerCase()) && !KNOWN_EXTERNAL[d.toLowerCase()]);
+
+          if (missing.length === 0) {
+            setLabel('Up to date ✓', false);
+            restoreLabel();
+            return;
+          }
+
+          // append to Projects list (these are real projects worth featuring)
+          const existing = projList.querySelectorAll('.link-item').length;
+          missing.forEach((name, i) => {
+            const row = renderRow(name, existing + i);
+            projList.appendChild(row);
+          });
+          projCount.textContent = String(existing + missing.length).padStart(2, '0');
+
+          setLabel(`Added ${missing.length} ✓`, false);
+          restoreLabel();
+        } catch (e) {
+          setLabel('Error — retry', true);
+          setTimeout(() => { btn.disabled = false; }, 600);
+        }
       });
     })();
 
