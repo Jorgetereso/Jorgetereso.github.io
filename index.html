@@ -83,148 +83,137 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.4L3 16"/><path d="M3 21v-5h5"/></svg>
             <span class="refresh-btn-label">Refresh Projects</span>
           </button>
-          <span class="section-count" id="projects-count">09</span>
+          <button type="button" class="refresh-btn" id="reset-cards-btn" aria-label="Reset card order and colors">
+            <span class="refresh-btn-label">Reset</span>
+          </button>
+          <span class="section-count" id="projects-count">15</span>
         </div>
       </div>
 
-      <ul class="link-list" id="projects-list">
-        <li class="link-item" style="--i:0">
-          <a href="/aoitravels/" class="link-row">
-            <span class="item-num">01</span>
-            <span class="item-name">AOI Travels</span>
-            <span class="item-desc">Signature luxury journeys to Japan — bilingual editorial site</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:1">
-          <a href="https://jorgetereso.github.io/ACCION/" target="_blank" rel="noopener" class="link-row">
-            <span class="item-num">02</span>
-            <span class="item-name">ACCION</span>
-            <span class="item-desc">Minimal task tracker (PWA)</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:2">
-          <a href="/eggscape/" class="link-row">
-            <span class="item-num">03</span>
-            <span class="item-name">Eggscape Intel</span>
-            <span class="item-desc">VR game marketing research hub (20 pages)</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:3">
-          <a href="/sketchbooks/" class="link-row">
-            <span class="item-num">04</span>
-            <span class="item-name">Sketchbooks</span>
-            <span class="item-desc">Digital sketchbook viewer with film-grain aesthetic</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:4">
-          <a href="/tasks/" class="link-row">
-            <span class="item-num">05</span>
-            <span class="item-name">Daily Tasks</span>
-            <span class="item-desc">Personal task manager</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:5">
-          <a href="https://jorgetereso.github.io/gloomyeyes/" target="_blank" rel="noopener" class="link-row">
-            <span class="item-num">06</span>
-            <span class="item-name">Gloomy Eyes</span>
-            <span class="item-desc">Interactive audio-visual experience</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:6">
-          <a href="/gloomyeyes-ownership/" class="link-row">
-            <span class="item-num">07</span>
-            <span class="item-name">Gloomy Eyes — Ownership</span>
-            <span class="item-desc">IP ownership pitch deck (LBE co-production)</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:7">
-          <a href="/gloomyeyes-timing/" class="link-row">
-            <span class="item-num">08</span>
-            <span class="item-name">Gloomy Eyes — Timing</span>
-            <span class="item-desc">Production timeline overview</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:8">
-          <a href="https://jorgetereso.github.io/HIRAKU/" target="_blank" rel="noopener" class="link-row">
-            <span class="item-num">09</span>
-            <span class="item-name">Hiraku</span>
-            <span class="item-desc">Interactive live experience</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <section class="index-section experimental" id="experimental">
-      <div class="section-header">
-        <div class="section-header-left">
-          <svg class="lab-icon" viewBox="0 0 24 24" fill="none" stroke="#aaff47" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 3h6M9 3v7.5L4.5 18A2 2 0 0 0 6.31 21h11.38a2 2 0 0 0 1.81-3L15 10.5V3"/>
-            <line x1="6.5" y1="14" x2="17.5" y2="14"/>
-          </svg>
-          <span class="section-label">Experimental</span>
+      <div class="card-grid" id="card-grid">
+        <div class="proj-card" data-id="aoitravels" data-href="/aoitravels/" data-color="#7eb8ff">
+          <a class="card-link" href="/aoitravels/" aria-label="AOI Travels"></a>
+          <span class="card-num">01</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">AOI Travels</h3>
+          <p class="card-desc">Signature luxury journeys to Japan — bilingual editorial site</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
         </div>
-        <span class="section-count">06</span>
+        <div class="proj-card" data-id="accion" data-href="https://jorgetereso.github.io/ACCION/" data-external="1" data-color="#aaff47">
+          <a class="card-link" href="https://jorgetereso.github.io/ACCION/" target="_blank" rel="noopener" aria-label="ACCION"></a>
+          <span class="card-num">02</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">ACCION</h3>
+          <p class="card-desc">Minimal task tracker (PWA)</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="eggscape" data-href="/eggscape/" data-color="#ffc857">
+          <a class="card-link" href="/eggscape/" aria-label="Eggscape Intel"></a>
+          <span class="card-num">03</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Eggscape Intel</h3>
+          <p class="card-desc">VR game marketing research hub (20 pages)</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="sketchbooks" data-href="/sketchbooks/" data-color="#5eead4">
+          <a class="card-link" href="/sketchbooks/" aria-label="Sketchbooks"></a>
+          <span class="card-num">04</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Sketchbooks</h3>
+          <p class="card-desc">Digital sketchbook viewer with film-grain aesthetic</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="tasks" data-href="/tasks/" data-color="#7eb8ff">
+          <a class="card-link" href="/tasks/" aria-label="Daily Tasks"></a>
+          <span class="card-num">05</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Daily Tasks</h3>
+          <p class="card-desc">Personal task manager</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="gloomyeyes" data-href="https://jorgetereso.github.io/gloomyeyes/" data-external="1" data-color="#a78bfa">
+          <a class="card-link" href="https://jorgetereso.github.io/gloomyeyes/" target="_blank" rel="noopener" aria-label="Gloomy Eyes"></a>
+          <span class="card-num">06</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Gloomy Eyes</h3>
+          <p class="card-desc">Interactive audio-visual experience</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="gloomyeyes-ownership" data-href="/gloomyeyes-ownership/" data-color="#a78bfa">
+          <a class="card-link" href="/gloomyeyes-ownership/" aria-label="Gloomy Eyes Ownership"></a>
+          <span class="card-num">07</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Gloomy Eyes — Ownership</h3>
+          <p class="card-desc">IP ownership pitch deck (LBE co-production)</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="gloomyeyes-timing" data-href="/gloomyeyes-timing/" data-color="#a78bfa">
+          <a class="card-link" href="/gloomyeyes-timing/" aria-label="Gloomy Eyes Timing"></a>
+          <span class="card-num">08</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Gloomy Eyes — Timing</h3>
+          <p class="card-desc">Production timeline overview</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="hiraku" data-href="https://jorgetereso.github.io/HIRAKU/" data-external="1" data-color="#ff6b9d">
+          <a class="card-link" href="https://jorgetereso.github.io/HIRAKU/" target="_blank" rel="noopener" aria-label="Hiraku"></a>
+          <span class="card-num">09</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Hiraku</h3>
+          <p class="card-desc">Interactive live experience</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="finance-tracker" data-href="/finance-tracker/" data-color="#aaff47">
+          <a class="card-link" href="/finance-tracker/" aria-label="Finance Tracker"></a>
+          <span class="card-num">10</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Finance Tracker</h3>
+          <p class="card-desc">Portfolio management dashboard</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="noticias" data-href="/noticias/" data-color="#ff5a47">
+          <a class="card-link" href="/noticias/" aria-label="Mis Noticias"></a>
+          <span class="card-num">11</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Mis Noticias</h3>
+          <p class="card-desc">Spanish news aggregator</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="ideas" data-href="/ideas/" data-color="#ffc857">
+          <a class="card-link" href="/ideas/" aria-label="Idea Eater"></a>
+          <span class="card-num">12</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Idea Eater</h3>
+          <p class="card-desc">A creature that eats and stores your ideas</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="dogterapy" data-href="/dogterapy/" data-color="#ff6b9d">
+          <a class="card-link" href="/dogterapy/" aria-label="DogTerapy"></a>
+          <span class="card-num">13</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">DogTerapy</h3>
+          <p class="card-desc">Private therapy with your dog. Speak or write.</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="eyesonyou" data-href="/eyesonyou/" data-color="#5eead4">
+          <a class="card-link" href="/eyesonyou/" aria-label="Eyes On You"></a>
+          <span class="card-num">14</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">Eyes On You</h3>
+          <p class="card-desc">Camera + audio reactive visual experience</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
+        <div class="proj-card" data-id="sebuki" data-href="/sebuki/" data-color="#f0ede6">
+          <a class="card-link" href="/sebuki/" aria-label="SEBUKI"></a>
+          <span class="card-num">15</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">SEBUKI</h3>
+          <p class="card-desc">Luxury personal site for Sebastian Vivares, AI strategist</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>
+        </div>
       </div>
 
-      <ul class="link-list">
-        <li class="link-item" style="--i:9">
-          <a href="/finance-tracker/" class="link-row">
-            <span class="item-num">01</span>
-            <span class="item-name">Finance Tracker</span>
-            <span class="item-desc">Portfolio management dashboard</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:10">
-          <a href="/noticias/" class="link-row">
-            <span class="item-num">02</span>
-            <span class="item-name">Mis Noticias</span>
-            <span class="item-desc">Spanish news aggregator</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:11">
-          <a href="/ideas/" class="link-row">
-            <span class="item-num">03</span>
-            <span class="item-name">Idea Eater</span>
-            <span class="item-desc">A creature that eats and stores your ideas</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:12">
-          <a href="/dogterapy/" class="link-row">
-            <span class="item-num">04</span>
-            <span class="item-name">DogTerapy</span>
-            <span class="item-desc">Private therapy with your dog. Speak or write.</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:13">
-          <a href="/eyesonyou/" class="link-row">
-            <span class="item-num">05</span>
-            <span class="item-name">Eyes On You</span>
-            <span class="item-desc">Camera + audio reactive visual experience</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-        <li class="link-item" style="--i:14">
-          <a href="/sebuki/" class="link-row">
-            <span class="item-num">06</span>
-            <span class="item-name">SEBUKI</span>
-            <span class="item-desc">Luxury personal site for Sebastian Vivares, AI strategist</span>
-            <span class="item-arrow">↗</span>
-          </a>
-        </li>
-      </ul>
+      <p class="card-hint">Drag to reorder · click the dot to recolor</p>
     </section>
 
     <section class="fun-stats">
@@ -344,20 +333,174 @@
       });
     })();
 
-    // Refresh Projects: scan repo via GitHub API, append any missing project folders
+    // ── Card grid: order persistence, color picker, drag-reorder, refresh ──
     (function () {
+      const grid = document.getElementById('card-grid');
+      if (!grid) return;
+      const projCount = document.getElementById('projects-count');
+      const ORDER_KEY = 'card-order-v1';
+      const COLOR_KEY = 'card-colors-v1';
+
+      const SWATCHES = [
+        '#7eb8ff', '#aaff47', '#ff6b9d', '#ffc857',
+        '#ff5a47', '#a78bfa', '#5eead4', '#f0ede6'
+      ];
+
+      const readJSON = (k, fallback) => {
+        try { return JSON.parse(localStorage.getItem(k)) ?? fallback; }
+        catch { return fallback; }
+      };
+      const writeJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+
+      // Hydrate stored color overrides onto each card
+      const colors = readJSON(COLOR_KEY, {});
+      grid.querySelectorAll('.proj-card').forEach((card) => {
+        const id = card.dataset.id;
+        const c = colors[id] || card.dataset.color || '#f0ede6';
+        card.style.setProperty('--card-color', c);
+        card.dataset.color = c;
+      });
+
+      // Reorder from stored order; unknown ids stay in source order at the end
+      const applyOrder = () => {
+        const saved = readJSON(ORDER_KEY, null);
+        if (!Array.isArray(saved)) return;
+        const map = new Map();
+        grid.querySelectorAll('.proj-card').forEach((c) => map.set(c.dataset.id, c));
+        const seen = new Set();
+        saved.forEach((id) => {
+          const el = map.get(id);
+          if (el) { grid.appendChild(el); seen.add(id); }
+        });
+        // Anything not in saved list (e.g. newly added) keeps source position relative to remaining
+        map.forEach((el, id) => { if (!seen.has(id)) grid.appendChild(el); });
+      };
+      applyOrder();
+
+      const renumber = () => {
+        grid.querySelectorAll('.proj-card').forEach((c, i) => {
+          const num = c.querySelector('.card-num');
+          if (num) num.textContent = String(i + 1).padStart(2, '0');
+        });
+        projCount.textContent = String(grid.querySelectorAll('.proj-card').length).padStart(2, '0');
+      };
+      renumber();
+
+      const saveOrder = () => {
+        const ids = [...grid.querySelectorAll('.proj-card')].map((c) => c.dataset.id);
+        writeJSON(ORDER_KEY, ids);
+      };
+
+      // ── Drag & drop reorder ──
+      let dragged = null;
+      let didDrag = false;
+
+      grid.addEventListener('dragstart', (e) => {
+        const card = e.target.closest('.proj-card');
+        if (!card) return;
+        dragged = card;
+        didDrag = true;
+        card.classList.add('dragging');
+        try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', card.dataset.id); } catch {}
+      });
+
+      grid.addEventListener('dragend', (e) => {
+        const card = e.target.closest('.proj-card');
+        if (card) card.classList.remove('dragging');
+        dragged = null;
+        saveOrder();
+        renumber();
+        // delay so the trailing click after drop is suppressed
+        setTimeout(() => { didDrag = false; }, 80);
+      });
+
+      grid.addEventListener('dragover', (e) => {
+        if (!dragged) return;
+        e.preventDefault();
+        const target = e.target.closest('.proj-card');
+        if (!target || target === dragged) return;
+        const rect = target.getBoundingClientRect();
+        const horizontalMid = rect.left + rect.width / 2;
+        const after = e.clientX > horizontalMid;
+        target.parentNode.insertBefore(dragged, after ? target.nextSibling : target);
+      });
+
+      // Make every card draggable
+      grid.querySelectorAll('.proj-card').forEach((c) => c.setAttribute('draggable', 'true'));
+
+      // Suppress link navigation if a drag just happened
+      grid.addEventListener('click', (e) => {
+        if (didDrag) { e.preventDefault(); e.stopPropagation(); didDrag = false; }
+      }, true);
+
+      // ── Color picker ──
+      let openPicker = null;
+      const closePicker = () => {
+        if (openPicker) { openPicker.remove(); openPicker = null; }
+      };
+
+      const openColorPicker = (card) => {
+        closePicker();
+        const popover = document.createElement('div');
+        popover.className = 'card-swatches';
+        SWATCHES.forEach((color) => {
+          const sw = document.createElement('button');
+          sw.type = 'button';
+          sw.className = 'swatch';
+          sw.style.background = color;
+          sw.setAttribute('aria-label', color);
+          if (color.toLowerCase() === (card.dataset.color || '').toLowerCase()) sw.classList.add('selected');
+          sw.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            card.style.setProperty('--card-color', color);
+            card.dataset.color = color;
+            const map = readJSON(COLOR_KEY, {});
+            map[card.dataset.id] = color;
+            writeJSON(COLOR_KEY, map);
+            closePicker();
+          });
+          popover.appendChild(sw);
+        });
+        card.appendChild(popover);
+        openPicker = popover;
+      };
+
+      grid.addEventListener('click', (e) => {
+        const colorBtn = e.target.closest('.card-color-btn');
+        if (colorBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const card = colorBtn.closest('.proj-card');
+          if (openPicker && card.contains(openPicker)) closePicker();
+          else openColorPicker(card);
+          return;
+        }
+        // click on swatch within picker is handled inline; clicks elsewhere close it
+        if (openPicker && !e.target.closest('.card-swatches')) closePicker();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (openPicker && !e.target.closest('.proj-card')) closePicker();
+      });
+
+      // ── Reset ──
+      const resetBtn = document.getElementById('reset-cards-btn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (!confirm('Reset card order and colors?')) return;
+          localStorage.removeItem(ORDER_KEY);
+          localStorage.removeItem(COLOR_KEY);
+          location.reload();
+        });
+      }
+
+      // ── Refresh Projects ──
       const btn = document.getElementById('refresh-projects-btn');
       if (!btn) return;
       const labelEl = btn.querySelector('.refresh-btn-label');
-      const projList = document.getElementById('projects-list');
-      const expList = document.querySelector('#experimental .link-list');
-      const projCount = document.getElementById('projects-count');
 
-      // folders that are listed but live at an external/non-folder path
-      const KNOWN_EXTERNAL = {
-        accion: true, hiraku: true, gloomyeyes: true
-      };
-      // folders to never auto-add (infra, build output, etc.)
+      const KNOWN_EXTERNAL = { accion: true, hiraku: true, gloomyeyes: true };
       const SKIP = new Set(['.git', '.github', 'node_modules', 'assets', 'images', 'img']);
 
       const titleCase = (s) => s
@@ -366,12 +509,7 @@
 
       const currentFolders = () => {
         const set = new Set();
-        document.querySelectorAll('.link-row').forEach((a) => {
-          const href = a.getAttribute('href') || '';
-          // match /folder/ or absolute github.io/folder/
-          const m = href.match(/(?:^|\/)([A-Za-z0-9_-]+)\/?$/);
-          if (m) set.add(m[1].toLowerCase());
-        });
+        grid.querySelectorAll('.proj-card').forEach((c) => set.add((c.dataset.id || '').toLowerCase()));
         return set;
       };
 
@@ -379,27 +517,26 @@
         labelEl.textContent = text;
         btn.dataset.state = isError ? 'error' : '';
       };
-
       const restoreLabel = () => {
-        setTimeout(() => {
-          setLabel('Refresh Projects', false);
-          btn.disabled = false;
-        }, 2200);
+        setTimeout(() => { setLabel('Refresh Projects', false); btn.disabled = false; }, 2200);
       };
 
-      const renderRow = (folder, index) => {
-        const li = document.createElement('li');
-        li.className = 'link-item link-item--new';
-        li.style.setProperty('--i', String(index));
-        const num = String(index + 1).padStart(2, '0');
-        li.innerHTML = `
-          <a href="/${folder}/" class="link-row">
-            <span class="item-num">${num}</span>
-            <span class="item-name">${titleCase(folder)} <span class="new-pill">new</span></span>
-            <span class="item-desc">Auto-discovered</span>
-            <span class="item-arrow">↗</span>
-          </a>`;
-        return li;
+      const buildCard = (folder) => {
+        const card = document.createElement('div');
+        card.className = 'proj-card proj-card--new';
+        card.dataset.id = folder;
+        card.dataset.href = `/${folder}/`;
+        card.dataset.color = '#7eb8ff';
+        card.style.setProperty('--card-color', '#7eb8ff');
+        card.setAttribute('draggable', 'true');
+        card.innerHTML = `
+          <a class="card-link" href="/${folder}/" aria-label="${titleCase(folder)}"></a>
+          <span class="card-num">00</span>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-name">${titleCase(folder)} <span class="new-pill">new</span></h3>
+          <p class="card-desc">Auto-discovered</p>
+          <button type="button" class="card-color-btn" aria-label="Change color"></button>`;
+        return card;
       };
 
       btn.addEventListener('click', async () => {
@@ -422,14 +559,9 @@
             return;
           }
 
-          // append to Projects list (these are real projects worth featuring)
-          const existing = projList.querySelectorAll('.link-item').length;
-          missing.forEach((name, i) => {
-            const row = renderRow(name, existing + i);
-            projList.appendChild(row);
-          });
-          projCount.textContent = String(existing + missing.length).padStart(2, '0');
-
+          missing.forEach((name) => grid.appendChild(buildCard(name)));
+          renumber();
+          saveOrder();
           setLabel(`Added ${missing.length} ✓`, false);
           restoreLabel();
         } catch (e) {
