@@ -213,7 +213,7 @@
         </div>
       </div>
 
-      <p class="card-hint">Drag to reorder · click the dot to recolor</p>
+      <p class="card-hint" id="card-hint">Auto-sorted by latest edit · drag to rearrange · click the dot to recolor</p>
     </section>
 
     <section class="fun-stats">
@@ -333,68 +333,81 @@
       });
     })();
 
-    // ── Card grid: order persistence, color picker, drag-reorder, refresh ──
+    // ── Card grid: auto-sort by latest edit, auto-sync daily, drag, recolor ──
     (function () {
       const grid = document.getElementById('card-grid');
       if (!grid) return;
       const projCount = document.getElementById('projects-count');
-      const ORDER_KEY = 'card-order-v1';
+      const hintEl = document.getElementById('card-hint');
       const COLOR_KEY = 'card-colors-v1';
+      const DATES_KEY = 'card-dates-v1';
+      const TS_KEY = 'card-dates-ts';
+      const TTL_MS = 24 * 60 * 60 * 1000; // 24h
+      const REPO = 'Jorgetereso/jorgetereso.github.io';
+      const API_CONTENTS = `https://api.github.com/repos/${REPO}/contents/`;
+      const SWATCHES = ['#7eb8ff','#aaff47','#ff6b9d','#ffc857','#ff5a47','#a78bfa','#5eead4','#f0ede6'];
+      const SKIP = new Set(['.git','.github','node_modules','assets','images','img']);
 
-      const SWATCHES = [
-        '#7eb8ff', '#aaff47', '#ff6b9d', '#ffc857',
-        '#ff5a47', '#a78bfa', '#5eead4', '#f0ede6'
-      ];
-
-      const readJSON = (k, fallback) => {
-        try { return JSON.parse(localStorage.getItem(k)) ?? fallback; }
-        catch { return fallback; }
-      };
+      const readJSON = (k, fb) => { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch { return fb; } };
       const writeJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+      const titleCase = (s) => s.replace(/[-_]+/g,' ').replace(/\b\w/g,(c)=>c.toUpperCase());
 
-      // Hydrate stored color overrides onto each card
+      // Hydrate stored color overrides + draggable
       const colors = readJSON(COLOR_KEY, {});
       grid.querySelectorAll('.proj-card').forEach((card) => {
         const id = card.dataset.id;
         const c = colors[id] || card.dataset.color || '#f0ede6';
         card.style.setProperty('--card-color', c);
         card.dataset.color = c;
+        card.setAttribute('draggable', 'true');
       });
 
-      // Reorder from stored order; unknown ids stay in source order at the end
-      const applyOrder = () => {
-        const saved = readJSON(ORDER_KEY, null);
-        if (!Array.isArray(saved)) return;
-        const map = new Map();
-        grid.querySelectorAll('.proj-card').forEach((c) => map.set(c.dataset.id, c));
-        const seen = new Set();
-        saved.forEach((id) => {
-          const el = map.get(id);
-          if (el) { grid.appendChild(el); seen.add(id); }
-        });
-        // Anything not in saved list (e.g. newly added) keeps source position relative to remaining
-        map.forEach((el, id) => { if (!seen.has(id)) grid.appendChild(el); });
-      };
-      applyOrder();
-
       const renumber = () => {
-        grid.querySelectorAll('.proj-card').forEach((c, i) => {
+        const cards = grid.querySelectorAll('.proj-card');
+        cards.forEach((c, i) => {
           const num = c.querySelector('.card-num');
           if (num) num.textContent = String(i + 1).padStart(2, '0');
         });
-        projCount.textContent = String(grid.querySelectorAll('.proj-card').length).padStart(2, '0');
-      };
-      renumber();
-
-      const saveOrder = () => {
-        const ids = [...grid.querySelectorAll('.proj-card')].map((c) => c.dataset.id);
-        writeJSON(ORDER_KEY, ids);
+        if (projCount) projCount.textContent = String(cards.length).padStart(2, '0');
       };
 
-      // ── Drag & drop reorder ──
+      const sortByDates = () => {
+        const dates = readJSON(DATES_KEY, {});
+        const cards = [...grid.querySelectorAll('.proj-card')];
+        cards.sort((a, b) => {
+          const da = dates[a.dataset.id] || '';
+          const db = dates[b.dataset.id] || '';
+          if (db === da) return 0;
+          if (!da) return 1;   // unknown → end
+          if (!db) return -1;
+          return db.localeCompare(da); // ISO 8601 sorts chronologically
+        });
+        cards.forEach((c) => grid.appendChild(c));
+        renumber();
+      };
+
+      // Initial paint: use cached dates if any; else keep source order
+      sortByDates();
+
+      // Update the hint with relative last-sync time
+      const renderHint = () => {
+        if (!hintEl) return;
+        const ts = readJSON(TS_KEY, 0) || 0;
+        let when = '';
+        if (ts) {
+          const mins = Math.max(0, Math.floor((Date.now() - ts) / 60000));
+          if (mins < 1) when = ' · synced just now';
+          else if (mins < 60) when = ` · synced ${mins}m ago`;
+          else if (mins < 1440) when = ` · synced ${Math.floor(mins / 60)}h ago`;
+          else when = ` · synced ${Math.floor(mins / 1440)}d ago`;
+        }
+        hintEl.textContent = `Auto-sorted by latest edit${when} · drag to rearrange · click the dot to recolor`;
+      };
+      renderHint();
+
+      // ── Drag & drop reorder (session-only — auto-sort wins on reload) ──
       let dragged = null;
       let didDrag = false;
-
       grid.addEventListener('dragstart', (e) => {
         const card = e.target.closest('.proj-card');
         if (!card) return;
@@ -403,42 +416,29 @@
         card.classList.add('dragging');
         try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', card.dataset.id); } catch {}
       });
-
       grid.addEventListener('dragend', (e) => {
         const card = e.target.closest('.proj-card');
         if (card) card.classList.remove('dragging');
         dragged = null;
-        saveOrder();
         renumber();
-        // delay so the trailing click after drop is suppressed
         setTimeout(() => { didDrag = false; }, 80);
       });
-
       grid.addEventListener('dragover', (e) => {
         if (!dragged) return;
         e.preventDefault();
         const target = e.target.closest('.proj-card');
         if (!target || target === dragged) return;
         const rect = target.getBoundingClientRect();
-        const horizontalMid = rect.left + rect.width / 2;
-        const after = e.clientX > horizontalMid;
+        const after = e.clientX > rect.left + rect.width / 2;
         target.parentNode.insertBefore(dragged, after ? target.nextSibling : target);
       });
-
-      // Make every card draggable
-      grid.querySelectorAll('.proj-card').forEach((c) => c.setAttribute('draggable', 'true'));
-
-      // Suppress link navigation if a drag just happened
       grid.addEventListener('click', (e) => {
         if (didDrag) { e.preventDefault(); e.stopPropagation(); didDrag = false; }
       }, true);
 
       // ── Color picker ──
       let openPicker = null;
-      const closePicker = () => {
-        if (openPicker) { openPicker.remove(); openPicker = null; }
-      };
-
+      const closePicker = () => { if (openPicker) { openPicker.remove(); openPicker = null; } };
       const openColorPicker = (card) => {
         closePicker();
         const popover = document.createElement('div');
@@ -465,7 +465,6 @@
         card.appendChild(popover);
         openPicker = popover;
       };
-
       grid.addEventListener('click', (e) => {
         const colorBtn = e.target.closest('.card-color-btn');
         if (colorBtn) {
@@ -476,10 +475,8 @@
           else openColorPicker(card);
           return;
         }
-        // click on swatch within picker is handled inline; clicks elsewhere close it
         if (openPicker && !e.target.closest('.card-swatches')) closePicker();
       });
-
       document.addEventListener('click', (e) => {
         if (openPicker && !e.target.closest('.proj-card')) closePicker();
       });
@@ -488,43 +485,20 @@
       const resetBtn = document.getElementById('reset-cards-btn');
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-          if (!confirm('Reset card order and colors?')) return;
-          localStorage.removeItem(ORDER_KEY);
+          if (!confirm('Reset colors and cached sync data?')) return;
           localStorage.removeItem(COLOR_KEY);
+          localStorage.removeItem(DATES_KEY);
+          localStorage.removeItem(TS_KEY);
+          localStorage.removeItem('card-order-v1'); // legacy
           location.reload();
         });
       }
 
-      // ── Refresh Projects ──
-      const btn = document.getElementById('refresh-projects-btn');
-      if (!btn) return;
-      const labelEl = btn.querySelector('.refresh-btn-label');
-
-      const KNOWN_EXTERNAL = { accion: true, hiraku: true, gloomyeyes: true };
-      const SKIP = new Set(['.git', '.github', 'node_modules', 'assets', 'images', 'img']);
-
-      const titleCase = (s) => s
-        .replace(/[-_]+/g, ' ')
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-
-      const currentFolders = () => {
-        const set = new Set();
-        grid.querySelectorAll('.proj-card').forEach((c) => set.add((c.dataset.id || '').toLowerCase()));
-        return set;
-      };
-
-      const setLabel = (text, isError) => {
-        labelEl.textContent = text;
-        btn.dataset.state = isError ? 'error' : '';
-      };
-      const restoreLabel = () => {
-        setTimeout(() => { setLabel('Refresh Projects', false); btn.disabled = false; }, 2200);
-      };
-
+      // ── Card builder for auto-discovered folders ──
       const buildCard = (folder) => {
         const card = document.createElement('div');
         card.className = 'proj-card proj-card--new';
-        card.dataset.id = folder;
+        card.dataset.id = folder.toLowerCase();
         card.dataset.href = `/${folder}/`;
         card.dataset.color = '#7eb8ff';
         card.style.setProperty('--card-color', '#7eb8ff');
@@ -539,36 +513,91 @@
         return card;
       };
 
-      btn.addEventListener('click', async () => {
-        btn.disabled = true;
-        setLabel('Scanning…', false);
+      const currentIds = () => {
+        const s = new Set();
+        grid.querySelectorAll('.proj-card').forEach((c) => s.add((c.dataset.id || '').toLowerCase()));
+        return s;
+      };
+
+      // ── Sync: discover folders + per-folder last-commit dates, re-sort ──
+      const btn = document.getElementById('refresh-projects-btn');
+      const labelEl = btn ? btn.querySelector('.refresh-btn-label') : null;
+      let syncing = false;
+
+      const setLabel = (text, isError) => {
+        if (!labelEl) return;
+        labelEl.textContent = text;
+        btn.dataset.state = isError ? 'error' : '';
+      };
+
+      const sync = async (manual) => {
+        if (syncing) return;
+        syncing = true;
+        if (btn) { btn.disabled = true; setLabel(manual ? 'Scanning…' : 'Auto-sync…', false); }
         try {
-          const res = await fetch('https://api.github.com/repos/Jorgetereso/jorgetereso.github.io/contents/');
+          const res = await fetch(API_CONTENTS);
           if (!res.ok) throw new Error('http ' + res.status);
           const items = await res.json();
           const dirs = items
             .filter((i) => i.type === 'dir' && !SKIP.has(i.name) && !i.name.startsWith('.'))
             .map((i) => i.name);
 
-          const have = currentFolders();
-          const missing = dirs.filter((d) => !have.has(d.toLowerCase()) && !KNOWN_EXTERNAL[d.toLowerCase()]);
+          // Add missing folders as new cards
+          const have = currentIds();
+          let addedCount = 0;
+          dirs.forEach((name) => {
+            if (!have.has(name.toLowerCase())) {
+              grid.appendChild(buildCard(name));
+              addedCount++;
+            }
+          });
 
-          if (missing.length === 0) {
-            setLabel('Up to date ✓', false);
-            restoreLabel();
-            return;
+          // Map lowercased folder → actual folder name (for case-correct API calls)
+          const dirByLower = new Map();
+          dirs.forEach((d) => dirByLower.set(d.toLowerCase(), d));
+
+          const cards = [...grid.querySelectorAll('.proj-card')];
+          const results = await Promise.all(cards.map(async (card) => {
+            const id = card.dataset.id;
+            const folder = dirByLower.get(id) || id;
+            try {
+              const r = await fetch(`https://api.github.com/repos/${REPO}/commits?path=${encodeURIComponent(folder)}&per_page=1`);
+              if (!r.ok) return [id, null];
+              const arr = await r.json();
+              if (!Array.isArray(arr) || arr.length === 0) return [id, null];
+              return [id, arr[0].commit.author.date];
+            } catch { return [id, null]; }
+          }));
+
+          const dates = readJSON(DATES_KEY, {});
+          results.forEach(([id, date]) => { if (date) dates[id] = date; });
+          writeJSON(DATES_KEY, dates);
+          writeJSON(TS_KEY, Date.now());
+
+          sortByDates();
+          renderHint();
+
+          if (btn) {
+            setLabel(addedCount > 0 ? `Added ${addedCount} ✓` : 'Synced ✓', false);
+            setTimeout(() => { setLabel('Refresh Projects', false); btn.disabled = false; }, 2200);
           }
-
-          missing.forEach((name) => grid.appendChild(buildCard(name)));
-          renumber();
-          saveOrder();
-          setLabel(`Added ${missing.length} ✓`, false);
-          restoreLabel();
         } catch (e) {
-          setLabel('Error — retry', true);
-          setTimeout(() => { btn.disabled = false; }, 600);
+          if (btn) {
+            setLabel('Error — retry', true);
+            setTimeout(() => { setLabel('Refresh Projects', false); btn.disabled = false; }, 1500);
+          }
+        } finally {
+          syncing = false;
         }
-      });
+      };
+
+      if (btn) btn.addEventListener('click', () => sync(true));
+
+      // Auto-sync on load if cache is stale (>24h) or missing
+      const lastTs = readJSON(TS_KEY, 0) || 0;
+      if (Date.now() - lastTs > TTL_MS) {
+        setTimeout(() => sync(false), 250);
+      }
     })();
 
     // Generate random activity grid
