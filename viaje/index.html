@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0f5e8c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Viaje de Jorge · Europa 2026</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#f4ead0; --sand2:#ecdfbe; --paper:#fbf4e2; --paper2:#f5ecd6;
+  --ink:#2a2419; --ink2:#8a7a5c; --line:#e0cfa4; --line2:#d3bd8c;
+  --sea:#0f5e8c; --sea-deep:#0b4560; --sky:#2c8bb3;
+  --terra:#cf5b38; --coral:#e08256; --wine:#a5324a;
+  --ochre:#e0a52e; --sun:#f2b134; --olive:#6f8f4a; --espresso:#7a4a2b;
+  --shadow:0 8px 26px rgba(90,60,20,.14); --shadow-s:0 3px 12px rgba(90,60,20,.10);
+  --safe-b: env(safe-area-inset-bottom,0px); --safe-t: env(safe-area-inset-top,0px);
+  --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 5 L26 18 L39 22 L26 26 L22 39 L18 26 L5 22 L18 18 Z' fill='%230f5e8c' opacity='.9'/%3E%3Ccircle cx='0' cy='0' r='3.4' fill='%23cf5b38'/%3E%3Ccircle cx='44' cy='0' r='3.4' fill='%23cf5b38'/%3E%3Ccircle cx='0' cy='44' r='3.4' fill='%23cf5b38'/%3E%3Ccircle cx='44' cy='44' r='3.4' fill='%23cf5b38'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --sand:#0e1c24; --sand2:#0b1820; --paper:#15272f; --paper2:#122129;
+    --ink:#f3e7cb; --ink2:#9fb2b0; --line:#26414a; --line2:#315058;
+    --sea:#39a0c4; --sea-deep:#82c8de; --sky:#5bbdd8;
+    --terra:#e8825b; --coral:#ec9066; --wine:#e07189;
+    --ochre:#eab24c; --sun:#f4bd52; --olive:#93b96c; --espresso:#c98a5a;
+    --shadow:0 8px 28px rgba(0,0,0,.5); --shadow-s:0 3px 14px rgba(0,0,0,.4);
+    --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 5 L26 18 L39 22 L26 26 L22 39 L18 26 L5 22 L18 18 Z' fill='%2339a0c4' opacity='.9'/%3E%3Ccircle cx='0' cy='0' r='3.4' fill='%23e8825b'/%3E%3Ccircle cx='44' cy='0' r='3.4' fill='%23e8825b'/%3E%3Ccircle cx='0' cy='44' r='3.4' fill='%23e8825b'/%3E%3Ccircle cx='44' cy='44' r='3.4' fill='%23e8825b'/%3E%3C/svg%3E");
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;
+  padding-bottom:calc(80px + var(--safe-b));
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(240,165,46,.16), transparent 60%),
+    radial-gradient(80% 50% at 100% 0%, rgba(15,94,140,.10), transparent 60%),
+    var(--sand);
+}
+h1,h2,h3{margin:0;line-height:1.05}
+a{color:inherit;text-decoration:none}
+.serif{font-family:"Fraunces",Georgia,serif}
+.mono{font-family:"DM Mono",ui-monospace,monospace}
+.wrap{max-width:640px;margin:0 auto;padding:0 15px}
+
+/* ===== Header ===== */
+.app-head{position:sticky;top:0;z-index:40;padding-top:var(--safe-t);
+  background:linear-gradient(120deg,var(--sea-deep),var(--sea));color:#fdf6e6;
+  box-shadow:0 3px 0 var(--terra),0 6px 18px rgba(11,69,96,.35);overflow:hidden}
+.app-head::after{content:"";position:absolute;inset:0;background-image:var(--tile);
+  background-size:44px 44px;opacity:.10;mix-blend-mode:screen;pointer-events:none}
+.app-head .wrap{display:flex;align-items:center;gap:12px;padding:13px 15px;position:relative;z-index:1}
+.app-head h1{font-family:"Fraunces",serif;font-weight:800;font-size:22px;letter-spacing:.2px}
+.app-head .sub{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:1px;
+  text-transform:uppercase;opacity:.85;margin-top:3px}
+.tix{margin-left:auto;text-align:center;background:var(--sun);color:#3a2a10;
+  border-radius:10px;padding:6px 11px;min-width:60px;transform:rotate(2.5deg);
+  box-shadow:0 4px 0 rgba(0,0,0,.14);position:relative}
+.tix::before,.tix::after{content:"";position:absolute;top:50%;width:8px;height:8px;
+  border-radius:50%;background:var(--sea);transform:translateY(-50%)}
+.tix::before{left:-4px}.tix::after{right:-4px}
+.tix b{font-family:"Fraunces",serif;display:block;font-size:22px;line-height:.9}
+.tix span{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase}
+
+/* ===== Views ===== */
+.view{display:none;padding:20px 0 10px}
+.view.active{display:block}
+.view.active>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.view.active>*:nth-child(2){animation-delay:.05s}
+.view.active>*:nth-child(3){animation-delay:.1s}
+.view.active>*:nth-child(4){animation-delay:.15s}
+.view.active>*:nth-child(n+5){animation-delay:.2s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--terra);font-weight:500;display:flex;align-items:center;gap:8px;margin:26px 3px 12px}
+.eyebrow::after{content:"";flex:1;height:2px;border-radius:2px;
+  background:repeating-linear-gradient(90deg,var(--line2) 0 7px,transparent 7px 13px)}
+.view>.eyebrow:first-child{margin-top:2px}
+
+/* ===== Cards ===== */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  padding:16px;box-shadow:var(--shadow-s);margin-bottom:13px}
+.muted{color:var(--ink2);font-size:13px}
+
+/* ===== Postcard hero ===== */
+.postcard{position:relative;overflow:hidden;border-radius:20px;padding:22px 20px 20px;
+  color:#fdf6e6;border:3px solid rgba(255,255,255,.35);
+  background:linear-gradient(150deg,var(--sea) 0%,var(--sky) 55%,var(--ochre) 130%);
+  box-shadow:var(--shadow)}
+.postcard::before{content:"";position:absolute;inset:0;background-image:var(--tile);
+  background-size:46px 46px;opacity:.12;mix-blend-mode:overlay}
+.pc-sun{position:absolute;top:-46px;right:-46px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,var(--sun) 34%,rgba(242,177,52,.35) 40%,transparent 64%)}
+.pc-sun::before{content:"";position:absolute;inset:-18px;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,rgba(255,220,120,.55) 0 6deg,transparent 6deg 20deg);
+  -webkit-mask:radial-gradient(circle,transparent 52%,#000 54%);mask:radial-gradient(circle,transparent 52%,#000 54%);
+  animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pc-stamp{position:absolute;top:14px;right:16px;z-index:2;font-size:10px;letter-spacing:1px;
+  color:#fff;border:2px dashed rgba(255,255,255,.75);border-radius:8px;padding:5px 8px;
+  transform:rotate(-9deg);opacity:.9}
+.pc-eyebrow{position:relative;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;opacity:.9}
+.postcard h2{position:relative;font-family:"Fraunces",serif;font-weight:900;font-size:38px;
+  line-height:.95;margin:6px 0 6px;text-shadow:0 2px 8px rgba(0,0,0,.18)}
+.postcard h2 em{font-style:italic;font-weight:500;font-size:26px;opacity:.9}
+.pc-sub{position:relative;font-size:13.5px;opacity:.95;font-weight:600}
+.pc-counts{position:relative;display:flex;gap:8px;margin-top:16px}
+.pc-counts .b{flex:1;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+  border-radius:12px;padding:9px 6px;text-align:center;backdrop-filter:blur(3px)}
+.pc-counts .b b{font-family:"Fraunces",serif;display:block;font-size:24px;line-height:1}
+.pc-counts .b span{font-family:"DM Mono",monospace;font-size:8.5px;letter-spacing:.5px;
+  text-transform:uppercase;opacity:.9}
+
+/* ===== Quick grid ===== */
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.qgrid a{background:var(--paper);border:1px solid var(--line);border-radius:15px;
+  padding:13px 5px 10px;text-align:center;box-shadow:var(--shadow-s);
+  transition:transform .12s,box-shadow .12s;position:relative;overflow:hidden}
+.qgrid a::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--terra)}
+.qgrid a:nth-child(2)::before{background:var(--espresso)}
+.qgrid a:nth-child(3)::before{background:var(--coral)}
+.qgrid a:nth-child(4)::before{background:var(--olive)}
+.qgrid a:nth-child(5)::before{background:var(--sea)}
+.qgrid a:nth-child(6)::before{background:var(--ochre)}
+.qgrid a:nth-child(7)::before{background:var(--wine)}
+.qgrid a:nth-child(8)::before{background:var(--sun)}
+.qgrid a:active{transform:translateY(2px) scale(.97)}
+.qgrid .ic{font-size:24px;display:block;margin-bottom:5px}
+.qgrid .lb{font-size:11px;font-weight:700;color:var(--ink)}
+
+/* ===== Stamps (datos) ===== */
+.stamps{display:flex;flex-wrap:wrap;gap:9px}
+.stamp{background:var(--paper2);border:2px dashed var(--line2);border-radius:11px;
+  padding:7px 11px;font-size:12.5px;font-weight:600;color:var(--ink);
+  display:flex;align-items:center;gap:5px;box-shadow:var(--shadow-s)}
+.stamp b{font-family:"DM Mono",monospace;color:var(--terra);font-weight:500}
+.stamp:nth-child(3n){transform:rotate(-1.5deg)}
+.stamp:nth-child(3n+1){transform:rotate(1.2deg)}
+
+/* ===== Boarding pass ===== */
+.bpass{display:flex;background:var(--paper);border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow);margin-bottom:14px;border:1px solid var(--line)}
+.bpass-main{flex:1;padding:15px 16px;position:relative;min-width:0}
+.bpass-main::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--sea),var(--sky))}
+.bp-head{display:flex;justify-content:space-between;align-items:center;margin:4px 0 12px}
+.bp-air{font-family:"Fraunces",serif;font-weight:700;font-size:13px;color:var(--sea);letter-spacing:.3px}
+.bp-tag{font-family:"DM Mono",monospace;font-size:10px;background:var(--sun);color:#3a2a10;
+  padding:2px 7px;border-radius:6px;letter-spacing:.5px}
+.bp-route{display:flex;align-items:center;gap:8px}
+.bp-ap{text-align:center}
+.bp-ap.r{text-align:center}
+.bp-iata{font-family:"Fraunces",serif;font-weight:900;font-size:27px;display:block;line-height:.9;color:var(--ink)}
+.bp-city{font-family:"DM Mono",monospace;font-size:9.5px;color:var(--ink2);letter-spacing:.3px}
+.bp-mid{flex:1;text-align:center;color:var(--sky);position:relative}
+.bp-mid::before{content:"";position:absolute;top:12px;left:6px;right:6px;height:2px;
+  background:repeating-linear-gradient(90deg,var(--line2) 0 4px,transparent 4px 8px)}
+.bp-mid .pl{font-size:17px;position:relative;background:var(--paper);padding:0 4px}
+.bp-mid .du{font-family:"DM Mono",monospace;font-size:9.5px;color:var(--ink2);display:block;margin-top:2px}
+.bp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:13px;
+  border-top:1px dashed var(--line2);padding-top:10px}
+.bp-grid>div b{display:block;font-family:"DM Mono",monospace;font-size:8px;letter-spacing:.5px;
+  color:var(--ink2);text-transform:uppercase}
+.bp-grid>div span{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--ink)}
+.bp-extra{font-size:11.5px;color:var(--ink2);margin-top:9px}
+.bpass-stub{width:60px;flex:0 0 60px;background:linear-gradient(160deg,var(--sea),var(--sea-deep));
+  color:#fdf6e6;position:relative;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;padding:10px 4px}
+.bpass-stub::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;
+  background:repeating-linear-gradient(var(--paper) 0 5px,transparent 5px 10px)}
+.bpass-stub .s-lb{writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:"Fraunces",serif;font-weight:800;font-size:15px;letter-spacing:1px}
+.bpass-stub .s-code{font-family:"DM Mono",monospace;font-size:8.5px;
+  writing-mode:vertical-rl;transform:rotate(180deg);opacity:.8}
+
+/* ===== Route / timeline ===== */
+.route{position:relative;padding-left:34px}
+.route::before{content:"";position:absolute;left:12px;top:10px;bottom:14px;width:3px;
+  background:repeating-linear-gradient(var(--terra) 0 8px,transparent 8px 15px)}
+.stop{position:relative;margin-bottom:18px}
+.stop .pin{position:absolute;left:-34px;top:-1px;width:26px;height:26px;font-size:15px;
+  display:grid;place-items:center;background:var(--paper);border:2.5px solid var(--terra);
+  border-radius:50% 50% 50% 2px;transform:rotate(-45deg);box-shadow:var(--shadow-s)}
+.stop .pin span{transform:rotate(45deg)}
+.stop.maybe .pin{border-color:var(--ochre);border-style:dashed}
+.stop .st-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.stop h3{font-family:"Fraunces",serif;font-weight:700;font-size:19px}
+.stop .dates{font-family:"DM Mono",monospace;font-size:11px;color:var(--sea);font-weight:500}
+.tag{font-family:"DM Mono",monospace;font-size:9px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.5px;padding:2px 8px;border-radius:20px}
+.tag.conf{background:rgba(207,91,56,.15);color:var(--terra)}
+.tag.pos{background:rgba(224,165,46,.18);color:var(--ochre)}
+
+/* ===== Note ===== */
+.note{background:var(--paper2);border-left:4px solid var(--ochre);border-radius:10px;
+  padding:13px 14px;font-size:13px;color:var(--ink2);line-height:1.6}
+.note b{color:var(--ink)}
+.pill{display:inline-block;margin-top:10px;background:var(--sea);color:#fdf6e6;
+  font-family:"DM Mono",monospace;font-size:12px;font-weight:500;padding:9px 15px;border-radius:11px;
+  box-shadow:0 3px 0 var(--sea-deep)}
+.pill:active{transform:translateY(2px);box-shadow:0 1px 0 var(--sea-deep)}
+
+/* ===== Filters ===== */
+.filterbar{position:sticky;top:54px;z-index:20;background:linear-gradient(var(--sand) 78%,transparent);
+  padding:12px 0 10px;margin:-20px 0 6px}
+.fscroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.fscroll::-webkit-scrollbar{display:none}
+.fbtn{white-space:nowrap;border:2px solid var(--line2);background:var(--paper);color:var(--ink);
+  border-radius:22px;padding:8px 15px;font-size:13px;font-weight:700;cursor:pointer;flex:0 0 auto;
+  font-family:"Figtree",sans-serif;transition:.12s}
+.fbtn.on{background:var(--sea);color:#fdf6e6;border-color:var(--sea);box-shadow:0 3px 0 var(--sea-deep)}
+.fbtn.cat.on{background:var(--terra);border-color:var(--terra);box-shadow:0 3px 0 #9c3d21}
+
+/* ===== Place card ===== */
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:15px;
+  box-shadow:var(--shadow-s);margin-bottom:11px;overflow:hidden;display:flex}
+.pcard .rail{width:6px;flex:0 0 6px;background:var(--terra)}
+.pcard[data-cat="cafe"] .rail{background:var(--espresso)}
+.pcard[data-cat="comer"] .rail{background:var(--terra)}
+.pcard[data-cat="gym"] .rail{background:var(--olive)}
+.pcard[data-cat="work"] .rail{background:var(--sea)}
+.pcard[data-cat="ver"] .rail{background:var(--ochre)}
+.place{flex:1;display:flex;gap:12px;align-items:flex-start;padding:13px 14px;min-width:0}
+.place .pic{font-size:21px;width:40px;height:40px;flex:0 0 auto;border-radius:12px;
+  display:grid;place-items:center;background:var(--paper2);border:1px solid var(--line)}
+.place .body{flex:1;min-width:0}
+.place .pname{font-family:"Fraunces",serif;font-weight:700;font-size:16px;line-height:1.1;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.place .parea{font-family:"DM Mono",monospace;font-size:10.5px;color:var(--sea);margin-top:3px;letter-spacing:.2px}
+.place .pnote{font-size:13px;margin-top:5px;line-height:1.45}
+.place .ptags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.mini{font-family:"DM Mono",monospace;font-size:9.5px;font-weight:500;padding:3px 8px;
+  border-radius:20px;background:var(--paper2);color:var(--ink2);border:1px solid var(--line)}
+.mini.laptop{background:rgba(15,94,140,.12);color:var(--sea);border-color:transparent}
+.mini.price{background:rgba(224,165,46,.16);color:var(--ochre);border-color:transparent}
+.mini.tag2{background:rgba(165,50,74,.12);color:var(--wine);border-color:transparent}
+.place .maps{flex:0 0 auto;align-self:center;font-family:"DM Mono",monospace;font-size:11px;
+  font-weight:500;color:var(--sea);border:2px solid var(--line2);border-radius:11px;
+  padding:8px 10px;white-space:nowrap}
+.place .maps:active{background:var(--sea);color:#fff}
+.fav{cursor:pointer;font-size:16px;opacity:.4;user-select:none;line-height:1}
+.fav.on{opacity:1}
+
+/* ===== Packing ===== */
+.pk-head{background:linear-gradient(120deg,var(--olive),#54733a);color:#fdf6e6;
+  border:none;border-radius:16px;box-shadow:var(--shadow)}
+.pk-head .n{font-family:"Fraunces",serif;font-weight:800;font-size:17px}
+.pk-progress{height:10px;background:rgba(255,255,255,.25);border-radius:8px;overflow:hidden;margin:9px 0 2px}
+.pk-progress i{display:block;height:100%;background:var(--sun);width:0;transition:.35s;border-radius:8px}
+.pk-item{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px dashed var(--line2);cursor:pointer}
+.pk-item:last-child{border-bottom:none}
+.pk-box{width:23px;height:23px;border:2.5px solid var(--olive);border-radius:7px;flex:0 0 auto;
+  display:grid;place-items:center;font-size:14px;color:#fff;transition:.15s}
+.pk-item.done .pk-box{background:var(--olive);border-color:var(--olive)}
+.pk-item.done .pk-lb{text-decoration:line-through;color:var(--ink2)}
+.pk-lb{font-size:14.5px}
+
+/* ===== Bottom nav ===== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
+  background:var(--paper);border-top:3px solid var(--terra);
+  padding-bottom:var(--safe-b);box-shadow:0 -6px 22px rgba(90,60,20,.14)}
+.nav::before{content:"";position:absolute;top:-3px;left:0;right:0;height:3px;
+  background-image:var(--tile);background-size:44px 44px;opacity:.25}
+.nav button{flex:1;background:none;border:none;padding:10px 2px 9px;cursor:pointer;
+  color:var(--ink2);display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-family:"DM Mono",monospace}
+.nav .ic{font-size:21px;line-height:1;transition:transform .18s}
+.nav .lb{font-size:9px;letter-spacing:.5px;text-transform:uppercase;font-weight:500}
+.nav button.on{color:var(--terra)}
+.nav button.on .ic{transform:translateY(-3px) scale(1.12)}
+.nav button.on .lb{color:var(--terra);font-weight:600}
+.empty{text-align:center;color:var(--ink2);padding:44px 20px;font-family:"Fraunces",serif;font-size:16px}
+</style>
+</head>
+<body>
+
+<header class="app-head">
+  <div class="wrap">
+    <div>
+      <h1>Viaje de Jorge</h1>
+      <div class="sub">Europa · 22 Jul – 12 Sep '26</div>
+    </div>
+    <div class="tix" id="tix"><b>–</b><span>días</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ===================== HOY ===================== -->
+<section class="view active" id="v-hoy">
+  <div class="postcard">
+    <div class="pc-sun"></div>
+    <div class="pc-stamp mono">✦ Y5FESK ✦</div>
+    <span class="pc-eyebrow">Tu viaje</span>
+    <h2 class="serif">Málaga <em>&amp;</em><br>Mallorca</h2>
+    <div class="pc-sub">Costa del Sol → Baleares → Venecia</div>
+    <div class="pc-counts" id="pc-counts"></div>
+  </div>
+
+  <div class="eyebrow">Accesos rápidos</div>
+  <div class="qgrid">
+    <a href="#" data-go="vuelos"><span class="ic">✈️</span><span class="lb">Vuelos</span></a>
+    <a href="#" data-go="lugares" data-cat="cafe"><span class="ic">☕</span><span class="lb">Café</span></a>
+    <a href="#" data-go="lugares" data-cat="comer"><span class="ic">🍽️</span><span class="lb">Comer</span></a>
+    <a href="#" data-go="lugares" data-cat="gym"><span class="ic">🏋️</span><span class="lb">Gym</span></a>
+    <a href="#" data-go="lugares" data-cat="work"><span class="ic">💻</span><span class="lb">Trabajar</span></a>
+    <a href="#" data-go="ruta"><span class="ic">🗺️</span><span class="lb">Ruta</span></a>
+    <a href="#" data-go="valija"><span class="ic">🧳</span><span class="lb">Valija</span></a>
+    <a href="#" data-go="lugares" data-fav="1"><span class="ic">⭐</span><span class="lb">Favoritos</span></a>
+  </div>
+
+  <div class="eyebrow">Datos a mano</div>
+  <div class="card">
+    <div class="stamps">
+      <span class="stamp">💶 Moneda <b>Euro €</b></span>
+      <span class="stamp">🔌 Enchufe <b>C/F · 230V</b></span>
+      <span class="stamp">🚨 SOS <b>112</b></span>
+      <span class="stamp">🗣️ Idioma <b>Español</b></span>
+      <span class="stamp">🕐 Hora <b>ARG +5h</b></span>
+      <span class="stamp">💧 Agua <b>Potable</b></span>
+      <span class="stamp">💳 <b>Tarjeta OK</b></span>
+      <span class="stamp">🎫 Reserva <b>Y5FESK</b></span>
+    </div>
+  </div>
+
+  <div class="eyebrow">Próximo vuelo</div>
+  <div id="next-flight"></div>
+</section>
+
+<!-- ===================== RUTA ===================== -->
+<section class="view" id="v-ruta">
+  <div class="eyebrow">El itinerario</div>
+  <div class="card">
+    <div class="route" id="route"></div>
+  </div>
+  <div class="eyebrow">El tramo del medio</div>
+  <div class="note">
+    Después de Mallorca tenés casi <b>6 semanas libres</b> hasta el vuelo de vuelta desde
+    <b>Venecia (12 Sep)</b>. Ideas de ruta lógica hacia el este:
+    <b>Barcelona → Costa Azul / Niza → norte de Italia (Milán, Lagos, Verona) → Venecia</b>,
+    o Valencia → islas → sur de Francia. Editá esta lista cuando tengas fechas.
+  </div>
+</section>
+
+<!-- ===================== VUELOS ===================== -->
+<section class="view" id="v-vuelos">
+  <div class="eyebrow">La reserva</div>
+  <div class="card">
+    <div class="stamps">
+      <span class="stamp">🎫 Ref <b>Y5FESK</b></span>
+      <span class="stamp">🛫 <b>Air Europa</b></span>
+      <span class="stamp">🧾 Ticket <b>996-9498022130</b></span>
+      <span class="stamp">🧳 <b>1 valija/tramo</b></span>
+    </div>
+    <a class="pill" href="https://www.aireuropa.com/es/check-in" target="_blank" rel="noopener">Check-in Air Europa ↗</a>
+  </div>
+  <div class="eyebrow">Vuelos confirmados</div>
+  <div id="flights-list"></div>
+  <div class="eyebrow">Internos por reservar</div>
+  <div class="note">
+    No están en tu ticket — los reservás aparte:<br>
+    • <b>Madrid → Málaga</b> (23 Jul, tras aterrizar 05:10): tren AVE ~2h40 o vuelo ~1h15.<br>
+    • <b>Málaga → Palma de Mallorca</b>: vuelo directo ~1h (Vueling / Air Europa / Ryanair).<br>
+    • <b>Mallorca → (tramo medio) → Venecia</b> antes del 12 Sep.
+    <a class="pill" href="https://www.google.com/travel/flights" target="_blank" rel="noopener">Buscar vuelos ↗</a>
+  </div>
+</section>
+
+<!-- ===================== LUGARES ===================== -->
+<section class="view" id="v-lugares">
+  <div class="filterbar">
+    <div class="fscroll" id="city-filter"></div>
+    <div style="height:8px"></div>
+    <div class="fscroll" id="cat-filter"></div>
+  </div>
+  <div id="places-list"></div>
+</section>
+
+<!-- ===================== VALIJA ===================== -->
+<section class="view" id="v-valija">
+  <div class="eyebrow">Armá la valija</div>
+  <div class="card pk-head">
+    <div class="n" id="pk-count">0 / 0 listo</div>
+    <div class="pk-progress"><i id="pk-bar"></i></div>
+  </div>
+  <div id="packing-list"></div>
+  <div style="text-align:center;margin:16px 0">
+    <button class="fbtn" id="pk-reset">↺ Reiniciar lista</button>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav" id="nav">
+  <button data-go="hoy" class="on"><span class="ic">🏠</span><span class="lb">Hoy</span></button>
+  <button data-go="ruta"><span class="ic">🗺️</span><span class="lb">Ruta</span></button>
+  <button data-go="vuelos"><span class="ic">✈️</span><span class="lb">Vuelos</span></button>
+  <button data-go="lugares"><span class="ic">📍</span><span class="lb">Lugares</span></button>
+  <button data-go="valija"><span class="ic">🧳</span><span class="lb">Valija</span></button>
+</nav>
+
+<script>
+/* ==================== DATA ==================== */
+const TRIP_START = new Date('2026-07-22T12:10:00-03:00');
+const TRIP_END   = new Date('2026-09-13T07:40:00-03:00');
+
+const DESTINATIONS = [
+  {emoji:'🛬', name:'Madrid (llegada)', dates:'23 Jul', type:'conf', note:'Aterrizás 05:10. Conexión a Málaga (tren AVE o vuelo corto).'},
+  {emoji:'🌊', name:'Málaga', dates:'~23–27 Jul', type:'conf', note:'Costa del Sol. Unos días: playa, pescaíto, café de especialidad y casco histórico.'},
+  {emoji:'🏝️', name:'Mallorca', dates:'~27 Jul – 6 Ago', type:'conf', note:'~10 días. Base en Palma + calas, Serra de Tramuntana y trabajo remoto.'},
+  {emoji:'🧭', name:'Tramo abierto', dates:'Agosto', type:'pos', note:'~5 semanas libres. Ideas: Barcelona, Valencia, Costa Azul, norte de Italia.'},
+  {emoji:'🚤', name:'Venecia', dates:'~11–12 Sep', type:'conf', note:'Punto de salida. Vuelo de vuelta el 12 Sep 18:35 desde Marco Polo.'}
+];
+
+const FLIGHTS = [
+  {group:'Ida', date:'22 JUL', code:'UX0042', op:'Air Europa',
+   fromC:'EZE', fromN:'Buenos Aires · T.P', toC:'MAD', toN:'Madrid · T1',
+   dep:'12:10', arr:'05:10+1', dur:'12h 00m', eq:'787-9', extra:'Directo · Comida a bordo · 1 valija'},
+  {group:'Vuelta', date:'12 SEP', code:'UX1084', op:'Air Europa Express',
+   fromC:'VCE', fromN:'Venecia MP · T2', toC:'MAD', toN:'Madrid',
+   dep:'18:35', arr:'21:15', dur:'2h 40m', eq:'737-800', extra:'Directo · Comida a la venta'},
+  {group:'Vuelta', date:'12 SEP', code:'UX0041', op:'Air Europa',
+   fromC:'MAD', fromN:'Madrid · T1', toC:'EZE', toN:'Buenos Aires · T.IA',
+   dep:'23:55', arr:'07:40+1', dur:'12h 45m', eq:'787-9', extra:'Directo · Conexión 2h40 en Madrid'}
+];
+
+/* cat = cafe|comer|gym|work|ver ; city = malaga|mallorca */
+const PLACES = [
+  /* MÁLAGA · CAFÉ */
+  {city:'malaga',cat:'cafe',name:'Kima Coffee',area:'Centro',note:'Tuestan su propio café; ~#80 del World’s 100 Best y campeón nacional de AeroPress. El imperdible para el fanático.',laptop:false,tag:'Tostador propio'},
+  {city:'malaga',cat:'cafe',name:'Santa Coffee',area:'Soho',note:'Buque insignia en el Soho con tostadora in-house.',laptop:false},
+  {city:'malaga',cat:'cafe',name:'Next Level Specialty',area:'Centro',note:'Specialty serio: filtrados y espresso de nivel.',laptop:false},
+  {city:'malaga',cat:'cafe',name:'Mía Coffee',area:'Centro',note:'Café purista, one-man shop. Para tomarlo bien, no para trabajar.',laptop:false},
+  {city:'malaga',cat:'cafe',name:'Bertani Specialty',area:'Centro',note:'El primer specialty de Málaga (2012).',laptop:false},
+  {city:'malaga',cat:'cafe',name:'El Último Mono',area:'Centro',note:'Specialty consolidado y cómodo para quedarse.',laptop:true},
+  {city:'malaga',cat:'cafe',name:'Recyclo Bike Café',area:'Centro',note:'Café-bici con buen wifi; ideal para trabajar un rato.',laptop:true},
+  {city:'malaga',cat:'cafe',name:'Julia Bakery',area:'Centro',note:'Panadería + café de especialidad, apto laptop.',laptop:true},
+  {city:'malaga',cat:'cafe',name:'Café con Libros',area:'Plaza de la Merced',note:'Café entre libros, tranquilo para trabajar.',laptop:true},
+  /* MÁLAGA · COMER */
+  {city:'malaga',cat:'comer',name:'El Tintero II',area:'El Palo',note:'Chiringuito icónico: los platos de pescado se “subastan” a los gritos. Experiencia pura.',price:'€€'},
+  {city:'malaga',cat:'comer',name:'El Cabra',area:'Pedregalejo',note:'Espetos de sardina y pescaíto frito frente al mar.',price:'€€'},
+  {city:'malaga',cat:'comer',name:'El Pimpi',area:'Centro histórico',note:'Bodega-institución de Málaga: vinos dulces y tapas. Muy turístico pero clásico.',price:'€€'},
+  {city:'malaga',cat:'comer',name:'Antigua Casa de Guardia',area:'Centro',note:'La taberna de vinos más antigua (1840). Vino de la tierra al barril.',price:'€'},
+  {city:'malaga',cat:'comer',name:'La Tranca',area:'Centro',note:'Bar de tapas con ambientazo, vermut y música.',price:'€'},
+  {city:'malaga',cat:'comer',name:'Uvedoble Taberna',area:'Centro',note:'Tapas creativas muy bien resueltas.',price:'€€'},
+  {city:'malaga',cat:'comer',name:'Los Patios de Beatas',area:'Centro',note:'Vinoteca gastronómica con gran carta de vinos.',price:'€€'},
+  {city:'malaga',cat:'comer',name:'Casa Lola',area:'Centro',note:'Tapas clásicas, croquetas y ambiente andaluz.',price:'€'},
+  {city:'malaga',cat:'comer',name:'Kaleja',area:'Centro',note:'1★ Michelin (Guía 2026): cocina malagueña de autor.',price:'€€€€',tag:'★ Michelin'},
+  {city:'malaga',cat:'comer',name:'José Carlos García',area:'Muelle Uno',note:'1★ Michelin frente al puerto. Alta cocina.',price:'€€€€',tag:'★ Michelin'},
+  {city:'malaga',cat:'comer',name:'Ta-Kumi',area:'Centro',note:'Japonés muy valorado en la ciudad.',price:'€€'},
+  {city:'malaga',cat:'comer',name:'Lettus',area:'Centro',note:'Saludable: ensaladas, bowls y desayunos.',price:'€'},
+  {city:'malaga',cat:'comer',name:'Healthy Poke',area:'Centro',note:'Poke bowls para un almuerzo liviano.',price:'€'},
+  /* MÁLAGA · VER */
+  {city:'malaga',cat:'ver',name:'Alcazaba + Teatro Romano',area:'Centro',note:'Fortaleza árabe y teatro romano en pleno casco.'},
+  {city:'malaga',cat:'ver',name:'Castillo de Gibralfaro',area:'Centro',note:'Mirador con las mejores vistas de la ciudad y el puerto.'},
+  {city:'malaga',cat:'ver',name:'Catedral “La Manquita”',area:'Centro',note:'Catedral renacentista, símbolo de Málaga.'},
+  {city:'malaga',cat:'ver',name:'Museo Picasso',area:'Centro',note:'Málaga es cuna de Picasso; colección imperdible.'},
+  {city:'malaga',cat:'ver',name:'Playa de la Malagueta',area:'Centro',note:'La playa urbana, a pasos del centro.'},
+  {city:'malaga',cat:'ver',name:'Caminito del Rey',area:'El Chorro (excursión)',note:'Pasarela de vértigo en el desfiladero, ~1h en auto. Reservar entrada.'},
+  /* MÁLAGA · GYM */
+  {city:'malaga',cat:'gym',name:'Basic-Fit',area:'Varias sedes',note:'La opción diaria más fácil: day pass real de €11,99 en el kiosco.',tag:'Day pass €11,99'},
+  {city:'malaga',cat:'gym',name:'O2 Centro Wellness',area:'Centro',note:'Premium con pileta y spa; pase puntual reservable.',tag:'Premium'},
+  {city:'malaga',cat:'gym',name:'Anytime Fitness',area:'Centro',note:'24/7. Prueba gratis de 3 días para visitantes.',tag:'Trial 3 días'},
+  {city:'malaga',cat:'gym',name:'CrossFit Málaga',area:'Centro',note:'Box con drop-in por clase (~€10). Reservar.',tag:'Drop-in'},
+  {city:'malaga',cat:'gym',name:'Box 1315 CrossFit',area:'Málaga',note:'CrossFit con clases sueltas (~€10).',tag:'Drop-in'},
+  {city:'malaga',cat:'gym',name:'VivaGym',area:'Varias sedes',note:'Cadena económica. Ojo: suele ser solo mensual, no day pass.'},
+  /* MÁLAGA · TRABAJAR */
+  {city:'malaga',cat:'work',name:'The Living Room',area:'Soho',note:'Hub de nómadas digitales, buen ambiente. ~€25/día.',laptop:true,tag:'~€25/día'},
+  {city:'malaga',cat:'work',name:'Innovation Campus',area:'Málaga',note:'El coworking más grande de la ciudad. ~€19/día.',laptop:true,tag:'~€19/día'},
+  {city:'malaga',cat:'work',name:'Impact Hub Málaga',area:'Centro',note:'Comunidad + eventos, muy activo.',laptop:true},
+  {city:'malaga',cat:'work',name:'La Aduana Coworking',area:'Centro',note:'Espacio de trabajo céntrico.',laptop:true},
+  {city:'malaga',cat:'work',name:'Grow Working',area:'Centro',note:'Coworking con buena comunidad local.',laptop:true},
+  {city:'malaga',cat:'work',name:'Spaces / Regus',area:'Varias sedes',note:'Oficinas flexibles y salas por hora/día.',laptop:true},
+  {city:'malaga',cat:'work',name:'Paws for a Moment',area:'Centro',note:'Café apto laptop para días de trabajo liviano.',laptop:true},
+  /* MALLORCA · CAFÉ */
+  {city:'mallorca',cat:'cafe',name:'Mistral Coffee Roasters',area:'Palma · Casco antiguo',note:'Tostador insignia de Palma; entre los mejores del mundo según el Financial Times. Empezá por acá.',laptop:true,tag:'Tostador propio'},
+  {city:'mallorca',cat:'cafe',name:'Arabay Coffee',area:'Palma · Sindicat',note:'Tostador histórico (1952) hecho specialty. 3 pisos y wifi fuerte: el mejor café-oficina.',laptop:true},
+  {city:'mallorca',cat:'cafe',name:'La Molienda',area:'Palma · Arxiduc',note:'Pioneros del specialty en la isla; sede luminosa con menú de mediodía.',laptop:true},
+  {city:'mallorca',cat:'cafe',name:'The Barn',area:'Palma · La Rambla',note:'Sucursal del famoso tostador de Berlín. Espresso + filtrado.',laptop:false},
+  {city:'mallorca',cat:'cafe',name:'Bacan',area:'Palma',note:'Specialty + gran brunch; sirve Hola Coffee (Madrid), espresso tonic y terraza.',laptop:true},
+  {city:'mallorca',cat:'cafe',name:'Batx Coffee',area:'Palma · Arxiduc',note:'Sirve al tostador holandés Lot 61; amplio y con verde.',laptop:true},
+  {city:'mallorca',cat:'cafe',name:'Nano Coffee Lab',area:'Palma · Casco antiguo',note:'Tostadores invitados rotativos (Nomad, April, Tanat). Foco en filtrados para el geek.',laptop:false},
+  {city:'mallorca',cat:'cafe',name:'Menut Café',area:'Palma · Passeig de Mallorca',note:'Sirve Nomad (Barcelona); espresso + cold brew, interior y exterior.',laptop:true},
+  {city:'mallorca',cat:'cafe',name:'Surry Hills',area:'Palma · Carrer del Carme',note:'Brunch estilo aussie con granos de Mistral.',laptop:false},
+  {city:'mallorca',cat:'cafe',name:'Coccum',area:'Sóller',note:'Specialty + brunch en la montaña (junto al tranvía). Ideal para combinar con la excursión a Sóller.',laptop:false},
+  /* MALLORCA · COMER */
+  {city:'mallorca',cat:'comer',name:'Celler Sa Premsa',area:'Palma · Casco antiguo',note:'Institución desde 1958: taberna de toneles, frito mallorquín, arròs brut y tumbet.',price:'€€'},
+  {city:'mallorca',cat:'comer',name:'La Bóveda',area:'Palma · La Llotja',note:'Tapas clásicas con ambiente: pa amb oli, jamón, gambas al ajillo.',price:'€€'},
+  {city:'mallorca',cat:'comer',name:'Sa Roqueta',area:'Portixol',note:'En un antiguo taller de pescadores: guisos, paella y marisco mallorquín.',price:'€€€'},
+  {city:'mallorca',cat:'comer',name:'Periplo',area:'Portixol',note:'En la Guía Michelin: pescado del mercado a la brasa con vistas a la bahía.',price:'€€€',tag:'Michelin'},
+  {city:'mallorca',cat:'comer',name:'Ola del Mar',area:'Portixol',note:'Terraza frente al mar, mariscos españoles con vuelta creativa.',price:'€€€'},
+  {city:'mallorca',cat:'comer',name:'Mercat de Santa Catalina',area:'Palma · Santa Catalina',note:'Mercado clásico para picar: Bar Joan Frau, Arume (dim sum) y Mercat Negre.',price:'€'},
+  {city:'mallorca',cat:'comer',name:'Mercat de l’Olivar',area:'Palma · Centro',note:'Mercado central: pescado, quesos baleares, sobrassada y ensaïmadas.',price:'€'},
+  {city:'mallorca',cat:'comer',name:'Stagier Bar',area:'Palma · Santa Catalina',note:'7 mesas, tapas creativas del chef Joel Baeza. Reservar sí o sí.',price:'€€'},
+  {city:'mallorca',cat:'comer',name:'Vandal',area:'Palma · Santa Catalina',note:'Alta cocina relajada: raíces latinas × mediterráneo, marisco y carnes.',price:'€€€'},
+  {city:'mallorca',cat:'comer',name:'Osma',area:'Palma · Santa Catalina',note:'Francés moderno de temporada con buena carta de vinos.',price:'€€€'},
+  {city:'mallorca',cat:'comer',name:'Sumaq',area:'Palma',note:'Cocina peruana seria y muy valorada.',price:'€€'},
+  {city:'mallorca',cat:'comer',name:'Marc Fosh',area:'Palma · Casco antiguo',note:'1★ Michelin: mediterráneo de temporada en el Convent de la Missió.',price:'€€€€',tag:'★ Michelin'},
+  {city:'mallorca',cat:'comer',name:'Natur Poke',area:'Palma',note:'Poke bowls, opciones veganas y desayunos saludables.',price:'€'},
+  {city:'mallorca',cat:'comer',name:'Ola Poke',area:'Palma',note:'Poke y jugos prensados en frío.',price:'€'},
+  /* MALLORCA · VER */
+  {city:'mallorca',cat:'ver',name:'Catedral La Seu',area:'Palma',note:'Joya gótica frente al mar (interior intervenido por Gaudí, gran rosetón).'},
+  {city:'mallorca',cat:'ver',name:'Palacio de la Almudaina',area:'Palma',note:'Residencia real gótico-mudéjar junto a la catedral, con vistas al puerto.'},
+  {city:'mallorca',cat:'ver',name:'Castillo de Bellver',area:'Palma',note:'Fortaleza circular del s.XIV (rara en Europa) con vistas 360° a la bahía.'},
+  {city:'mallorca',cat:'ver',name:'Valldemossa',area:'Serra de Tramuntana',note:'De los pueblos más lindos de España; cartuja donde pasaron Chopin y George Sand.'},
+  {city:'mallorca',cat:'ver',name:'Deià + Cala Deià',area:'Serra de Tramuntana',note:'Pueblo de artistas en el acantilado y cala de piedras con agua cristalina.'},
+  {city:'mallorca',cat:'ver',name:'Sóller & Port de Sóller',area:'Serra de Tramuntana',note:'Tranvía de madera de 1913 entre naranjos hasta el puerto.'},
+  {city:'mallorca',cat:'ver',name:'Cap de Formentor',area:'Norte',note:'Península de acantilados y faro. En verano el acceso suele ser en bus lanzadera: verificar.'},
+  {city:'mallorca',cat:'ver',name:'Es Trenc',area:'Sur (Campos)',note:'Playa virgen de arena blanca y agua turquesa, en parque natural.'},
+  {city:'mallorca',cat:'ver',name:'Cala Mondragó',area:'Sureste (Santanyí)',note:'Calas Blue Flag dentro de un parque natural; arena fina y agua calma.'},
+  /* MALLORCA · GYM */
+  {city:'mallorca',cat:'gym',name:'Fit Club Mallorca',area:'Palma',note:'Vende un 1-Day Pass online: el drop-in más sin fricción para turista.',tag:'Day pass online'},
+  {city:'mallorca',cat:'gym',name:'Basic-Fit',area:'Palma · Avda. Portugal',note:'Cadena grande (1.850m²); day pass por la app.',tag:'Day pass app'},
+  {city:'mallorca',cat:'gym',name:'VivaGym Santa Catalina',area:'Palma · Santa Catalina',note:'Sin permanencia, pases por día. Cómodo si te alojás en Santa Catalina.'},
+  {city:'mallorca',cat:'gym',name:'VivaGym Porto Pi',area:'Palma · Porto Pi',note:'Dentro del centro comercial Porto Pi.'},
+  {city:'mallorca',cat:'gym',name:'Anytime Fitness Palma',area:'Palma · 31 de Desembre',note:'Acceso 24/7; suele ofrecer pases de visitante.',tag:'24/7'},
+  {city:'mallorca',cat:'gym',name:'CrossFit Portixol',area:'Portixol',note:'Box de 700m² frente al mar; drop-in ~€25 en recepción.',tag:'Drop-in €25'},
+  {city:'mallorca',cat:'gym',name:'CrossFit Mallorca',area:'Palma',note:'Clase suelta / open gym ~€25. Reservar con tiempo.',tag:'Drop-in €25'},
+  {city:'mallorca',cat:'gym',name:'True Love CrossFit',area:'Son Oms',note:'Drop-in €25; escribir antes (piden ~3 meses de experiencia).',tag:'Drop-in €25'},
+  /* MALLORCA · TRABAJAR */
+  {city:'mallorca',cat:'work',name:'Palmapolitan',area:'Palma · Casco antiguo',note:'Espacio top: escritorios ergonómicos, wifi rápido, cocina común. Pases por día.',laptop:true},
+  {city:'mallorca',cat:'work',name:'Cómodo&Co Santa Catalina',area:'Palma · Santa Catalina',note:'Escritorios flex desde ~€15/día, café/té incluido. Lun-Sáb 07-22h.',laptop:true,tag:'~€15/día'},
+  {city:'mallorca',cat:'work',name:'Cómodo&Co Arxiduc',area:'Palma · Arxiduc',note:'Segunda sede, mismo esquema de flex desk.',laptop:true},
+  {city:'mallorca',cat:'work',name:'Rayaworx',area:'Palma · Santa Catalina',note:'Comunidad de coworking establecida (consultá pase por día).',laptop:true}
+];
+
+const PACKING = [
+  {cat:'📄 Documentos', items:['Pasaporte (vigencia +6 meses)','DNI','Tarjeta de crédito/débito (avisar viaje al banco)','Efectivo en euros','Licencia de conducir (para alquilar auto en Mallorca)','Seguro de viaje + copia','Reserva de vuelos Y5FESK','Copias/foto de documentos en el celu']},
+  {cat:'💻 Trabajo & tech', items:['Notebook + cargador','Adaptador de enchufe Europa (tipo C/F)','Power bank','Auriculares','Mouse','Cables USB-C / lightning','eSIM o chip europeo','Disco/backup o nube','Botella de agua reutilizable']},
+  {cat:'👕 Ropa (calor)', items:['Remeras x6-7','Shorts x3','Pantalón largo liviano','Camisa de lino','Ropa interior x8','Medias x6','Buzo/campera liviana (noches)','Gorra','Lentes de sol','Zapatillas urbanas','Sandalias / ojotas']},
+  {cat:'🏋️ Gym', items:['Ropa deportiva x3','Zapatillas de entrenamiento','Toalla de microfibra','Candado para locker','Shaker / botella']},
+  {cat:'🏖️ Playa', items:['Traje de baño x2','Toalla de playa liviana','Protector solar (alto FPS)','After-sun','Gorra / sombrero']},
+  {cat:'🧴 Higiene & salud', items:['Cepillo y pasta de dientes','Desodorante','Shampoo/jabón (viaje)','Botiquín básico','Ibuprofeno / analgésico','Medicación personal','Repelente','Curitas']},
+  {cat:'☕ Café (opcional, para el fanático)', items:['AeroPress Go de viaje','Molinillo manual','Filtros','Bolsa de café favorito para arrancar']},
+  {cat:'🎒 Varios', items:['Mochila de día','Candado de valija','Bolsa para ropa sucia','Paraguas/piloto plegable','Antifaz + tapones (vuelo)','Almohada de cuello']}
+];
+
+/* ==================== STATE ==================== */
+const store = {
+  get(k,d){ try{return JSON.parse(localStorage.getItem('viaje_'+k))??d}catch(e){return d} },
+  set(k,v){ localStorage.setItem('viaje_'+k, JSON.stringify(v)) }
+};
+let favs = store.get('favs', []);
+let packed = store.get('packed', {});
+let filterCity='all', filterCat='all', filterFav=false;
+
+/* ==================== HELPERS ==================== */
+const $ = s=>document.querySelector(s);
+const CITY = {malaga:'Málaga', mallorca:'Mallorca'};
+const CAT = {cafe:{e:'☕'},comer:{e:'🍽️'},gym:{e:'🏋️'},work:{e:'💻'},ver:{e:'📸'}};
+const mapsUrl = p => 'https://www.google.com/maps/search/?api=1&query='+
+  encodeURIComponent(p.name+' '+(p.area||'')+' '+(CITY[p.city]||''));
+
+/* ==================== HOY ==================== */
+function daysInfo(){
+  const now=new Date();
+  if(now<TRIP_START) return {n:Math.ceil((TRIP_START-now)/864e5), lb:'p/salir'};
+  if(now>TRIP_END) return {n:0, lb:'fin'};
+  return {n:Math.ceil((TRIP_END-now)/864e5), lb:'restan'};
+}
+function renderHoy(){
+  const d=daysInfo(), now=new Date();
+  $('#tix').innerHTML=`<b>${d.n}</b><span>${d.lb}</span>`;
+  const total=Math.round((TRIP_END-TRIP_START)/864e5);
+  const elapsed=Math.max(0,Math.min(total,Math.round((now-TRIP_START)/864e5)));
+  let boxes;
+  if(now<TRIP_START) boxes=[[d.n,'días p/salir'],[total,'días de viaje'],['4','destinos']];
+  else if(now>TRIP_END) boxes=[['¡Fin!','buen viaje'],[total,'días'],[PLACES.length,'lugares']];
+  else boxes=[[elapsed,'recorridos'],[d.n,'restantes'],[total,'total']];
+  $('#pc-counts').innerHTML=boxes.map(b=>`<div class="b"><b>${b[0]}</b><span>${b[1]}</span></div>`).join('');
+  $('#next-flight').innerHTML=flightCard(FLIGHTS[0]);
+}
+
+/* ==================== RUTA ==================== */
+function renderRuta(){
+  $('#route').innerHTML=DESTINATIONS.map(s=>`
+    <div class="stop ${s.type==='pos'?'maybe':''}">
+      <div class="pin"><span>${s.emoji}</span></div>
+      <div class="st-top">
+        <h3>${s.name}</h3>
+        <span class="dates">${s.dates}</span>
+        <span class="tag ${s.type==='conf'?'conf':'pos'}">${s.type==='conf'?'Confirmado':'Posible'}</span>
+      </div>
+      <div class="muted">${s.note}</div>
+    </div>`).join('');
+}
+
+/* ==================== VUELOS ==================== */
+function flightCard(f){
+  return `<div class="bpass">
+    <div class="bpass-main">
+      <div class="bp-head">
+        <span class="bp-air">✈ ${f.op}</span>
+        <span class="bp-tag mono">${f.code}</span>
+      </div>
+      <div class="bp-route">
+        <div class="bp-ap"><span class="bp-iata">${f.fromC}</span><span class="bp-city">${f.fromN}</span></div>
+        <div class="bp-mid"><span class="pl">✈</span><span class="du">${f.dur}</span></div>
+        <div class="bp-ap r"><span class="bp-iata">${f.toC}</span><span class="bp-city">${f.toN}</span></div>
+      </div>
+      <div class="bp-grid">
+        <div><b>Sale</b><span>${f.dep}</span></div>
+        <div><b>Llega</b><span>${f.arr}</span></div>
+        <div><b>Fecha</b><span>${f.date}</span></div>
+        <div><b>Avión</b><span>${f.eq}</span></div>
+      </div>
+      <div class="bp-extra">${f.extra}</div>
+    </div>
+    <div class="bpass-stub">
+      <span class="s-lb">${f.group}</span>
+      <span class="s-code">${f.code}</span>
+    </div>
+  </div>`;
+}
+function renderVuelos(){ $('#flights-list').innerHTML=FLIGHTS.map(flightCard).join(''); }
+
+/* ==================== LUGARES ==================== */
+function renderFilters(){
+  const cities=[['all','Todo'],['malaga','🌊 Málaga'],['mallorca','🏝️ Mallorca']];
+  $('#city-filter').innerHTML=cities.map(c=>`<button class="fbtn ${filterCity===c[0]&&!filterFav?'on':''}" data-city="${c[0]}">${c[1]}</button>`).join('');
+  const cats=[['all','Todo'],['cafe','☕ Café'],['comer','🍽️ Comer'],['gym','🏋️ Gym'],['work','💻 Trabajar'],['ver','📸 Ver']];
+  $('#cat-filter').innerHTML=cats.map(c=>`<button class="fbtn cat ${filterCat===c[0]&&!filterFav?'on':''}" data-cat="${c[0]}">${c[1]}</button>`).join('')
+    +`<button class="fbtn cat ${filterFav?'on':''}" data-fav="1">⭐ Favoritos</button>`;
+}
+function renderPlaces(){
+  renderFilters();
+  let list=PLACES.filter(p=>
+    (filterCity==='all'||p.city===filterCity)&&
+    (filterCat==='all'||p.cat===filterCat)&&
+    (!filterFav||favs.includes(p.name)));
+  if(!list.length){ $('#places-list').innerHTML=`<div class="empty">Sin resultados con estos filtros ✦</div>`; return; }
+  $('#places-list').innerHTML=list.map(p=>{
+    const c=CAT[p.cat]||{e:'📍'}, isFav=favs.includes(p.name);
+    return `<div class="pcard" data-cat="${p.cat}"><div class="rail"></div><div class="place">
+      <div class="pic">${c.e}</div>
+      <div class="body">
+        <div class="pname">${p.name}
+          <span class="fav ${isFav?'on':''}" data-fav-name="${p.name.replace(/"/g,'&quot;')}">${isFav?'⭐':'☆'}</span></div>
+        <div class="parea">${CITY[p.city]||''}${p.area?' · '+p.area:''}</div>
+        <div class="pnote">${p.note||''}</div>
+        <div class="ptags">
+          ${p.price?`<span class="mini price">${p.price}</span>`:''}
+          ${p.laptop?`<span class="mini laptop">💻 apto laptop</span>`:''}
+          ${p.tag?`<span class="mini tag2">${p.tag}</span>`:''}
+        </div>
+      </div>
+      <a class="maps" href="${mapsUrl(p)}" target="_blank" rel="noopener">Mapa ↗</a>
+    </div></div>`;
+  }).join('');
+}
+
+/* ==================== VALIJA ==================== */
+function renderPacking(){
+  let total=0,done=0;
+  $('#packing-list').innerHTML=PACKING.map(g=>{
+    const items=g.items.map(it=>{
+      const key=g.cat+'|'+it; total++; const on=!!packed[key]; if(on)done++;
+      return `<div class="pk-item ${on?'done':''}" data-pk="${key.replace(/"/g,'&quot;')}">
+        <div class="pk-box">${on?'✓':''}</div><div class="pk-lb">${it}</div></div>`;
+    }).join('');
+    return `<div class="eyebrow">${g.cat}</div><div class="card" style="padding:2px 15px">${items}</div>`;
+  }).join('');
+  $('#pk-count').textContent=`${done} / ${total} listo`;
+  $('#pk-bar').style.width=total?(done/total*100)+'%':'0';
+}
+
+/* ==================== NAV ==================== */
+function go(view,opts={}){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const el=$('#v-'+view); el.classList.add('active');
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.go===view));
+  window.scrollTo(0,0);
+  if(view==='lugares'){
+    filterFav=!!opts.fav;
+    filterCat=opts.fav?'all':(opts.cat||'all');
+    renderPlaces();
+  }
+}
+
+/* ==================== EVENTS ==================== */
+document.addEventListener('click',e=>{
+  const nav=e.target.closest('[data-go]');
+  if(nav){ e.preventDefault(); go(nav.dataset.go,{cat:nav.dataset.cat,fav:nav.dataset.fav}); return; }
+  const city=e.target.closest('[data-city]');
+  if(city){ filterCity=city.dataset.city; filterFav=false; renderPlaces(); return; }
+  const cat=e.target.closest('.fbtn[data-cat]');
+  if(cat){ filterCat=cat.dataset.cat; filterFav=false; renderPlaces(); return; }
+  const fav=e.target.closest('.fbtn[data-fav]');
+  if(fav){ filterFav=true; filterCat='all'; renderPlaces(); return; }
+  const favBtn=e.target.closest('[data-fav-name]');
+  if(favBtn){ const n=favBtn.dataset.favName;
+    favs.includes(n)?favs=favs.filter(x=>x!==n):favs.push(n);
+    store.set('favs',favs); renderPlaces(); return; }
+  const pk=e.target.closest('[data-pk]');
+  if(pk){ const k=pk.dataset.pk; packed[k]=!packed[k]; store.set('packed',packed); renderPacking(); return; }
+});
+$('#pk-reset').addEventListener('click',()=>{ packed={}; store.set('packed',packed); renderPacking(); });
+
+/* ==================== INIT ==================== */
+renderHoy(); renderRuta(); renderVuelos(); renderPlaces(); renderPacking();
+</script>
+</body>
+</html>
