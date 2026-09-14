@@ -1,0 +1,164 @@
+/* ============================================================
+   BANCO DE DIÁLOGOS — Idea Bank Page
+   Hereda styles.css + script.css. Solo agrega lo propio.
+   ============================================================ */
+
+/* HERO tweak */
+.bank-hero .script-title { font-size: clamp(1.5rem, 3.6vw, 2.4rem); }
+
+.bank-lead {
+  max-width: 720px; margin: 1.5rem auto 0;
+  font-family: var(--font-body); font-size: 1.05rem; line-height: 1.8;
+  color: var(--text); text-align: left;
+}
+.bank-lead strong { color: var(--gold-light); }
+
+/* TONE LEGEND (sticky) */
+.tone-legend {
+  position: sticky; top: 60px; z-index: 50;
+  background: rgba(5,5,5,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding: 0.8rem 2rem;
+}
+.tone-legend-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap;
+  align-items: center;
+}
+
+/* TONE TAGS */
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.18rem 0.55rem; border-radius: 2px;
+  border: 1px solid currentColor; line-height: 1.4;
+  white-space: nowrap;
+}
+.t-serio    { color: #8fb0c8; }
+.t-gracioso { color: #d8b24a; }
+.t-sarcastico { color: #c88fb0; }
+.t-inteligente { color: #6fb8a8; }
+.t-acido    { color: #d06868; }
+.t-oscuro   { color: #9a8fc8; }
+.t-tierno   { color: #c8907a; }
+
+/* CHARACTER GROUP */
+.char-group { margin: 2.5rem 0; }
+.char-group-head {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-bottom: 1.2rem; padding-bottom: 0.6rem;
+  border-bottom: 1px dashed var(--border);
+}
+.char-name-big {
+  font-family: var(--font-heading); font-size: 1.25rem;
+  color: var(--text-light); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.char-role {
+  font-family: var(--font-mono); font-size: 0.66rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);
+}
+.char-count {
+  margin-left: auto; font-family: var(--font-mono); font-size: 0.62rem;
+  letter-spacing: 0.1em; color: var(--text-muted);
+}
+
+/* SCENE CONTEXT reminder */
+.scene-context {
+  margin: 0 0 2rem; padding: 0.9rem 1.2rem;
+  border-left: 3px solid var(--border-gold);
+  background: rgba(154,120,48,0.05);
+  font-family: var(--font-body); font-style: italic;
+  font-size: 1rem; line-height: 1.7; color: var(--text-muted);
+}
+.scene-context strong { color: var(--gold-light); font-style: normal; }
+
+/* DIALOGUE LINE (clickable to mark) */
+.line {
+  position: relative;
+  display: block; width: 100%; text-align: left;
+  padding: 0.9rem 1.1rem 0.9rem 2.6rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.012);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, transform 0.08s;
+  font: inherit; color: inherit;
+}
+.line:hover { border-color: rgba(216,208,192,0.28); background: rgba(255,255,255,0.03); }
+.line:active { transform: scale(0.998); }
+
+/* checkbox marker */
+.line::before {
+  content: "";
+  position: absolute; left: 0.9rem; top: 1rem;
+  width: 15px; height: 15px; border-radius: 3px;
+  border: 1px solid var(--text-muted);
+  transition: all 0.15s;
+}
+.line.marked {
+  border-color: var(--teal);
+  background: rgba(58,128,128,0.09);
+}
+.line.marked::before {
+  content: "✓";
+  background: var(--teal); border-color: var(--teal); color: #05100f;
+  font-size: 11px; font-weight: 700; text-align: center; line-height: 15px;
+  font-family: var(--font-mono);
+}
+
+.line-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.45rem; }
+.line-text {
+  font-family: var(--font-body); font-size: 1.12rem; line-height: 1.55;
+  color: var(--text-light);
+}
+.line-text em { color: var(--gold-light); font-style: italic; }
+/* stage direction inside a line */
+.line-dir {
+  display: block; margin-top: 0.35rem;
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--text-muted); letter-spacing: 0.04em; font-style: italic;
+}
+
+/* group label for a run of lines that form an exchange */
+.exchange-label {
+  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--teal);
+  margin: 1.4rem 0 0.6rem; padding-left: 0.2rem;
+}
+
+/* FLOATING TOOLBAR */
+.mark-bar {
+  position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+  z-index: 200;
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.7rem 1.1rem;
+  background: rgba(10,10,10,0.94); backdrop-filter: blur(14px);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+.mark-count {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--gold-light);
+}
+.mark-count b { color: var(--text-light); }
+.mark-btn {
+  font-family: var(--font-mono); font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.45rem 0.8rem; cursor: pointer;
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border); border-radius: 3px;
+  transition: all 0.15s;
+}
+.mark-btn:hover { border-color: var(--gold-light); color: var(--gold-light); }
+.mark-btn.primary { border-color: var(--teal); color: var(--teal); }
+.mark-btn.primary:hover { background: rgba(58,128,128,0.14); }
+
+@media (max-width: 768px) {
+  .tone-legend { padding: 0.6rem 0.8rem; }
+  .tone-legend-inner { gap: 0.4rem; }
+  .line { padding: 0.8rem 0.9rem 0.8rem 2.4rem; }
+  .line-text { font-size: 1.02rem; }
+  .mark-bar { flex-wrap: wrap; justify-content: center; width: calc(100% - 1.5rem); bottom: 0.6rem; }
+  .char-count { display: none; }
+}
